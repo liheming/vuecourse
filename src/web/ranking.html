@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>排行</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1,maximum-scale=1, minimum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="css/app.css"/>
+    <style>
+
+    </style>
+
+</head>
+<body style="background-color: white">
+
+
+<div class="mui-content" id="app">
+
+    <div id="slider-banner" class="mui-slider">
+        <div class="mui-slider-group mui-slider-loop">
+            <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+
+
+            <!--第一张 v-for=" (item, index) in data" v-if="index<10"-->
+
+
+            <!-- 第三张 -->
+            <div class="mui-slider-item">
+                <a @click="openContentDetail('ff808081616b58bd01616b6705e5000b',null)">
+                    <img src="images/banner-xiyouji.jpg">
+                </a>
+            </div>
+
+            <!--第一张-->
+            <div class="mui-slider-item">
+                <a @click="openContentDetail('ff808081616b58bd01616b6690720009',null)">
+                    <img src="images/banner-zhonghua.jpg">
+                </a>
+            </div>
+
+            <!--第二张-->
+            <div class="mui-slider-item">
+                <a @click="openContentDetail('ff808081616b58bd01616b660c870005',null)">
+                    <img src="images/banner-sanzijing.jpg">
+                </a>
+            </div>
+            <!-- 第三张 -->
+            <div class="mui-slider-item">
+                <a @click="openContentDetail('ff808081616b58bd01616b6705e5000b',null)">
+                    <img src="images/banner-xiyouji.jpg">
+                </a>
+            </div>
+
+            <!-- 第四张 -->
+            <!--<div class="mui-slider-item">-->
+            <!--<a href="content-details.html?id=ff8080816155bd6c016155daf089001c">-->
+            <!--<img src="images/banner-sanzijing.jpg">-->
+            <!--</a>-->
+            <!--</div>-->
+
+
+            <div class="mui-slider-item">
+                <a @click="openContentDetail('ff808081616b58bd01616b6690720009',null)">
+                    <img src="images/banner-zhonghua.jpg">
+                </a>
+            </div>
+
+        </div>
+
+        <div class="mui-slider-indicator">
+            <div class="mui-indicator mui-active"></div>
+            <div class="mui-indicator"></div>
+            <div class="mui-indicator"></div>
+        </div>
+    </div>
+
+
+    <div id="ranking-content">
+
+        <div id="segmentedControl" class="mui-segmented-control">
+            <div id="tab" style="padding: 3px">
+
+                <a id="1" data-value="11" class="mui-control-item mui-active">付费榜<span style="width: 42px"></span></a>
+                <a id="2" class="mui-control-item">点播榜<span style="width: 42px"></span></a>
+                <a id="3" class="mui-control-item">收藏榜<span style="width: 42px"></span></a>
+                <a id="4" class="mui-control-item">点评榜<span style="width: 42px"></span></a>
+
+            </div>
+
+            <div style="height: 5px ; width: 100% ;background-color: #f9faff ;margin-bottom: 10px"></div>
+
+        </div>
+        <template v-if="isShow">
+            <div class="content">
+                <div id="pay-ranking" class="mui-control-content mui-active">
+
+                    <div class="list">
+
+                        <ul class="mui-table-view">
+                            <li v-for=" (item, index) in data" v-if="index<10" class="mui-table-view-cell mui-media"
+                                style=" height: 100%">
+                                <a class="item-a" @click="openDetailsPage(item.id)">
+
+                                    <div class="item-div-img">
+                                        <img class="item-preview-img"
+                                             v-bind:src="  item.preview ==''  ?   'images/default-preview.jpg' : item.preview   ">
+                                    </div>
+                                    <div class="item-content-div">
+                                        <div class="item-content-div-div">
+                                            <p class=" item-contentName">{{item.contentName}} </p>
+                                            <p class="item-totalNum-num">共{{item.totalNum}}集 | 已更{{item.hasNum}}集</p>
+                                            <p class="item-playNum">
+
+
+                                                <span v-if="rankType === '1'">{{item.buyNum > 9999  ?   Math.round(item.buyNum/10000*100)/100 + '万人在线学' : item.buyNum+'人在线学'}}</span>
+                                                <span v-else-if="rankType === '2'">{{item.playNum > 9999  ?   Math.round(item.playNum/10000*100)/100 +  '万人播放' : item.playNum+'人播放'}}</span>
+                                                <span v-else-if="rankType === '3' ">{{item.remarkNum > 9999  ?  Math.round(item.remarkNum/10000*100)/100 +  '万人收藏' : item.remarkNum+'人收藏'}}</span>
+                                                <span v-else-if="rankType === '4' ">{{item.commentsNum > 9999  ?  Math.round(item.commentsNum/10000*100)/100 +  '万人评论' : item.commentsNum +'人评论'}}</span>
+
+
+
+                                            </p>
+                                            <div class="item-content-div-div-div">
+                                                <p>
+                                                    <span class="item-base-price">{{item.isFree ?  '' : '原价¥'}} {{item.isFree ?  '' : item.price+30}}</span>
+                                                    <span class="item-price"> {{item.isFree ? '免费' : '¥'+item.price+'' }}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+        </template>
+    </div>
+
+</div>
+
+
+</div>
+
+
+<!--js 脚本-->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/base.js?_20180207"></script>
+<script src="js/api.js"></script>
+
+<script>
+
+    mui.init({
+        swipeBack: false  //关闭右滑关闭功能
+    });
+
+    var ranking;
+
+    ranking = new Vue({
+        el: '#app',
+        data: {
+            rankType: '1',
+            isShow: false,
+            data: null
+        }
+    });
+
+
+    getRanking('1');
+
+    mui('#tab').on('tap', 'a', function () {
+        getRanking(this.id);
+
+    });
+
+
+    function getRanking(type) {
+        $.ajax({
+            url: 'http://www.wyuetec.com/wycms/selling/products/rankList',
+            type: 'post',
+            data: {
+                'appKey': 'sandaoyun',
+                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'channelCode': '100001',
+                'rankType': type
+            },
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+                if (result.code == 200) {
+                    console.log("200");
+                    ranking.data = JSON.parse(result.data);
+                    ranking.rankType = type;
+                    ranking.isShow = true;
+                } else {
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+
+</script>
+
+</body>
+</html>

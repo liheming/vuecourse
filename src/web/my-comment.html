@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1,maximum-scale=1, minimum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
+    <!--自定义的css-->
+    <link rel="stylesheet" type="text/css" href="css/app.css"/>
+
+    <title>我的评论</title>
+
+    <style>
+        .limit-length-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .transparent {
+            color: transparent;
+            background-color: transparent;
+        }
+
+        .hot_recommend {
+            width: 50%;
+            font-size: 16px;
+            color: white;
+            background: #f35b75;
+            display: inline-block;
+            border-radius: 20px;
+            padding: 6px 8px;
+        }
+    </style>
+</head>
+
+<body style="background-color: white;">
+<div id="app">
+    <template v-if="isShow">
+
+        <ul class="mui-table-view">
+            <li v-for="item in commentData " @click="openComment(item.productsId, item.contentType, item.status)"
+                style=" padding-top: 10px">
+
+                <div style=" float: left;width: 100%;  padding-left: 35px ;  padding-right: 35px ;  ">
+                    <div>
+                        <img v-if="!(item.headPic == '' || item.headPic == null)" v-bind:src="item.headPic"
+                             style=" width: 30px ;  height: 30px; float: left">
+                    </div>
+                    <div style="padding-left: 10px ; margin-top: 2px; float: left;  line-height: 9px">
+                        <p style="font-size: 13px ;font-weight: bold;color: black;">{{item.userName}}</p>
+                        <p style="font-size: 11px">{{ item.commentTime.substring(0,10) }}【{{item.contentName}}】</p>
+                    </div>
+                    <div style="text-align: right ;font-size: 10px ; ">
+                        <span style="color: #f35b75" v-if="item.status==0">未审核</span>
+                        <span v-else-if="item.status==1">已审核</span>
+                        <span style="color: red" v-else>审核未通过</span>
+                        <!--<span>{{ item.status==1 ? '已审核': '未审核'   }}</span>-->
+
+                        <div style=" position: absolute;  right: 35px ;display: none ">
+							<span v-if="item.isLike" class="mui-icon iconfont icon-like"
+                                          style=" font-size:  13px  ;color: red"></span>
+
+                            <span v-else class="mui-icon iconfont icon-un-like"
+                                  style=" font-size:  13px"></span>
+
+                            <span style="color: grey"> {{ item.likeNum > 9999 ?  Math.round(item.likeNum/10000*100)/100 + '万'  :  item.likeNum  }}  </span>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div style=" padding-left: 74px ; font-size: 14px ;padding-bottom: 10px ; padding-right: 35px ; ">
+                    {{item.comment}}
+                </div>
+
+                <template v-if="!(item.reply == '' || item.reply == null)">
+                    <div style="font-size: 14px;   background-color: #f9faff ;        padding: 10px 35px 10px 74px;">
+                        <span style="color: #f35b75;font-size: 14px;">三到云课堂小助手</span>
+                        回复：{{item.reply}}
+                    </div>
+                </template>
+                <span style="width: 100%  ;height: 1px ;background-color: #f2f2f2 ;display: block"></span>
+
+            </li>
+        </ul>
+
+
+        <!--<ul class="mui-table-view">-->
+        <!--<li v-for="item in commentData " class="mui-table-view-cell mui-media">-->
+        <!--<a @click="openPlayPage(item.productsId)" style="height: 100%;">-->
+        <!--<div class="mui-media-object mui-pull-left" style="width: 60px;text-align: center;">-->
+        <!--<div style="width: 50px;height: 50px;text-align: center;">-->
+        <!--<img v-if="!(item.headPic == '' || item.headPic == null)" style="width: 100%;" v-bind:src="item.headPic">-->
+        <!--<img v-else style="width: 100%;" src="images/shuijiao.jpg">	-->
+        <!--</div>-->
+        <!--<div class="limit-length-text" style="width: 50px;margin-top: -10px;text-align: center;">-->
+        <!--<span class="mui-ellipsis" style="font-size: 12px;">{{item.userName}}</span>-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <!--<div style="margin: 0;padding: 0;">-->
+        <!--<div>-->
+        <!--<span style="white-space: normal; font-size: 12px;">{{item.comment}}</span>-->
+        <!--</div>-->
+
+        <!--<div style="color: #A9A9A9;">-->
+        <!--<span style="float: left; font-size: 10px;margin-left: -4px;">【{{item.commentTime}}】</span>-->
+        <!--<div class="limit-length-text" style="vertical-align: top; float: left; max-width: 28%;">-->
+        <!--<span style="vertical-align: top; font-size: 11px;">《</span>-->
+        <!--<span style="vertical-align: top; font-size: 11px;">{{item.contentName}}</span>-->
+        <!--</div>-->
+        <!--<span style="vertical-align: top; font-size: 11px;">》</span>-->
+
+        <!--&lt;!&ndash;<span style="width: 18px;margin-left: 12px;">-->
+        <!--<img style="width: 12px;height: 12px;" src="images/ic_comment_unlike.png">-->
+        <!--<span style="font-size: 11px;">12</span>-->
+        <!--</span>&ndash;&gt;-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</a>-->
+
+        <!--<template v-if="!(item.reply == '' || item.reply == null)">-->
+        <!--<div style="font-size: 12px;">-->
+        <!--<span style="color: #4A82D1;font-size: 11px;">三到云课堂小助手</span> 回复：{{item.reply}}-->
+        <!--</div>-->
+        <!--</template>-->
+        <!--</li>-->
+        <!--</ul>-->
+    </template>
+
+    <template v-else>
+        <div style="width: 100%;height: 100%;background-color: white;text-align: center;">
+            <div style="padding-top: 20%;">
+                <img style="width: 30%;height: 50%;" src="images/ic_comment_not.png"/>
+            </div>
+            <div style="margin-top: 4%;">
+                <p style="font-size: 11px;">暂无评论喔~</p>
+            </div>
+            <div @click="toHome()" style="margin-top: 4%;">
+                <p class="mui-ellipsis hot_recommend">热门推荐</p>
+            </div>
+        </div>
+    </template>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<!--<script src="https://cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js"></script>-->
+<script src="js/mui.min.js"></script>
+<script src="js/vue-router.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/api.js?_2018021118"></script>
+<script src="js/base.js?_2018021118"></script>
+
+<script>
+    //mui初始化
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+
+    //获取数据
+    $.ajax({
+        url: hostUrl+'selling/comments/myComments',
+        type: 'post',
+        data: {
+            'appKey': 'sandaoyun',
+            'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+            'cpid': '100001',
+            'userid': userid
+        },
+        dataType: 'json',
+        success: function (result) {
+            console.log(result);
+            if (result.code == 200) {
+                var data = JSON.parse(result.data);
+                if (data && data.length != 0) {
+                    //$('#item-success').show();
+                    commentvm.isShow = true;
+                    commentvm.commentData = data;
+                } else {
+                    //$('#item-success').hide();
+                    commentvm.isShow = false;
+                }
+            } else {
+                //$('#item-success').hide();
+                commentvm.isShow = false;
+            }
+        },
+        error: function () {
+            commentvm.isShow = false;
+        }
+    });
+
+    var commentvm = new Vue({
+        el: '#app',
+        data: {
+            commentData: null,
+            isShow: false
+        },
+        methods: {
+            toHome: function () {
+                mui.openWindow({
+                    url: "index.html",
+                    waiting: {
+                        autoShow: true, //自动显示等待框，默认为true
+                        title: '正在加载...', //等待对话框上显示的提示内容
+                    }
+                })
+            },
+
+            openComment: function (productsId, contentType, status) {
+                if (status == 1)
+                    openPlayPage(productsId, 'comment', contentType);
+            },
+//					openPlayPage: function(productsId, contentId, type) {
+//						addCollection(contentId, type);
+//						mui.openWindow({
+//							id: "1321",
+//							url: "content-play.html?id=" + productsId,
+//							extras: {
+//								name: 'mui' //自定义扩展参数，可以用来处理页面间传值
+//							},
+//							show: {
+//								autoShow: false
+//							},
+//							waiting: {
+//								autoShow: true, //自动显示等待框，默认为true
+//								title: '正在加载...', //等待对话框上显示的提示内容
+//							}
+//						})
+//					},
+
+
+        },
+    });
+</script>
+</body>
+
+</html>

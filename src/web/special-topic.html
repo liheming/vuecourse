@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>专题</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1,maximum-scale=1, minimum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" type="text/css" href="css/app.css"/>
+    <link rel="stylesheet" type="text/css" href="css/iconfont.css"/><!-- 自定义字体图标 -->
+
+
+    <style>
+        /*.item-preview-img {*/
+            /*border-top-left-radius: 5px;*/
+            /*border-bottom-left-radius: 5px*/
+        /*}*/
+
+        .item-contentName {
+            margin-top: 5px;
+        }
+
+        .item-playNum {
+            margin-top: 6px;
+        }
+
+        .item-a {
+            border-radius: 5px;
+            box-shadow: 0 0 8px 0 rgba(40, 40, 40, 0.2);
+        }
+
+        .item-div-img {
+            height: 86px;
+
+        }
+
+        .mui-table-view-cell:after {
+            height: 0;
+        }
+        
+        .item-preview-img{
+        	width: 100%;
+		    height: 100%;
+		    border-radius: 5px 0px 0px 5px
+        }
+
+    </style>
+</head>
+<body style="background-color: white">
+
+<div class="mui-content" id="app">
+
+
+    <template v-if="isShow">
+
+
+        <div class="top-pic" style="background-color: white">
+
+            <img  v-bind:src="topPicture" style="width: 100%;  height: auto ; ">
+            <div style="padding: 16px 16px 8px 16px ;font-size: 15px ;  color: #282828 ">
+                {{ topicDesc }}  </div>
+        </div>
+        <div class="list">
+
+            <ul class="mui-table-view">
+                <li v-for=" (item, index) in data" v-if="index<10" class="mui-table-view-cell mui-media"
+                    style=" height: 100% ;padding: 0  ;line-height: 40px">
+                   
+                   <div v-if="item.title" style="line-height: 17px; margin-top: 20px;">
+						<div style="text-align: center ; font-weight: bold; font-size: 17px">{{item.title}}</div>
+						
+						<img v-if="item.title" class="item-preview-img" style="border-radius: 5px; margin-top: 8px;" src="images/special_topic_line.png" />                   	
+                   </div>
+                   
+                   <div v-else style="line-height: 15px;">
+						<div style="text-align: center ; font-weight: bold; font-size: 17px">{{item.title}}</div>
+						
+						<img v-if="item.title" class="item-preview-img" style="border-radius: 5px; margin-top: 8px;" src="images/special_topic_line.png" />                   	
+                   </div>
+					
+					<div style="width: 100%; padding: 14px 16px 0 16px;" v-if="item.productPic">
+						<img class="item-preview-img" style="border-radius: 5px" v-bind:src="item.productPic" />
+					</div>
+					
+                    <div style="padding: 4px 16px ;font-size: 13px ;  color: #282828 ; line-height: 20px; ">
+                      {{item.productDesc}}</div>
+                    <a   class="item-a" @click="openPlayPage(item.productId, '')"
+                       style=" margin: 16px 16px ; background-color: #fafafa">
+                        <div class="item-div-img">
+                            <img class="item-preview-img"
+                                 v-bind:src="  item.preview ==''  ?   'images/default-preview.jpg' : item.preview   ">
+                        </div>
+                        <div class="item-content-div">
+                            <div class="item-content-div-div">
+                                <p class=" item-contentName">{{item.productName}} </p>
+                                <!--<p class="item-playNum"> {{item.playNum > 9999 ?  Math.round(item.playNum/10000*100)/100 +'万人在学' :item.playNum+'人在学' }}</p>-->
+                                <p class="item-playNum"> {{item.playNum > 9999 ?
+                                    Math.round(item.playNum/10000*100)/100 +'万人在学' :item.playNum+'人在学' }}</p>
+
+                                <div class="item-content-div-div-div">
+                                    <p>
+                                        <span class="item-base-price">{{item.isFree ?  '' : '原价¥'}} {{item.isFree ?  '' : item.price+30}}</span>
+                                        <span class="item-price"> {{item.isFree ? '免费' : '¥'+item.price+'' }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+
+        </div>
+
+
+        <footer>
+            <div style="text-align: center ; padding: 30px ; color: #a89e9d ;font-size: 13px ; background-color: #f9faff">
+                <div style=" color: black ;margin-bottom: 9px">
+                    <a href="index.html?index=0" style="color: black">首页 |</a>
+                    <a href="index.html?index=2" style="color: black">个人中心 |</a>
+                    <span @click="openFollow">关注我们</span>
+                </div>
+                <div>广州万悦网络科技有限公司</div>
+                <div>www.wyuetec.com</div>
+            </div>
+
+        </footer>
+
+    </template>
+
+
+    <!--<div style="background-color: white ; font-size: 8px ; color: darkgray; width: 100% ; text-align: center; padding: 15px">-->
+
+    <!--<span>已经加载完</span>-->
+
+    <!--</div>-->
+
+</div>
+
+
+<!--js 脚本-->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/base.js?_2018031301"></script>
+<script src="js/api.js?_2018031301"></script>
+<script>
+
+    var vueTopic;
+    var topPicture = GetQueryString('topPicture');
+    var topicDesc = GetQueryString('topicDesc');
+
+
+
+    var topicType = GetQueryString('topicType');
+    var topicid = GetQueryString('topicid');
+    topicType = 1;
+    if (topicType == 1)
+        document.title = "专题";
+    else
+        document.title = "YY兔专题";
+
+
+    getTopicList(topicid);
+    mui.init({
+        swipeBack: false  //关闭右滑关闭功能
+    });
+
+     vueTopic = new Vue({
+        el: '#app',
+        data: {
+
+            topPicture: '',
+            topicDesc: '',
+            isShow: false,
+            data: null
+        },
+        methods: {}
+
+    });
+
+    vueTopic.topPicture = topPicture;
+    vueTopic.topicDesc = topicDesc;
+
+    function getTopicList(topicid) {
+        $.ajax({
+            url: hostUrl + 'topic/products/detail',
+            type: 'post',
+            data: {
+                'appKey': 'sandaoyun',
+                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'channelCode': '100001',
+                'topicid': topicid
+            },
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+
+                if (result.code == 200) {
+                    vueTopic.data = JSON.parse(result.data);
+                    vueTopic.isShow = true;
+                } else {
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

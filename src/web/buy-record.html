@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="utf-8">
+		<title>购买记录</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, minimum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="css/app.css" />
+		<style>
+			.mui-table-view .mui-media-object {
+				width: 25%;
+				max-width: 500px;
+				height: auto;
+			}
+			
+			a .mui-media-object {
+				width: 50%;
+			}
+			
+			.mui-table-view:before {
+				position: absolute;
+				right: 0;
+				left: 0;
+				height: 0;
+				content: '';
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				background-color: #c8c7cc;
+				top: 0
+			}
+			
+
+
+			
+			.mui-table-view-cell.mui-active {
+				background-color: white;
+			}
+			
+			.mui-table-view .mui-grid-view .mui-table-view-cell .mui-media-body {
+				font-size: 15px;
+				line-height: 18px;
+				display: block;
+				width: 100%;
+				height: 18px;
+				margin-top: 3px;
+				text-overflow: ellipsis;
+				color: #333
+			}
+			
+			.order-success {
+				color: transparent;
+				background-color: transparent
+			}
+			
+			.hot_recommend {
+				width: 50%;
+				font-size: 16px ;
+				color: white;
+				background:#f35b75;
+				display: inline-block;
+				border-radius: 20px;
+				padding: 6px 8px;
+			}
+		</style>
+
+	</head>
+
+	<body style="width: 100%;height: 100%;background-color: white;">
+		<div class="mui-content" id="app">
+			<div id="buy-record" style=" background-color: #F5F5F5; ">
+
+				<div id="segmentedControl" class="mui-segmented-control">
+					<a class="mui-control-item mui-active" href="#item-un-success">未成功<span style="width: 45px"></span></a>
+					<a class="mui-control-item" href="#item-success">成功<span></span></a>
+				</div>
+
+				<div style="height: 5px ; width: 100% ;background-color: #f9faff"></div>
+
+				<div id="item-un-success" class="mui-control-content mui-active" >
+					<template v-if="isShow">
+
+
+
+						<ul id="record-unsuccess" class="mui-table-view">
+							<li v-for="item in unSuccessData" class="mui-table-view-cell mui-media">
+								<a @click="openPlayPage(item.productsId,'')" style="padding: 11px 15px 6px 15px;">
+									<!--优化-->
+									<div style="text-align: center; width: 35% ;height: 100%; margin-right: 0 ;  float: left ; position: relative">
+										<img v-if="!(item.preview == '' || item.preview == null)" v-bind:src="item.preview" style="width: 100%; border-radius: 5px ">
+										<img v-else src="images/default-preview.jpg" style="width: 100%; border-radius: 5px ">
+									</div>
+
+									<div class="my-class" style="position: relative; height: 100% ;width: 100%">
+										<div style=" position:  absolute;top: 10%; left: 35%;  transform: translateY(10%);display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;   white-space: normal; float: left ; width: 65%;  margin-right: 0;  padding-left: 10px;  font-size: 15px  ; line-height: 21px;">
+											<p style="color: #282828;  font-weight:  bold ; overflow: hidden;">{{item.name}}</p>
+											<p v-if="item.payType == 1" class='mui-ellipsis' style="font-size: 11px;">¥{{item.price}}</p>
+											<p v-if="item.payType == 2" class='mui-ellipsis' style="font-size: 11px;">¥{{item.price}}/月</p>
+											<p class='mui-ellipsis' style="font-size: 11px; margin-top: 4px;">{{ item.updateTime }}</p>
+										</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+
+
+
+
+
+
+					</template>
+
+					<template v-else>
+						<div style="width: 100%;height: 100%;background-color: white;text-align: center;">
+							<div style="padding-top: 20%;">
+								<img style="width: 30%;height: 50%;" src="images/buy_not_record.png" />
+							</div>
+							<div style="margin-top: 4%;">
+								<p style="font-size: 11px;">暂无购买记录</p>
+							</div>
+							<div @click="toHome()" style="margin-top: 4%;">
+								<p class="mui-ellipsis hot_recommend">热门推荐</p>
+							</div>
+						</div>
+					</template>
+				</div>
+
+				<div id="item-success" class="mui-control-content" >
+					<template v-if="isShow">
+						<ul id="record-success" class="mui-table-view">
+							<li v-for="item in successData" class="mui-table-view-cell mui-media">
+								<a @click="openPlayPage(item.productsId, '')" style="padding: 11px 15px 6px 15px;">
+									<!--优化-->
+									<div style="text-align: center; width: 35% ;height: 100%; margin-right: 0 ;  float: left ; position: relative">
+										<img v-if="!(item.preview == '' || item.preview == null)" v-bind:src="item.preview" style="width: 100%; border-radius: 5px ">
+										<img v-else src="images/default-preview.jpg" style="width: 100%; border-radius: 5px ">
+									</div>
+
+									<div class="my-class" style="position: relative; height: 100% ;width: 100%">
+										<div style=" position:  absolute;top: 10%; left: 35%;  transform: translateY(10%);display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;   white-space: normal; float: left ; width: 65%;  margin-right: 0;  padding-left: 10px;  font-size: 15px  ; line-height: 21px;">
+											<p style="color: #282828;  font-weight:  bold ; overflow: hidden;">{{item.name}}</p>
+											<p v-if="item.payType == 1" class='mui-ellipsis' style="font-size: 11px;">¥{{item.price}}</p>
+											<p v-if="item.payType == 2" class='mui-ellipsis' style="font-size: 11px;">¥{{item.price}}/月</p>
+											<p class='mui-ellipsis' style="font-size: 11px; margin-top: 4px;">{{ item.updateTime }}</p>
+										
+											<div style="position: absolute;  bottom: 0px ; right: 5px; width: auto ;  float: left ; ;text-align: right">
+	                                            <p>
+	                                                <span style="text-align: center;font-size: 10px ; color: #E91C16;">交易成功</span>
+	                                            </p>
+	                                        </div>
+										</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</template>
+
+					<template v-else>
+						<div style="width: 100%;height: 100%;background-color: white;text-align: center;">
+							<div style="padding-top: 20%;">
+								<img style="width: 30%;height: 50%;" src="images/buy_not_record.png" />
+							</div>
+							<div style="margin-top: 4%;">
+								<p style="font-size: 11px;">暂无购买记录</p>
+							</div>
+							<div @click="toHome()" style="margin-top: 4%;">
+								<p class="mui-ellipsis hot_recommend">热门推荐</p>
+							</div>
+						</div>
+					</template>
+				</div>
+			</div>
+
+		</div>
+
+		<!--先引入库文件 再使用库文件  顺序不能乱-->
+		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+		<!--<script src="https://cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js"></script>-->
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/base.js"></script>
+		<script src="js/api.js"></script>
+
+		<script>
+			//mui初始化
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+
+			//			var itemsuccess = document.getElementById("item-success");
+			//			var itemunsuccess = document.getElementById("item-un-success");
+			//
+			//			//监听点击事件
+			//			itemsuccess.addEventListener("tap", function() {
+			//				queryRecordSuccess();
+			//			});
+			//			itemunsuccess.addEventListener("tap", function() {
+			//				queryRecordFail();
+			//			});
+
+			//获取成功订购数据
+			$.ajax({
+				url: hostUrl+'wechat/orders/record',
+				type: 'post',
+				data: {
+					'appKey': 'sandaoyun',
+					'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+					'channelid': '100001',
+					'userid': userid,
+					'functionType': 1
+				},
+				dataType: 'json',
+				success: function(result) {
+					if(result.code == 200) {
+						var data = JSON.parse(result.data);
+						if(data  && data.length != 0) {
+							//$('#item-success').show();
+							svm.isShow = true;
+							svm.successData = data;
+						} else {
+							//$('#item-success').hide();
+							svm.isShow = false;
+						}
+					} else {
+						//$('#item-success').hide();
+						svm.isShow = false;
+					}
+				},
+				error: function() {
+					svm.isShow = false;
+				}
+			});
+
+			//获取未成功数据
+			$.ajax({
+				url: hostUrl+'wechat/orders/record',
+				type: 'post',
+				data: {
+					'appKey': 'sandaoyun',
+					'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+					'channelid': '100001',
+					'userid': userid,
+					'functionType': 2
+				},
+				dataType: 'json',
+				success: function(result) {
+					if(result.code == 200) {
+						var data = JSON.parse(result.data);
+						if(data  && data.length != 0) {
+							//$('#item-un-success').show();
+							uvm.isShow = true;
+							uvm.unSuccessData = data;
+						} else {
+							//$('#item-un-success').hide();
+							uvm.isShow = false;
+						}
+					} else {
+						//$('#item-un-success').hide();
+						uvm.isShow = false;
+					}
+				},
+				error: function() {
+					uvm.isShow = false;
+				}
+			});
+
+			var svm = new Vue({
+				el: '#item-success',
+				data: {
+					successData: null,
+					isShow: false
+				},
+				methods: {
+					openPage: function(contentId) {
+//						mui.openWindow({
+//							id: contentId,
+//							url: "content-details.html?id=" + contentId,
+//							extras: {
+//								name: 'mui' //自定义扩展参数，可以用来处理页面间传值
+//							},
+//							show: {
+//								autoShow: false
+//							},
+//							waiting: {
+//								autoShow: true, //自动显示等待框，默认为true
+//								title: '正在加载...', //等待对话框上显示的提示内容
+//							}
+//						})
+						openContentDetail(contentId, '');
+					},
+					toHome: function(){
+						openHomePage();
+					}
+				},
+			});
+
+			var uvm = new Vue({
+				el: '#item-un-success',
+				data: {
+					unSuccessData: null,
+					isShow: false
+				},
+				methods: {
+					openPage: function(contentId) {
+//						mui.openWindow({
+//							url: "content-details.html?id=" + contentId,
+//							extras: {
+//								name: 'mui' //自定义扩展参数，可以用来处理页面间传值
+//							},
+//							show: {
+//								autoShow: false
+//							},
+//							waiting: {
+//								autoShow: true, //自动显示等待框，默认为true
+//								title: '正在加载...', //等待对话框上显示的提示内容
+//							}
+//						})
+						openContentDetail(contentId, '');
+					},
+					toHome: function(){
+//						mui.openWindow({
+//							url: "index.html",
+//							show: {
+//								autoShow: false
+//							},
+//							waiting: {
+//								autoShow: true, //自动显示等待框，默认为true
+//								title: '正在加载...', //等待对话框上显示的提示内容
+//							}
+//						})
+						openHomePage();
+					}
+				},
+			});
+		</script>
+
+	</body>
+
+</html>

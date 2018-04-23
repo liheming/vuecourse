@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>免费</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1,maximum-scale=1, minimum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--标准mui.css-->
+    <!--自定义的css-->
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" type="text/css" href="css/app.css"/>
+    <link rel="stylesheet" type="text/css" href="css/iconfont.css"/><!-- 自定义字体图标 -->
+
+
+</head>
+<body style="background-color: white">
+
+<div class="mui-content" id="app">
+
+    <div id="slider-banner" class="mui-slider">
+        <div class="mui-slider-group mui-slider-loop">
+            <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+
+
+            <!--第一张 v-for=" (item, index) in data" v-if="index<10"-->
+
+
+            <!-- 第三张 -->
+            <div class="mui-slider-item">
+                <a @click="openContentDetail('ff808081616b58bd01616b6705e5000b',null)">
+                    <img src="images/banner-xiyouji.jpg">
+                </a>
+            </div>
+
+            <!--第一张-->
+            <div class="mui-slider-item">
+                <a @click="openContentDetail('ff808081616b58bd01616b6690720009',null)">
+                    <img src="images/banner-zhonghua.jpg">
+                </a>
+            </div>
+
+            <!--第二张-->
+            <div class="mui-slider-item">
+                <a @click="openContentDetail('ff808081616b58bd01616b660c870005',null)">
+                    <img src="images/banner-sanzijing.jpg">
+                </a>
+            </div>
+            <!-- 第三张 -->
+            <div class="mui-slider-item">
+                <a @click="openContentDetail('ff808081616b58bd01616b6705e5000b',null)">
+                    <img src="images/banner-xiyouji.jpg">
+                </a>
+            </div>
+
+            <!-- 第四张 -->
+            <!--<div class="mui-slider-item">-->
+            <!--<a href="content-details.html?id=ff8080816155bd6c016155daf089001c">-->
+            <!--<img src="images/banner-sanzijing.jpg">-->
+            <!--</a>-->
+            <!--</div>-->
+
+
+            <div class="mui-slider-item">
+                <a @click="openContentDetail('ff808081616b58bd01616b6690720009',null)">
+                    <img src="images/banner-zhonghua.jpg">
+                </a>
+            </div>
+
+        </div>
+
+        <div class="mui-slider-indicator">
+            <div class="mui-indicator mui-active"></div>
+            <div class="mui-indicator"></div>
+            <div class="mui-indicator"></div>
+        </div>
+    </div>
+
+    <!--<div style="position: relative">-->
+
+
+    <!--<div id="category-all" onclick="changecolor(true)"-->
+    <!--style="text-align:  center ; padding-top: 19px; color:#67d9fe;  background-color: white ; float: left;font-size: 10px ;width: 15%  ;    height: 60px">-->
+    <!--<span class="mui-control-item "-->
+    <!--style="border-radius: 10px ;border: solid 1px  ; padding: 3px 10px ;"> 全部</span>-->
+    <!--</div>-->
+    <!--<div onclick="changecolor('#ff0000',13)"-->
+    <!--class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted"-->
+    <!--style=" font-size: 10px ; background-color: white  ; width: 85% ; padding: 10px 0 10px 0; height: 60px">-->
+    <!--<div id="category-item" class="mui-scroll">-->
+    <!--&lt;!&ndash;<span class=" " style="border-radius: 10px ; color: #67d9fe ;border: solid 1px  #67d9fe; position: relative ;top: -40% ; padding: 2px 10px ;font-size: 10px ;  margin-left: 15px ;margin-right: 5px"> 全部</span>&ndash;&gt;-->
+    <!--<a class="mui-control-item"><span class="classify-item"-->
+    <!--v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">亲子</span></a>-->
+    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
+    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
+    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
+    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
+    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
+    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
+    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
+    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
+    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
+    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
+
+
+    <!--</div>-->
+    <!--</div>-->
+
+
+    <!--</div>-->
+
+    <div style="height: 10px ; width: 100% ;background-color: #f9faff"></div>
+    <div class="list" style="background-color: white;">
+
+        <template v-if="isShow">
+
+            <div class="" style=" text-align:  left;  font-size: 14px;   padding: 10px  25px ;">
+                    <span id="mostNew" onclick="mostNew()" style="color: #f35b75">最新</span>&nbsp&nbsp<span id="mostHot" onclick="mostHot()"
+                                                                                              style="color:#d2d2d2;">最热</span>
+
+            </div>
+
+
+            <div class="list">
+
+                <ul class="mui-table-view">
+                    <li v-for=" (item, index) in data" v-if="index<10" class="mui-table-view-cell mui-media"
+                        style=" height: 100%">
+                        <a class="item-a" @click="openDetailsPage(item.id)">
+
+                            <div class="item-div-img">
+                                <img class="item-preview-img"
+                                     v-bind:src="  item.preview ==''  ?   'images/default-preview.jpg' : item.preview   ">
+                            </div>
+                            <div class="item-content-div">
+                                <div class="item-content-div-div">
+                                    <p class=" item-contentName">{{item.contentName}} </p>
+                                    <p class="item-totalNum-num">共{{item.totalNum}}集 | 已更{{item.hasNum}}集</p>
+                                    <p class="item-playNum"> {{item.playNum > 9999 ?
+                                        Math.round(item.playNum/10000*100)/100 +'万人在学' :item.playNum+'人在学'
+                                        }}</p>
+                                    <div class="item-content-div-div-div">
+                                        <p>
+                                            <span class="item-base-price">{{item.isFree ?  '' : '原价¥'}} {{item.isFree ?  '' : item.price+30}}</span>
+                                            <span class="item-price"> {{item.isFree ? '免费' : '¥'+item.price+'' }}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </template>
+    </div>
+
+    <!--<div style="background-color: white ; font-size: 8px ; color: darkgray; width: 100% ; text-align: center; padding: 15px">-->
+
+    <!--<span>已经加载完</span>-->
+
+    <!--</div>-->
+
+</div>
+
+
+<!--js 脚本-->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/base.js?_20180207"></script>
+<script src="js/api.js"></script>
+
+<script>
+
+
+    var isFree = GetQueryString('freeOrPay');
+    var newest = 1;
+    var hottest = 2;
+    if (isFree == 1)
+        document.title = "免费";
+    else
+        document.title = "付费";
+
+
+    payOrFree(isFree, newest);
+    mui.init({
+        swipeBack: false  //关闭右滑关闭功能
+    });
+
+
+    var vuefree = new Vue({
+        el: '#app',
+        data: {
+
+            isShow: false,
+            isNew: true,
+            data: null
+        },
+        methods: {
+            openDetailsPage: function (id) {
+                openContentDetail(id, null);
+
+//                mui.openWindow({
+//                    id: "1321",
+//                    url: "content-details.html?id=" + id,
+//                    extras: {
+//                        name: 'mui' //自定义扩展参数，可以用来处理页面间传值
+//                    },
+//                    show: {
+//                        autoShow: false
+//                    },
+//                    waiting: {
+//                        autoShow: true, //自动显示等待框，默认为true
+//                        title: '正在加载...', //等待对话框上显示的提示内容
+//                        //                            options:{
+//                        //                                width:waiting-dialog-widht,//等待框背景区域宽度，默认根据内容自动计算合适宽度
+//                        //                                height:waiting-dialog-height,//等待框背景区域高度，默认根据内容自动计算合适高度
+//                        //                            }
+//                    }
+//                })
+
+
+            },
+
+
+        }
+
+    });
+
+    function mostNew() {
+        $('#mostNew').css('color', '#f35b75');
+        $('#mostHot').css('color', '#d2d2d2');
+        payOrFree(isFree, newest);
+    }
+
+    function mostHot() {
+        $('#mostNew').css('color', '#d2d2d2');
+        $('#mostHot').css('color', '#f35b75');
+        payOrFree(isFree, hottest);
+    }
+
+
+    function payOrFree(isFree, newOrHot) {
+        $.ajax({
+//            url: 'http://192.168.0.114:8180/wycms/selling/products/payOrFree',
+            url: 'http://www.wyuetec.com/wycms/selling/products/payOrFree',
+            type: 'post',
+            data: {
+                'appKey': 'sandaoyun',
+                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'channelCode': '100001',
+                'isfree': isFree,
+                'newOrHot': newOrHot
+            },
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+
+                if (result.code == 200) {
+                    console.log("200");
+                    vuefree.data = JSON.parse(result.data);
+                    vuefree.isShow = true;
+                } else {
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,324 @@
+*{
+  font-family: "PingFang SC Medium";
+}
+@font-face {font-family: "iconfont";
+  src: url('//at.alicdn.com/t/font_553542_svnicntfkxmbzkt9.eot?t=1519638621126'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_553542_svnicntfkxmbzkt9.eot?t=1519638621126#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff;charset=utf-8;base64,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') format('woff'),
+  url('//at.alicdn.com/t/font_553542_svnicntfkxmbzkt9.ttf?t=1519638621126') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_553542_svnicntfkxmbzkt9.svg?t=1519638621126#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-close:before { content: "\e69a"; }
+
+.icon-head:before { content: "\e697"; }
+
+.icon-home:before { content: "\e626"; }
+
+.icon-gift:before { content: "\e73f"; }
+
+.icon-voice:before { content: "\e610"; }
+
+.icon-xindenew85:before { content: "\e705"; }
+
+.icon-play:before { content: "\e611"; }
+
+.icon-i-message:before { content: "\e60d"; }
+
+.icon-collect:before { content: "\e606"; }
+
+.icon-collectselected:before { content: "\e620"; }
+
+.icon-heads:before { content: "\e602"; }
+
+.icon-share:before { content: "\e6ae"; }
+
+.icon-buygift:before { content: "\e66e"; }
+
+.icon-iconmycard:before { content: "\e676"; }
+
+.icon-collect1:before { content: "\e64f"; }
+
+.icon-collect2:before { content: "\e650"; }
+
+.icon-shu:before { content: "\e634"; }
+
+.icon-book:before { content: "\e67c"; }
+
+.icon-coupons:before { content: "\e6ed"; }
+
+.icon-un-like:before { content: "\e61d"; }
+
+.icon-like:before { content: "\e621"; }
+
+.icon-shijianguannian:before { content: "\e79f"; }
+
+
+
+
+
+
+/*
+ *这是单独为hello mui准备的个性化css，可以覆盖标准mui的css定义；
+ * 在实际项目开发时，建议为App单独写一个css文件，从而实现项目的自定义皮肤功能；
+ *
+ * */
+
+/*---------------------------------------覆盖 mui 样式---------------------------------------------*/
+
+.mui-bar-tab {
+  background-color: white;
+  box-shadow: 0 -2px 0 rgba(194, 194, 194, .1);
+}
+
+.mui-bar-tab .mui-tab-item.mui-active {
+  color: #f35b75
+}
+
+.mui-bar-tab .mui-tab-item {
+  color: #a89e9d;
+}
+
+.mui-grid-view.mui-grid-9 {
+
+  border-top: 0;
+}
+
+.mui-grid-view.mui-grid-9 .mui-table-view-cell {
+  padding: 2px 15px;
+
+}
+
+
+.mui-grid-view.mui-grid-9 .mui-table-view-cell {
+  margin: 0;
+  padding: 11px 15px;
+  vertical-align: top;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+
+
+.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body {
+  font-size: 15px;
+  line-height: 18px;
+  height: 18px;
+  margin-top: 3px;
+}
+
+/*----table分割线样式-------*/
+.mui-table-view:before {
+  height: 0;
+
+}
+
+.mui-table-view-cell.mui-collapse .mui-table-view .mui-table-view-cell:after {
+  left: 0;
+  background-color: #f3f3f3;
+}
+
+.mui-table-view:after {
+  height: 0;
+}
+
+.mui-table-view-cell:after {
+
+  background-color: #f3f3f3;
+}
+
+/*-------tab切换按钮样式----------*/
+.mui-segmented-control {
+  background-color: white;
+}
+
+.mui-segmented-control .mui-control-item {
+  font-size: 14px;
+  color: #282828;
+  border-color: #007aff;
+  border-left: 0;
+  border-bottom: 0;
+}
+
+.mui-segmented-control .mui-control-item.mui-active {
+  color: #f35b75;
+  background-color: white;
+  line-height: inherit;
+}
+
+.mui-segmented-control .mui-control-item.mui-active span {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background: #f35b75;
+  height: 2px;
+  width: 30px;
+}
+
+/*---------------------------------------------page自定义样式-------------------------------------------*/
+
+
+*{
+  font-family: "PingFang SC Medium";
+}
+
+
+
+/*-----内容列表item公共样式----*/
+
+.item-a {
+  padding: 15px 15px 10px 15px
+}
+
+.item-div-img {
+  text-align: center;
+  width: 35%;
+  height: 100%;
+  margin-right: 0;
+  float: left;
+  position: relative
+}
+
+
+.item-preview-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px 5px 5px 5px
+}
+
+
+.item-content-div {
+  position: relative;
+  height: 100%;
+  width: 100%
+}
+
+.item-content-div-div {
+  position: absolute;
+  top: 1%;
+  left: 35%;
+  transform: translateY(1%);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  white-space: normal;
+  float: left;
+  width: 65%;
+  margin-right: 0;
+  padding-left: 10px;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.item-contentName {
+  color: #282828;
+  font-weight: bold;
+  font-size: 15px;
+  overflow: hidden;
+}
+
+.item-totalNum-num {
+  font-size: 11px;
+  margin-top: 1px;
+}
+
+.item-playNum {
+  margin-top: -4px;
+  font-size: 11px;
+}
+
+.item-content-div-div-div {
+  position: absolute;
+  bottom: 0;
+  right: 5px;
+  width: auto;
+  float: left;;
+  text-align: right
+}
+
+.item-base-price {
+  font-size: 11px;
+  text-decoration: line-through
+}
+
+.item-price {
+  font-size: 15px;
+  color: #f35b75;
+
+}
+
+/*-----------index 首页---------*/
+.index-menu-topic-img{
+  width: 30px ; height: 30px
+}
+
+.learn-hot-recommend {
+  width: 50%;
+  font-size: 16px;
+  color: white;
+  background: #f35b75;
+  display: inline-block;
+  border-radius: 20px;
+  padding: 6px 8px;
+}
+
+.order-success {
+  color: transparent;
+  background-color: transparent;
+}
+
+
+/*----------center个人中心---------*/
+
+#tabbar-with-contact .mui-table-view-cell {
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+  padding: 12px 15px;
+  -webkit-touch-callout: none
+}
+
+.person-center {
+  background: url('../images/person-center.png') no-repeat;
+  background-size: 100% 189px;
+  width: 100%;
+  height: 188px;
+  position: relative;
+}
+
+.person-center-div {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px
+}
+
+.person-center-div-img {
+  border-radius: 50px;
+  width: 60px;
+  height: 60px;
+}
+
+.person-center-nickName {
+  color: white;
+}
+
+.person-center-item-image {
+  width: 14px;
+  height: 12px;
+}

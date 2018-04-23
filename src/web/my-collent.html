@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="utf-8">
+		<title>我的收藏</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, minimum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="css/app.css" />
+		<style>
+
+			.hot_recommend {
+				width: 50%;
+				font-size: 16px;
+				color: white;
+				background: #f35b75;
+				display: inline-block;
+				border-radius: 20px;
+				padding: 6px 8px;
+			}
+
+		</style>
+
+	</head>
+
+	<body style="width: 100%;height: 100%;background-color: white;">
+		<div class="mui-content" id="app">
+			<div id="my_collent" style=" background-color: #F5F5F5; ">
+				<!--<div id="segmentedControl" class="mui-segmented-control">
+					<a class="mui-control-item mui-active" href="#item-course">课程<span style="width: 30px"></span></a>
+					<a class="mui-control-item" href="#item-single">单集<span style="width: 30px"></span></a>
+				</div>-->
+                <!--<div style="height: 5px ; width: 100% ;background-color: #f9faff"></div>-->
+				<div id="item-course" class="mui-control-content mui-active">
+					<template v-if="isShow">
+
+						<ul class="mui-table-view">
+							<li v-for=" item  in courseData"  class="mui-table-view-cell mui-media"
+								style=" height: 100%">
+								<a class="item-a" @click="openPlayPage(item.productsId, '')">
+
+									<div class="item-div-img">
+										<img class="item-preview-img"
+											 v-bind:src="  item.preview ==''  ?   'images/default-preview.jpg' : item.preview   ">
+									</div>
+									<div class="item-content-div">
+										<div class="item-content-div-div" style="">
+											<p class=" item-contentName">{{item.name}} </p>
+											<p class="item-totalNum-num">共{{item.totalNum}}集 | 已更{{item.hasNum}}集</p>
+											<p class="item-playNum">
+												 {{ item.remarkNum > 9999 ?   Math.round(item.remarkNum/10000*100)/100+'万人收藏' : item.remarkNum+'人收藏' }}
+											</p>
+											<div class="item-content-div-div-div">
+												<p class='mui-ellipsis' style="font-size: 11px; margin-top: 8px;">{{item.createTime}}</p>
+
+											</div>
+										</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+
+
+					</template>
+
+					<template v-else>
+						<div style="width: 100%;height: 100%;background-color: white;text-align: center;">
+							<div style="padding-top: 20%;">
+								<img style="width: 30%;height: 50%;" src="images/ic_collect_not.png" />
+							</div>
+							<div style="margin-top: 4%;">
+								<p style="font-size: 11px;">空空如也喔~</p>
+							</div>
+							<div @click="toHome()" style="margin-top: 4%;">
+								<p class="mui-ellipsis hot_recommend">热门推荐</p>
+							</div>
+						</div>
+					</template>
+				</div>
+
+				<div id="item-single" class="mui-control-content" >
+					<template v-if="isShow">
+						<ul id="record-single" class="mui-table-view">
+							<li v-for="item in singleData" class="mui-table-view-cell mui-media">
+								<a @click="openPlayPage(item.contentId, '')" style="padding: 11px 15px 6px 15px;">
+									<div style="text-align: center; width: 35% ;height: 100%; margin-right: 0 ;  float: left ; position: relative">
+										<img v-if="!(item.preview == '' || item.preview == null)" v-bind:src="item.preview" style="width: 100%;border-radius: 5px ">
+										<img v-else src="images/default-preview.jpg" style="width: 100%;   border-radius: 5px ">
+									</div>
+
+									<div class="my-class" style="position: relative; height: 100% ;width: 100%">
+										<div style=" position:  absolute;top: 10%; left: 35%;  transform: translateY(10%);display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;   white-space: normal; float: left ; width: 65%;  margin-right: 0;  padding-left: 10px;  font-size: 15px  ; line-height: 21px;">
+											<p style="color: #282828;  font-weight:  bold ; overflow: hidden;">{{item.name}}</p>
+											<p style="font-size: 11px">共{{item.totalNum}}集 | 已更{{item.hasNum}}集</p>
+											<p  class="mui-ellipsis" style="margin-top: -5px ;  font-size: 11px;"> {{ item.remarkNum > 9999 ?   Math.round(item.remarkNum/10000*100)/100+'万人收藏' : item.remarkNum+'人收藏' }}</p>
+
+											<div style="position: absolute;  bottom: 0px ; right: 5px; width: auto ;  float: left ; ;text-align: right">
+												<p class='mui-ellipsis' style="font-size: 11px;margin-top: 8px;">{{item.createTime}}</p>
+											</div>
+										</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</template>
+
+					<template v-else>
+						<div style="width: 100%;height: 100%;background-color: white;text-align: center;">
+							<div style="padding-top: 20%;">
+								<img style="width: 30%;height: 50%;" src="images/ic_collect_not.png" />
+							</div>
+							<div style="margin-top: 4%;">
+								<p style="font-size: 11px;">空空如也喔~</p>
+							</div>
+							<div @click="toHome()" style="margin-top: 4%;">
+								<p class="mui-ellipsis hot_recommend">热门推荐</p>
+							</div>
+						</div>
+					</template>
+				</div>
+			</div>
+
+		</div>
+
+		<!--先引入库文件 再使用库文件  顺序不能乱-->
+		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+		<!--<script src="https://cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js"></script>-->
+		<script src="js/mui.min.js"></script>
+		<script src="js/vue-router.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/api.js"></script>
+		<script src="js/base.js"></script>
+
+		<script>
+			//mui初始化
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+
+			//			var itemsuccess = document.getElementById("item-success");
+			//			var itemunsuccess = document.getElementById("item-un-success");
+			//
+			//			//监听点击事件
+			//			itemsuccess.addEventListener("tap", function() {
+			//				queryRecordSuccess();
+			//			});
+			//			itemunsuccess.addEventListener("tap", function() {
+			//				queryRecordFail();
+			//			});
+
+			//获取单集收藏数据
+			/*$.ajax({
+				url: hostUrl+'user/remark/list',
+				type: 'post',
+				data: {
+					'appKey': 'sandaoyun',
+					'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+					'cpid': '100001',
+					'userid': userid,
+					'remarkType': 1
+				},
+				dataType: 'json',
+				success: function(result) {
+					if(result.code == 200) {
+						var data = JSON.parse(result.data);
+						if(data && data.length != 0) {
+							//$('#item-success').show();
+							svm.isShow = true;
+							svm.singleData = data;
+						} else {
+							//$('#item-success').hide();
+							svm.isShow = false;
+						}
+					} else {
+						//$('#item-success').hide();
+						svm.isShow = false;
+					}
+				},
+				error: function() {
+					svm.isShow = false;
+				}
+			});*/
+
+			//获取课程收藏数据
+			$.ajax({
+				url: hostUrl+'user/remark/list',
+				type: 'post',
+				data: {
+					'appKey': 'sandaoyun',
+					'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+					'cpid': '100001',
+					'userid': userid,
+					'remarkType': 2
+				},
+				dataType: 'json',
+				success: function(result) {
+					if(result.code == 200) {
+						var data = JSON.parse(result.data);
+						if(data && data.length != 0) {
+							//$('#item-success').show();
+							cvm.isShow = true;
+							cvm.courseData = data;
+						} else {
+							//$('#item-success').hide();
+							cvm.isShow = false;
+						}
+					} else {
+						//$('#item-success').hide();
+						cvm.isShow = false;
+					}
+				},
+				error: function() {
+					cvm.isShow = false;
+				}
+			});
+
+			//视频集/音频集增加播放量接口 type 内容类型1视频集 , 3音频集
+			function addCollection(contentId, type) {
+				$.ajax({
+					url: hostUrl+'user/center/history/addCollection',
+					type: 'post',
+					data: {
+						'appKey': 'sandaoyun',
+						'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+						'contentid': contentId,
+						'type': type
+					},
+					dataType: 'json',
+					success: function(result) {
+						console.log(result);
+
+						if(result.code == 200) {
+							console.log("200");
+						} else {}
+					},
+					error: function() {}
+				});
+			}
+
+			var cvm = new Vue({
+				el: '#item-course',
+				data: {
+					courseData: null,
+					isShow: false
+				},
+				methods: {
+					toHome: function() {
+//						mui.openWindow({
+//							url: "index.html",
+//							waiting: {
+//								autoShow: true, //自动显示等待框，默认为true
+//								title: '正在加载...', //等待对话框上显示的提示内容
+//							}
+//						})
+						openHomePage();
+					},
+					openDetailsPage: function(id) {
+//						mui.openWindow({
+//							id: "1321",
+//							url: "content-details.html?id=" + id,
+//							extras: {
+//								name: 'mui' //自定义扩展参数，可以用来处理页面间传值
+//							},
+//							show: {
+//								autoShow: false
+//							},
+//							waiting: {
+//								autoShow: true, //自动显示等待框，默认为true
+//								title: '正在加载...', //等待对话框上显示的提示内容
+//							}
+//						})
+						openContentDetail(id);
+					},
+					openPlayPage: function(productsId, contentId, type) {
+//						addCollection(contentId, type);
+//						mui.openWindow({
+//							id: "1321",
+//							url: "content-play.html?id=" + productsId,
+//							extras: {
+//								name: 'mui' //自定义扩展参数，可以用来处理页面间传值
+//							},
+//							show: {
+//								autoShow: false
+//							},
+//							waiting: {
+//								autoShow: true, //自动显示等待框，默认为true
+//								title: '正在加载...', //等待对话框上显示的提示内容
+//							}
+//						})
+						openPlayPage(productsId, contentId, type);
+					},
+				},
+			});
+
+			var svm = new Vue({
+				el: '#item-single',
+				data: {
+					singleData: null,
+					isShow: false
+				},
+				methods: {
+					toHome: function() {
+						mui.openWindow({
+							url: "index.html",
+							show: {
+								autoShow: false
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '正在加载...', //等待对话框上显示的提示内容
+							}
+						})
+					},
+					openDetailsPage: function(id) {
+						mui.openWindow({
+							id: "1321",
+							url: "content-details.html?id=" + id,
+							extras: {
+								name: 'mui' //自定义扩展参数，可以用来处理页面间传值
+							},
+							show: {
+								autoShow: false
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '正在加载...', //等待对话框上显示的提示内容
+							}
+						})
+					},
+					openPlayPage: function(productsId, contentId, type) {
+						addCollection(contentId, type);
+						mui.openWindow({
+							id: "1321",
+							url: "content-play.html?id=" + productsId,
+							extras: {
+								name: 'mui' //自定义扩展参数，可以用来处理页面间传值
+							},
+							show: {
+								autoShow: false
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '正在加载...', //等待对话框上显示的提示内容
+							}
+						})
+					},
+				},
+			});
+		</script>
+
+	</body>
+
+</html>

@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1,maximum-scale=1, minimum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" type="text/css" href="css/iconfont.css?_20180207"/>
+    <link rel="stylesheet" type="text/css" href="css/app.css?_20180208"/>
+    <style>
+
+
+        video::-internal-media-controls-download-button {
+            /*display: none!important;
+				  	-webkit-appearance: none;*/
+            display: none;
+        }
+
+        video::-webkit-media-controls-enclosure {
+            overflow: hidden;
+        }
+
+        video::-webkit-media-controls-panel {
+            width: calc(100% + 30px);
+            /*display: none!important;
+  					-webkit-appearance: none;*/
+        }
+
+        /* Old shadow dom for play button */
+        video::--webkit-media-controls-play-button {
+            display: none !important;
+            -webkit-appearance: none;
+        }
+
+        /* New shadow dom for play button */
+        /* This one works */
+        video::-webkit-media-controls-start-playback-button {
+            display: none !important;
+            -webkit-appearance: none;
+        }
+
+        .mui-table-view-cell:after {
+            background-color: #EBEBEB;
+        }
+
+        /*.main{*/
+        /*position:fixed;top:50px; bottom:50px;overflow:scroll;*/
+        /*}*/
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        .main {
+            padding-bottom: 60px;
+        }
+
+        /*main的padding-bottom值要等于或大于footer的height值*/
+        .footer {
+            position: fixed;
+            z-index: 10;
+            right: 0;
+            left: 0;
+            /*position: absolute;*/
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+        }
+    </style>
+
+</head>
+<body style="background-color: white">
+
+<div id="app" class="main">
+
+
+    <template v-if="!content.isFree  &&  !content.hasBuy  ">
+        <nav class="mui-bar mui-bar-tab"
+             style=" background-color: #f35b75 ;  box-shadow: 0 -2px 0 rgba(194, 194, 194,0.2);">
+
+            <div style="width: 100%; height: 51px;  float: left">
+                <div @click="openHomePage"
+                     style="width: 30%  ;  height: 51px; float: left ;background-color: white ;padding-left: 50px ">
+
+
+                    <div style="width: 100%; height: 100%; " class="">
+                        <!--<span class="mui-icon iconfont icon-home"></span>-->
+                        <span class=" " style=" margin: 4px 4px 0 0  ; "><img
+                                src="images/index-home.png"
+                                style=" width: 28px ; height: auto ;padding-top: 6px"></span>
+                        <div class="" style="color: #a89e9d ; font-size: 11px;margin-top: -4px; padding-left: 3px ">首页
+                        </div>
+                    </div>
+                </div>
+
+                <div @click="subCourse" style="float: left; width: 70%;  text-align: center; ">
+                    <div style="color: white;font-size: 20px ;margin-top: 15px ;">立即订阅</div>
+                </div>
+
+                <!--<span @click="subCourse()" class="mui-ellipsis"-->
+                <!--<span @click="subCourse" class="mui-ellipsis"-->
+                <!--style="font-size: 10px ; color: white;  background:#f35b75;  display: inline-block;">立即订阅 </span>-->
+
+            </div>
+        </nav>
+
+
+    </template>
+
+
+    <template v-else>
+
+
+        <!--<nav v-if="isComment" class=" mui-bar mui-bar-tab"-->
+        <!--style="background-color: white ; box-shadow: 0 0 0 rgba(40,40,40,0.1);">-->
+        <!--<div style="padding-left: 10px; width: 100% ;height: 50px ;padding-top: 5px;    display: table;">-->
+        <!--<input id="inputcomment" type="text" v-model="message" placeholder="控制在100字以内喔"-->
+        <!--style="font-size: 15px ; border: 0; width: 75%; color: #282828; padding: 5px 10px; background:#EEE; border-radius: 18px; margin-bottom: 0px;"/>-->
+        <!--<input id="inputbutton" type="button" value="发表"-->
+        <!--style="font-size: 15px ; width: 20%; text-align: center; color: white; background:#f35b75; border-radius: 18px ; border: 0; padding: 9px 25px; margin-left: 5px;"-->
+        <!--@click="addComments(content.id, content.type)"/>-->
+        <!--</div>-->
+        <!--</nav>-->
+
+
+        <nav v-if="isComment" id="commentLayout" class="footer"
+             style="background-color: white ; box-shadow: 0 -2px 0 rgba(194, 194, 194,0.2);">
+            <div style="padding-left: 10px; width: 100% ;height: 50px ;padding-top: 5px;    display: table;">
+                <input id="inputcomment" type="text" v-model="message" placeholder="控制在100字以内喔"
+                       style="font-size: 15px ; border: 0; width: 75%; color: #282828; padding: 5px 10px; background:#EEE; border-radius: 18px; margin-bottom: 0px;"/>
+                <input id="inputbutton" type="button" value="发表"
+                       style="font-size: 15px ; width: 20%; text-align: center; color: white; background:#f35b75; border-radius: 18px ; border: 0; padding: 9px 25px; margin-left: 5px;"
+                       @click="addComments(content.id, content.type)"/>
+            </div>
+        </nav>
+
+
+        <nav v-else class="mui-bar mui-bar-tab"
+             style=" background-color: #f35b75 ;  box-shadow: 0 -2px 0 rgba(194, 194, 194,0.2);">
+
+            <!--<div style="width: 100%; height: 51px;  float: left">-->
+            <!--<div  style="width: 30%  ;  float: left ;background-color: white ; ">-->
+
+            <!--<div @click="openHomePage" style="padding: 0 50px ;   width: 100%; height: 100%; " class="mui-tab-item">-->
+            <!--&lt;!&ndash;<span class="mui-icon iconfont icon-home"></span>&ndash;&gt;-->
+            <!--<span class="mui-icon   " style=" margin: 4px 4px 2px 0 "><img-->
+            <!--src="images/index-home.png"-->
+            <!--style=" width: 28px ; height: auto"></span>-->
+            <!--<span class="mui-tab-label" style="color: #a89e9d">首页</span>-->
+            <!--</div>-->
+            <!--</div>-->
+
+            <div style="width: 100%; height: 51px;  float: left">
+                <div @click="openHomePage"
+                     style="width: 30%  ;  height: 51px; float: left ;background-color: white ;padding-left: 50px ">
+
+
+                    <div style="width: 100%; height: 100%; " class="">
+                        <!--<span class="mui-icon iconfont icon-home"></span>-->
+                        <span class=" " style=" margin: 4px 4px 0 0  ; "><img
+                                src="images/index-home.png"
+                                style=" width: 28px ; height: auto ;padding-top: 6px"></span>
+                        <div class="" style="color: #a89e9d ; font-size: 11px;margin-top: -4px; padding-left: 3px ">首页
+                        </div>
+                    </div>
+                </div>
+
+
+                <div @click="openHomePage(3)" style="float: left; width: 70%;  text-align: center; ">
+                    <div style="color: white;font-size: 20px ;margin-top: 15px ;">更多推荐</div>
+                </div>
+
+                <!--<span @click="subCourse()" class="mui-ellipsis"-->
+                <!--<span @click="subCourse" class="mui-ellipsis"-->
+                <!--style="font-size: 10px ; color: white;  background:#f35b75;  display: inline-block;">立即订阅 </span>-->
+            </div>
+        </nav>
+
+
+    </template>
+
+
+    <template v-if="isSeen">
+
+        <div class="mui-content main" style="padding-bottom: 0 ;">
+
+            <div style="background-color: white ;">
+                <div style="position: relative ; height: 100%; width: 100%;">
+
+                    <video id="myVideo" v-bind:src="fileUrl"
+                           onplay="videoPlay()" playsinline="" webkit-playsinline=""
+                           poster="" preload="auto" style="width: 100%  ;height: auto"
+                           v-bind:poster="content.topPicture" v-bind:title="subsetName">
+                    </video>
+
+                    <div v-if="playIsShow" @click="playVideo(fileUrl)"
+                         style="width: 100% ; height: inherit ; position: absolute; top:-5.5px ; background:rgba(40,40,40,0.2);  ">
+                        <div style="position:   absolute;top: 50%;  left:35% ;   transform: translateY(-50%); color: white ;  ">
+                            <img src="images/icon-play.png" style="height: 43px ; width: auto">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div style="padding: 20px ;position: relative ">
+
+                    <p style="color: #282828;  overflow: hidden; font-size: 15px; font-weight: bold">
+                        {{ content.contentName }}
+                        <!--{{ subsetName }}目录中第几集的名字 -->
+                    </p>
+                    <p class='mui-ellipsis' style="font-size: 13px;"> {{ content.director }} </p>
+
+                    <div class='mui-ellipsis' style="width: 100%;">
+                        <p style="display: inline; font-size: 11px;">
+                            已有{{content.playNum}}人播放
+                        </p>
+
+                        <div style="display: inline; float: right;">
+                            <span style="font-size: 11px ; color: #a89e9d;  text-decoration:line-through">{{content.isFree ?  '' : '原价¥'}} {{content.isFree ?  '' : content.price+30}}</span>
+                            <span style="font-size: 15px ; color:  #f35b75 "> {{content.isFree ? '免费' : '¥'+content.price+'' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="menu">
+                <ul class="mui-table-view mui-grid-view mui-grid-9" style="margin: 0  ;background-color: white ; ">
+                    <li class="mui-table-view-cell mui-media mui-col-xs-4  mui-col-sm-4 ">
+                        <a onclick="doCollect()">
+
+                            <img v-if="content.isRemark" src="images/icon-like-ok.png"
+                                 style="width: 25px ; height: 25px">
+                            <img v-else src="images/icon-like.png" style="width: 25px ; height: 25px">
+
+                            <div style="font-size: 15px;  " class="mui-media-body"><span
+                                    style="font-size: 13px"> 收藏 <span
+                                    style="color:grey ;font-size: 13px">  {{  content.remarkNum > 9999 ?  '('+Math.round(content.remarkNum/10000*100)/100 + '万)'  : '('+content.remarkNum+')'  }} </span> </span>
+                            </div>
+                        </a></li>
+
+                    <!--<li class="mui-table-view-cell mui-media mui-col-xs-4   mui-col-sm-4">
+                        <a @click="sendFriend">
+                            &lt;!&ndash;<div class="mui-icon iconfont icon-gift" style=" font-size:  25px"></div>&ndash;&gt;
+                            <img src="images/icon-gift.png" style="width: 25px ; height: 25px">
+                            <div style="font-size: 13px" class="mui-media-body">赠送</div>
+                        </a></li>
+
+                    <li class="mui-table-view-cell mui-media mui-col-xs-4  mui-col-sm-4"><a
+                            @click="share">
+                        <img src="images/icon-share.png" style="width: 25px ; height: 25px">
+                        <div style="font-size: 13px" class="mui-media-body">分享<span></span></div>
+                    </a></li>-->
+
+                    <!--<li class="mui-table-view-cell mui-media mui-col-xs-4  mui-col-sm-4"><a href="ranking.html">-->
+                    <!--<span class="mui-icon "><img src="images/index_ranking.png"-->
+                    <!--style="width: 30px ; height: 30px"></span>-->
+                    <!--<div class="mui-media-body">排行</div>-->
+                    <!--</a></li>-->
+                </ul>
+            </div>
+
+        </div>
+    </template>
+
+
+    <div style="height: 5px ; width: 100% ;background-color: #f9faff"></div>
+
+    <div style="padding-top: 5px ; background-color: white">
+
+        <div class="mui-segmented-control" style="padding: 3px 0 ;      z-index: 10; font-size: 15px">
+            <a id="detail" class="mui-control-item mui-active" href="#item-detail"
+               style=" font-size: 15px  ">简介<span></span></a>
+            <a id="category" class="mui-control-item " href="#item-category"
+               style=" font-size: 15px ">目录<span></span></a>
+            <a id="comment" class="mui-control-item" href="#item-comment"
+               style=" font-size: 15px ;">评论<span></span></a>
+
+
+        </div>
+
+        <div style="height: 2px ; width: 100% ;background-color: #f9faff"></div>
+
+        <div id="item-detail" class="mui-control-content mui-active">
+
+            <div class="pic-detail">
+                <div v-for="image in content.contentPicture">
+                    <img v-bind:src="image" style="width: 100%;   ">
+
+                </div>
+
+
+                <div>
+                    <img src="images/use-guide.jpg" style="width: 100% ;">
+
+                </div>
+
+            </div>
+
+            <div style="height: 5px ; width: 100% ;background-color: #f9faff"></div>
+
+
+            <template v-if="newRecisShow">
+                <div class="mostNewRecommend">
+                    <div style="padding: 20px  0  10px  15px ;font-size: 17px ; color: #282828 ;font-weight: bold ">
+                        最新推荐
+                    </div>
+
+
+                    <div class="list">
+
+                        <ul class="mui-table-view">
+                            <li v-for=" (item, index) in newRecommendData" v-if="index<3"
+                                class="mui-table-view-cell mui-media"
+                                style=" height: 100%">
+                                <a class="item-a" @click="getContent(item.id)">
+
+                                    <div class="item-div-img">
+                                        <img class="item-preview-img"
+                                             v-bind:src="  item.preview ==''  ?   'images/default-preview.jpg' : item.preview   ">
+                                    </div>
+                                    <div class="item-content-div">
+                                        <div class="item-content-div-div">
+                                            <p class=" item-contentName">{{item.contentName}} </p>
+                                            <p class="item-totalNum-num">共{{item.totalNum}}集 | 已更{{item.hasNum}}集</p>
+                                            <p class="item-playNum"> {{item.playNum > 9999 ?
+                                                Math.round(item.playNum/10000*100)/100 +'万人在学' :item.playNum+'人在学'
+                                                }}</p>
+                                            <div class="item-content-div-div-div">
+                                                <p>
+                                                    <span class="item-base-price">{{item.isFree ?  '' : '原价¥'}} {{item.isFree ?  '' : item.price+30}}</span>
+                                                    <span class="item-price"> {{item.isFree ? '免费' : '¥'+item.price+'' }}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+            </template>
+
+
+        </div>
+
+
+        <div id="item-category" class="mui-control-content ">
+
+            <!--&lt;!&ndash;下拉刷新容器&ndash;&gt;-->
+            <!--<div id="pullrefresh" class="mui-content mui-scroll-wrapper">-->
+
+            <!--<div class="mui-scroll">-->
+            <ul class="mui-table-view mui-table-view-chevron">
+
+                <li v-bind:style="{ color:   (content.isFree  || content.hasBuy || item.isTry==1)  && index==myindex ?  '#f35b75' :  '#282828'  }"
+                    v-for="  (item, index)  in   categoryData" class="mui-table-view-cell">
+                    <a style="padding:15px 30px 15px 20px"
+                       @click="changeVideo(item.fileUrl, item.subsetName, item.id, item.isTry,item.productsType, content.isFree,content.hasBuy)">
+                        <template v-if="!content.isFree &&  !content.hasBuy">
+
+                            <img v-if="item.isTry" src="images/icon-free.png" style="width: 16px;">
+                            <img v-else src="images/icon-money.jpg" style="width: 16px;">
+
+                        </template>
+
+                        <span style="font-size: 15px ; "> {{item.subsetName}} </span>
+                        <!--<span v-if="item.isTry" style="position: absolute;right: 25px ; font-size: 11px ; color: white; margin-top: 2px ; background:#f35b75;  display: inline-block; border-radius: 5px;border: 1px solid #f35b75;  padding: 1px 3px; ">{{ item.isTry==1 ?  '试看' :  '' }} </span>-->
+                    </a>
+                </li>
+
+
+            </ul>
+            <!--</div>-->
+            <!--</div>-->
+        </div>
+
+
+        <div id="item-comment" class="mui-control-content ">
+
+            <template v-if="commentIsShow">
+
+                <div style="padding: 5px 0 5px 20px  ;font-size: 15px">评论 {{
+                    commentData == null ?
+                    '0' : commentData.length}} 人
+                </div>
+                <ul class="mui-table-view">
+                    <li v-for=" (item, index) in commentData " style=" padding-top: 10px">
+
+                        <div style=" float: left;width: 100%;  padding-left: 20px ;  padding-right: 35px ;  ">
+
+                            <div>
+                                <img v-if="!(item.headPic == '' || item.headPic == null)" v-bind:src="item.headPic"
+                                     style=" width: 30px ;  height: 30px; float: left">
+                            </div>
+                            <div style="padding-left: 10px ; margin-top: 2px; float: left;  line-height: 9px">
+                                <p style="font-size: 13px ;font-weight: bold;color: black;">{{item.userName}}</p>
+                                <p style="font-size: 11px">{{ item.commentTime }}</p>
+                            </div>
+                            <div @click="likeComment(item.id,index)" style="text-align: right">
+
+                                    <span v-if="item.isLike" class="mui-icon iconfont icon-like"
+                                          style=" font-size:  14px  ;color: red"></span>
+
+                                <span v-else class="mui-icon iconfont icon-un-like"
+                                      style=" font-size:  14px"></span>
+
+                                <span style="color: #8f8f94"> {{  item.likeNum > 9999 ?  Math.round(item.likeNum/10000*100)/100 + '万'  :  item.likeNum  }}  </span>
+                            </div>
+                        </div>
+
+                        <div style=" padding-left: 60px ; font-size: 14px ;padding-bottom: 10px ; padding-right: 35px ; ">
+                            {{item.comment}}
+                        </div>
+
+                        <template v-if="!(item.reply == '' || item.reply == null)">
+                            <div style="font-size: 14px;   background-color: #f9faff ;        padding: 10px 35px 10px 60px;">
+                                <span style="color: #f35b75;font-size: 14px;">三到云课堂小助手</span>
+                                回复：{{item.reply}}
+                            </div>
+                        </template>
+
+                        <div style="height: 1px ; width: 100% ;background-color: #f9faff"></div>
+                    </li>
+                </ul>
+
+            </template>
+
+            <template v-else>
+                <div style="width: 100%;height: 100%;background-color: white;text-align: center;">
+                    <div style="padding-top: 20%;">
+                        <img style="width: 30%;  height: auto" src="images/ic_comment_not.png"/>
+                    </div>
+                    <div style="margin-top: 4%;">
+                        <p style="font-size: 11px;">暂无评论喔~</p>
+                    </div>
+                </div>
+            </template>
+
+            <!--<div style="background-color: white ; font-size: 8px ; color: darkgray; width: 100% ; text-align: center; padding: 15px">-->
+
+            <!--<span>已经加载完</span>-->
+            <!--</div>-->
+
+        </div>
+
+
+    </div>
+
+
+    <template v-if="sub">
+        <div id="subdialog" class="mui-popup mui-popup-in"
+             style="display: block; line-height: 35px; width: 320px">
+            <div class="mui-popup-inner">
+                <div class="mui-popup-title" style="margin-top: 5px">《{{content.title}}》课程</div>
+
+                <div>
+
+
+                    <span style="font-size: 11px ; color: #8f8f94;  text-decoration:line-through">{{content.isFree ?  '' : '原价¥'}} {{content.isFree ?  '' : content.price+30}}</span>
+                    <span style="font-size: 15px ; color:  red "> {{content.isFree ? '免费' : '¥'+content.price+'' }}</span>
+
+                </div>
+
+                <input @click="wxPayConfig(content.productsCode)" class="mui-ellipsis"
+                       value="立即订阅" type="button"
+                       style="font-size: 20px ; border: 0; color: white; background:#f35b75; display: inline-block; border-radius: 50px; padding: 10px 70px; "/>
+                <!--<div class="mui-popup-text"><span class="mui-icon "> </span>话费支付<input disabled type="radio"></div>-->
+                <div class="mui-popup-out"><span class="mui-icon iconfont icon-close"
+                                                 style="position: absolute; right: 6px ; top: 6px; font-size: 20px;"
+                                                 @click="subguanbi"></span></div>
+            </div>
+        </div>
+        <div class="mui-popup-backdrop mui-active" style="display: block;"></div>
+    </template>
+
+    <template v-if="subsuccess">
+        <div id="successdialog" class="mui-popup mui-popup-in"
+             style="display: block; font-size: 16px; line-height: 40px; width: 320px; ">
+            <div class="mui-popup-inner" style="padding: 40px">
+                <div class="mui-popup-title">恭喜你已经成功订阅</div>
+                <div class="mui-popup-text">《{{content.contentName}}》课程</div>
+                <input @click="successguanbi" class="mui-ellipsis" value="我知道了" type="button"
+                       style="font-size: 20px ; border: 0; margin-top: 15px; color: white; background:#f35b75; display: inline-block; border-radius: 50px; padding: 10px 70px; "/>
+                <div class="mui-popup-out"><span class="mui-icon mui-icon-close"
+                                                 style="position: absolute; right: 2px ; top: 2px;"
+                                                 @click="successguanbi"></span></div>
+            </div>
+        </div>
+        <div class="mui-popup-backdrop mui-active" style=""></div>
+    </template>
+
+
+    <template v-if="subfail">
+        <div id="faildialog" class="mui-popup mui-popup-in"
+             style="display: block; font-size: 16px; line-height: 40px; width: 320px; ">
+            <div class="mui-popup-inner" style="padding: 30px">
+                <div class="mui-popup-title">订阅未成功</div>
+                <input @click="wxPayConfig(content.productsCode)" class="mui-ellipsis" value="再试一次呗"
+                       type="button"
+                       style="font-size: 20px ; border: 0; margin-top: 15px; color: white; background:#f35b75; display: inline-block; border-radius: 50px; padding: 10px 70px; "/>
+                <div class="mui-popup-out"><span class="mui-icon mui-icon-close"
+                                                 style="position: absolute; right: 2px ; top: 2px;"
+                                                 @click="failguanbi"></span></div>
+            </div>
+        </div>
+        <div class="mui-popup-backdrop mui-active" style="display: block;"></div>
+    </template>
+</div>
+
+
+<!--先引入库文件 再使用库文件  顺序不能乱-->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<!--<script src="https://cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js"></script>-->
+<script src="js/mui.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/api.js?ver=2018021217"></script>
+<script src="js/base.js?ver=2018021217"></script>
+<!--微信支付js-sdk-->
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+
+<script>
+
+    mui.init({
+        swipeBack: false,//启用右滑关闭功能
+
+        pullRefresh: {
+            container: '#pullrefresh',
+            down: {
+                style: 'circle',//必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+                color: '#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
+                height: '50px',//可选,默认50px.下拉刷新控件的高度,
+                range: '100px', //可选 默认100px,控件可下拉拖拽的范围
+                offset: '0px', //可选 默认0px,下拉刷新控件的起始位置
+                auto: true,//可选,默认false.首次加载自动上拉刷新一次
+                callback: pulldownRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+            }
+
+            ,
+            up: {
+                auto: true,
+                contentrefresh: '正在加载...',
+                callback: pullupRefresh
+            }
+        }
+    });
+
+    function videoPlay() {
+        var myVideo = document.getElementById('myVideo');
+        myVideo.controls = 'controls';
+    };
+
+    var count = 0;
+    function pullupRefresh() {
+        setTimeout(function () {
+            mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+            var table = document.body.querySelector('.mui-table-view');
+            var cells = document.body.querySelectorAll('.mui-table-view-cell');
+            var newCount = cells.length > 0 ? 5 : 20;//首次加载20条，满屏
+            for (var i = cells.length, len = i + newCount; i < len; i++) {
+                var li = document.createElement('li');
+                li.className = 'mui-table-view-cell';
+                li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+                table.appendChild(li);
+            }
+        }, 1500);
+    }
+
+    function addData() {
+        var table = document.body.querySelector('.mui-table-view');
+        var cells = document.body.querySelectorAll('.mui-table-view-cell');
+        for (var i = cells.length, len = i + 5; i < len; i++) {
+            var li = document.createElement('li');
+            li.className = 'mui-table-view-cell';
+            li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+            //下拉刷新，新纪录插到最前面；
+            table.insertBefore(li, table.firstChild);
+        }
+    }
+    /**
+     * 下拉刷新具体业务实现
+     */
+    function pulldownRefresh() {
+        setTimeout(function () {
+            addData();
+            mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+            mui.toast("为你推荐了5篇文章");
+        }, 1500);
+    }
+
+
+    $(window).scroll(function () {
+        var top1 = $('.mui-segmented-control').offset().top;
+        var gun = $(document).scrollTop();
+        var top = top1 - gun;
+        if (top <= 0) {
+            console.log("固定");
+            $('.mui-segmented-control').css('position', 'fixed');
+            $('.mui-segmented-control').css('top', '0');
+            $('.mui-segmented-control').css('z-index ', '10');
+        }
+        var t = document.documentElement.scrollTop || document.body.scrollTop;  //获取距离页面顶部的距离
+        if (t < 460) {
+            $('.mui-segmented-control').css('position', 'relative');
+        }
+    });
+
+
+    function initView() {
+
+
+        var detail = document.getElementById('detail');
+        var category = document.getElementById("category");
+        var comment = document.getElementById("comment");
+
+        detail.addEventListener('tap', function () {
+            vmplay.isComment = false;
+        });
+
+        category.addEventListener('tap', function () {
+            vmplay.isComment = false;
+//            getProductList(GetQueryString("id"));
+        });
+
+        comment.addEventListener('tap', function () {
+            vmplay.isComment = true;
+            getComment(vmplay.content.id)
+        });
+
+
+//      addCollection(vmplay.content.contentId, vmplay.content.type);
+
+        var contentId = GetQueryString("contentId");
+        if (contentId == '') {// 普通跳转的
+            document.title = vmplay.categoryData['0'].contentName;
+            vmplay.fileUrl = vmplay.categoryData['0'].fileUrl;
+            vmplay.subsetName = vmplay.categoryData['0'].subsetName;
+            addPlayRecord(GetQueryString('id'), vmplay.categoryData['0'].productsType, vmplay.categoryData['0'].id);
+        } else if (contentId == 'comment') {
+            // 从评论页面跳转的
+            getComment(vmplay.content.id);
+            document.title = vmplay.categoryData['0'].contentName;
+            vmplay.fileUrl = vmplay.categoryData['0'].fileUrl;
+            vmplay.subsetName = vmplay.categoryData['0'].subsetName;
+            addPlayRecord(GetQueryString('id'), vmplay.categoryData['0'].productsType, vmplay.categoryData['0'].id);
+            $("#detail").removeClass("mui-active");
+            $("#item-detail").removeClass("mui-active");
+            $("#comment").addClass("mui-active");
+            $("#item-comment").addClass("mui-active");
+
+        } else {
+            // 从播放记录跳转的
+            $("#detail").removeClass("mui-active");
+            $("#item-detail").removeClass("mui-active");
+            $("#category").addClass("mui-active");
+            $("#item-category").addClass("mui-active");
+
+            for (var i = 0; i < vmplay.categoryData.length; i++) {
+                if (vmplay.categoryData[i].id == contentId) {
+                    vmplay.myindex = i;
+                    document.title = vmplay.categoryData[i].contentName;
+                    vmplay.fileUrl = vmplay.categoryData[i].fileUrl;
+                    vmplay.subsetName = vmplay.categoryData[i].subsetName;
+                    addPlayRecord(GetQueryString('id'), vmplay.categoryData[i].productsType, vmplay.categoryData[i].id);
+                }
+            }
+        }
+
+    }
+
+    var vmplay = new Vue({
+        el: '#app'
+        ,
+        data: {
+
+            sub: false,
+            subfail: false,
+            subsuccess: false,
+            goHome: false,
+            playIsShow: true,
+            myindex: 0,
+            message: '',
+            commentIsShow: false,
+            newRecisShow: false,
+            isSeen: false,
+            isComment: false,
+            isCollect: true,
+            fileUrl: null,
+            subsetName: null,
+            content: null,
+            commentData: null,
+            categoryData: null,
+            newRecommendData: null
+        },
+
+        watch: {
+            message: {
+                handler: function () {
+                    if (this.message != '') {
+                        $("#inputbutton").removeAttr("disabled");
+                    }
+                }
+            }
+        },
+        methods: {
+
+            tabDetail: function () {
+                alert("正在升级，敬请期待");
+            },
+
+
+            tabCategory: function () {
+                alert("正在升级，敬请期待");
+            },
+
+
+            share: function () {
+                alert("正在升级，敬请期待");
+            },
+
+            playVideo: function (fileUrl) {
+                if (!fileUrl) {
+                    this.subCourse();
+                } else {
+                    $("#myVideo").trigger('play');
+                    $("#myVideo").attr('autoplay', 'autoplay');
+                    vmplay.playIsShow = false;
+                    console.log();
+                    //播放量
+                    addCollection(vmplay.content.contentId, vmplay.content.type);
+                }
+
+            },
+
+            sendFriend: function () {
+                alert("正在升级，敬请期待");
+            },
+
+            subCourse: function () {
+                this.sub = true;
+                this.subsuccess = false;
+                this.subfail = false;
+            },
+            subguanbi: function () {
+                this.sub = false;
+                this.subsuccess = false;
+                this.subfail = false;
+
+            },
+            successguanbi: function () {
+                this.sub = false;
+                this.subsuccess = false;
+                this.subfail = false;
+
+            },
+            failguanbi: function () {
+                this.sub = false;
+                this.subsuccess = false;
+                this.subfail = false;
+
+            },
+
+            changeVideo: function (fileUrl, subsetName, contentId, isTry, productsType, isFree, hasBuy) {
+                $("ul li").click(function () {
+
+                    $("ul li").css({"color": " #282828"});
+                    $(this).css({"color": " #f35b75"});
+                });
+
+
+                if (isFree || hasBuy || isTry) {
+                    addPlayRecord(GetQueryString('id'), productsType, contentId);
+                    this.subsetName = subsetName;
+                    this.fileUrl = fileUrl;
+                } else {
+                    this.subsetName = subsetName;
+                    this.fileUrl = fileUrl;
+                    // 微信支付
+                    this.sub = true;
+                    this.subsuccess = false;
+                    this.subfail = false;
+//                    wxPayConfig(this.content.productsCode);
+                    console.log("执行微信支付this.content.productsCode =" + this.content.productsCode);
+                }
+
+            }
+        }
+    });
+
+
+    getList();
+    getContent(GetQueryString("id"));
+
+
+    /**
+     * 点赞销售品的评论
+     * @param productsid
+     * @param index
+     */
+    function likeComment(commentsId, index) {
+
+        $.ajax({
+            url: hostUrl + 'comments/like/addLike',
+            type: 'post',
+            data: {
+                'appKey': 'sandaoyun',
+                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'commentsid': commentsId,
+                'userid': userid
+            },
+            dataType: 'json',
+            success: function (result) {
+//                console.log(result);
+                if (result.code == 200) {
+                    if (vmplay.commentData[index].isLike == 1) {
+                        vmplay.commentData[index].likeNum--;
+                        vmplay.commentData[index].isLike = 0
+                    }
+                    else {
+                        vmplay.commentData[index].likeNum++;
+                        vmplay.commentData[index].isLike = 1
+                    }
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+
+    /**
+     * 查看销售品的评论
+     * @param productsid
+     */
+    function getComment(productsid) {
+
+        $.ajax({
+            url: hostUrl + 'selling/comments/productsComments',
+            type: 'post',
+            data: {
+                'appKey': 'sandaoyun',
+                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'cpid': '100001',
+                'userid': userid,
+                'productsid': productsid
+            },
+            dataType: 'json',
+            success: function (result) {
+//                console.log("评论");
+//                console.log(result);
+                if (result.code == 200) {
+                    var data = JSON.parse(result.data);
+                    if (data && data.length != 0) {
+                        //$('#item-success').show();
+                        for (j = 0; j < data.length; j++) {
+                            var item = data[j];
+
+                            var commentTime = item.commentTime;
+
+                            var date2 = new Date();//结束时间
+                            var date3 = date2.getTime() - new Date(commentTime).getTime();//时间差的毫秒数
+                            //计算出小时数
+                            var leave1 = date3 % (24 * 3600 * 1000)//计算天数后剩余的毫秒数
+
+                            var days = Math.floor(date3 / (24 * 3600 * 1000))
+                            var hours = Math.floor(leave1 / (3600 * 1000))
+
+                            var leave2 = leave1 % (3600 * 1000)        //计算小时数后剩余的毫秒数
+                            var minutes = Math.floor(leave2 / (60 * 1000))
+
+                            if (days < 1 && hours <= 24) {
+                                if (hours < 1 && minutes < 60) {
+                                    data[j].commentTime = minutes + '分钟前';
+                                } else {
+                                    data[j].commentTime = hours + '小时前';
+                                }
+                            } else {
+                                data[j].commentTime = item.commentTime.substr(0, 10);
+                            }
+                        }
+
+                        vmplay.commentIsShow = true;
+                        vmplay.commentData = data;
+                    } else {
+                        //$('#item-success').hide();
+                        vmplay.commentIsShow = false;
+                    }
+                } else {
+                    //$('#item-success').hide();
+                    vmplay.commentIsShow = false;
+                }
+            },
+            error: function () {
+                vmplay.commentIsShow = false;
+            }
+        });
+    }
+
+
+    /**
+     * 单集增加播放量接口
+     * @param id
+     * @param type 内容类型1视频集 , 3音频集
+     * @param contentId
+     */
+    function addPlayRecord(id, type, contentId) {
+        $.ajax({
+            url: hostUrl + 'user/center/history/addPlayRecord',
+            type: 'post',
+            data: {
+                'appKey': 'sandaoyun',
+                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'cpid': '100001',
+                'userid': userid,
+                'productsid': id,
+                'type': type,
+                'contentid': contentId
+            },
+            dataType: 'json',
+            success: function (result) {
+//                console.log(result);
+
+                if (result.code == 200) {
+                } else {
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+
+
+    //视频集/音频集增加播放量接口 type 内容类型1视频集 , 3音频集
+    function addCollection(contentId, type) {
+        $.ajax({
+            url: hostUrl + 'user/center/history/addCollection',
+            type: 'post',
+            data: {
+                'appKey': 'sandaoyun',
+                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'contentid': contentId,
+                'type': type
+            },
+            dataType: 'json',
+            success: function (result) {
+//                console.log(result);
+                if (result.code == 200) {
+                } else {
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+
+    /**
+     *  微信支付
+     * @param productsId
+     */
+    function wxPayConfig(productsId) {
+
+        console.log("立即微信支付" + productsId);
+        $.ajax({
+            url: hostUrl + 'wx/wxConfig',
+            type: 'post',
+            data: {
+                'appKey': 'sandaoyun',
+                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'url': encodeURIComponent(location.href.split('#')[0])
+            },
+            dataType: 'json',
+            success: function (result) {
+                if (result.code == 200) {
+                    var data = JSON.parse(result.data);
+
+                    wx.config({
+                        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                        appId: data.appId, // 必填，公众号的唯一标识
+                        timestamp: data.timestamp, // 必填，生成签名的时间戳
+                        nonceStr: data.nonceStr, // 必填，生成签名的随机串
+                        signature: data.signature, // 必填，签名
+                        jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表
+                    });
+
+
+                    chooseWXPay(
+                        'sandaoyun',
+                        '59CCE180FFAC49C8FF97DE2A0A08C119',
+                        '100001',
+                        productsId
+                    );
+                }
+            },
+            error: function () {
+                alert("发起支付异常，请重试！");
+
+            }
+        });
+    }
+
+    function chooseWXPay(appKey, sign, cpid, productsId) {
+
+        $.ajax({
+            url: hostUrl + 'wx/pay',
+            type: 'post',
+            data: {
+                'appKey': appKey,
+                'sign': sign,
+                'userid': userid,
+                'cpid': cpid,
+                'productsId': productsId
+            },
+            dataType: 'json',
+            success: function (result) {
+                if (result.code == 200) {
+                    var data = JSON.parse(result.data);
+
+                    wx.chooseWXPay({
+                        timestamp: data.timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                        nonceStr: data.nonceStr, // 支付签名随机串，不长于 32 位
+                        package: data.packageValue, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+                        signType: data.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                        paySign: data.paySign, // 支付签名
+                        success: function (res) {
+                            if (res.errMsg == "chooseWXPay:ok") {
+                                vmplay.content.hasBuy = true;
+
+
+                                vmplay.content.hasBuy = true;
+                                vmplay.subsuccess = true;
+                                vmplay.sub = false;
+                                vmplay.subfail = false;
+
+//                                alert("支付成功");
+                            } else {
+                                vmplay.subsuccess = false;
+                                vmplay.sub = false;
+                                vmplay.subfail = true;
+                            }
+                        },
+                        cancel: function (res) {
+
+                        },
+                        fail: function (res) {
+
+                            vmplay.subsuccess = false;
+                            vmplay.sub = false;
+                            vmplay.subfail = true;
+                        },
+                        complete: function (res) {
+
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 添加评论
+     * @param id
+     * @param type 1  2  （视频还是音频）
+     */
+    function addComments(id, type) {
+        $("#inputbutton").attr("disabled", "disabled");
+        if (vmplay.message == '') {
+            alert("请先输入评论内容喔");
+            return;
+        }
+        $.ajax({
+            url: hostUrl + 'selling/comments/addComments',
+            type: 'post',
+            data: {
+                'appKey': 'sandaoyun',
+                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'productsid': id,
+                'cpid': '100001',
+                'userid': userid,
+                'comment': $("#inputcomment").val(),
+                'type': type
+            },
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+                if (result.code == 200) {
+                    $("#inputbutton").removeAttr("disabled");
+                    $("#inputcomment").val('');
+                    alert("提交评论成功！审核之后才会显示喔");
+                    console.log("200");
+                } else {
+                    alert("提交评论成失败！请重试");
+                    $("#inputbutton").removeAttr("disabled");
+                    console.log("err");
+                }
+            },
+            error: function () {
+                alert("提交评论失败！请重试");
+                $("#inputbutton").removeAttr("disabled");
+                return null;
+            }
+        });
+    }
+
+    /**
+     * 获取最新推荐的课程
+     */
+    function getList() {
+        $.ajax({
+            url: hostUrl + 'selling/products/home',
+            type: 'post',
+            data: {'appKey': 'sandaoyun', 'sign': '59CCE180FFAC49C8FF97DE2A0A08C119', 'channelCode': '100001'},
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+
+                if (result.code == 200) {
+                    console.log("200");
+                    vmplay.newRecommendData = JSON.parse(result.data);
+                    vmplay.newRecisShow = true;
+                } else {
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+
+    /**
+     * 获取内容
+     * @param id 产品id
+     */
+    function getContent(id) {
+
+        $('html, body').animate({scrollTop: 0}, 'fast');//带动画回到頂部
+        $.ajax({
+            url: hostUrl + 'selling/products/content',
+            type: 'post',
+            data: {
+                'appKey': 'sandaoyun',
+                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'productsId': id,
+                'userid': userid,
+                'cpid': '100001'
+            },
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+
+                if (result.code == 200) {
+                    console.log("200");
+                    vmplay.isSeen = true;
+                    vmplay.content = JSON.parse(result.data);
+                    getProductList(id);
+                } else {
+                    console.log("err");
+                }
+            },
+            error: function () {
+                return null;
+            }
+        });
+    }
+
+
+    /**
+     * 获取视频集列表
+     * @param productsId
+     */
+    function getProductList(productsId) {
+        //    获取列表
+        $.ajax({
+            url: hostUrl + 'selling/products/productList',
+//            url: 'http://192.168.0.129:8080/wycms/selling/products/productList',
+            type: 'post',
+            data: {
+                'appKey': 'sandaoyun',
+                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'productsId': productsId,
+                'userid': userid,
+                'cpid': '100001'
+            },
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+
+                if (result.code == 200) {
+                    vmplay.categoryData = JSON.parse(result.data);
+                    initView()
+                } else {
+                    console.log("err");
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+
+    /**
+     * 收藏 Or 取消收藏接口
+     */
+    function doCollect() {
+
+        var id = GetQueryString('id');
+        //    获取列表
+        $.ajax({
+            url: hostUrl + 'user/remark/addOrUpdate',
+            type: 'post',
+            async: true,
+            data: {
+                'appKey': 'sandaoyun',
+                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'userid': userid,
+                'cpid': '100001',
+                'productsid': id
+            },
+
+            dataType: 'json',
+            success: function (result) {
+
+                if (result.code == 200) {
+                    if (vmplay.content.isRemark == 1) {
+                        vmplay.content.remarkNum--;
+                        vmplay.content.isRemark = 0
+                    }
+                    else {
+                        vmplay.content.remarkNum++;
+                        vmplay.content.isRemark = 1
+                    }
+
+
+                } else {
+                    console.log("err");
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+
+
+</script>
+
+</body>
+</html>

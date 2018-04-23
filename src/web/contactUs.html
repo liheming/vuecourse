@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, minimum-scale=1,user-scalable=no">
+
+		<title>联系我们</title>
+
+		<style>
+			html,
+			body,
+			div {
+				width: 100%;
+			}
+			
+			div,
+			img {
+				width: 100%;
+			}
+		</style>
+	</head>
+
+	<body style="margin: 0;">
+		<div id="app">
+			<div>
+				<img src="images/contactUs.jpg">
+			</div>
+			<!--style="text-align: center ; width: 100%; color: #878787 ;font-size: 40px ; background-color: #f9faff"-->
+			<div style="text-align: center;font-size: 11px;margin-top: 8px;">
+				<div style="color: #878787;">
+					<span style="color: #67d9fe" @click="openIndex()">首页 |</span>
+					<span style="color: #67d9fe" @click="">个人中心 |</span>
+					<span style="color: #67d9fe" @click="openFollow()">关注我们</span>
+				</div>
+				<div style="margin-top: 2px;">广州万悦网络科技有限公司</div>
+				<div style="margin-top: 2px;">www.wyuetec.com</div>
+			</div>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+		<script src="js/mui.min.js"></script>
+
+		<script>
+			var vm = new Vue({
+				el: '#app',
+
+				methods: {
+					openIndex: function() {
+						mui.openWindow({
+							url: "index.html",
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '正在加载...', //等待对话框上显示的提示内容
+							}
+						})
+					},
+					openFollow: function() {
+						mui.openWindow({
+							url: "followUs.html",
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '正在加载...', //等待对话框上显示的提示内容
+							}
+						})
+					}
+				},
+			});
+		</script>
+	</body>
+
+</html>
