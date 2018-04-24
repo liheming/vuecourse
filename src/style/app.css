@@ -85,7 +85,7 @@
   color: #f35b75
 }
 
-.mui-bar-tab .mui-tab-item {
+.mui-bar-tab .mui-tab-item .mui-tab-label{
   color: #a89e9d;
 }
 
