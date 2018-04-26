@@ -1,23 +1,34 @@
 <template>
   <!--继续学习-->
-  <div  >
+  <div>
     <div class="mui-segmented-control" style="margin-bottom: 5px ;">
 
-      <router-link to="/study/orderCourse" class="mui-control-item mui-active" >我的订阅<span style="width: 58px"></span></router-link>
-      <router-link  to="/study/playRecord" class="mui-control-item"  >播放记录<span style="width: 58px"></span></router-link>
+      <router-link to="/study/orderCourse" class="mui-control-item mui-active">我的订阅<span style="width: 58px"></span>
+      </router-link>
+      <router-link to="/study/playRecord" class="mui-control-item">播放记录<span style="width: 58px"></span></router-link>
     </div>
     <div style="height: 5px ; width: 100% ;background-color: #f9faff"></div>
-  <router-view/>
+    <order></order>
+    <!--<router-view/>-->
   </div>
 </template>
 
 <script>
+  import order from './study/orderCourse'
+  import play from './study/playRecord'
+
   export default {
     name: 'Hi',
-    data () {
+    data() {
       return {
         msg: '很高兴你使用vue 我是继续学习'
       }
+    }
+    ,
+    components: {
+      order,
+      play
+
     }
   }
 </script>
