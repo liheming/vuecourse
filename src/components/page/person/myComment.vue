@@ -1,17 +1,15 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <router-link to="/person">Go to person</router-link>
-    <router-link to="/study">Go to study</router-link>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'home',
+  name: 'Hi',
   data () {
     return {
-      msg: '我是首页喔'
+      msg: '我的评论'
     }
   }
 }

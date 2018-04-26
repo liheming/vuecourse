@@ -3,7 +3,7 @@ var userid = localStorage.userid;
 var hostUrl = 'http://www.wyuetec.com/wycms/';
 var localUrl = 'http://192.168.0.129:8080/wycms/';
 
-if (!mui.os.wechat) {
+// if (!mui.os.wechat) {
  userid = "o4AOi1JRAUDzU5e9-MC-RuCirdCQ";
 //     mui.openWindow({
 //     	id: "三道云课堂",
@@ -19,7 +19,7 @@ if (!mui.os.wechat) {
 //     		title: '正在加载...' //等待对话框上显示的提示内容
 //     	}
 //     });
-}
+// }
 
 var vm;
 var index = 0;

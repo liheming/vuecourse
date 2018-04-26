@@ -9,7 +9,7 @@ export default {
   name: 'Hi',
   data () {
     return {
-      msg: '很高兴你使用vue 我是继续学习'
+      msg: '我的消息'
     }
   }
 }

@@ -5,30 +5,22 @@
 </template>
 
 <script>
+//  import slide from 'src/components/common/slider.vue'
+
 export default {
   name: 'Hi',
   data () {
     return {
-      msg: '很高兴你使用vue 我是个人中心'
+      msg: '很高兴你使用vue 我是排行'
     }
+  },
+  components: {
+//    slide
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
 </style>
