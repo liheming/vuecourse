@@ -431,6 +431,7 @@ function getRanking(type) {
  * @param newOrHot 1 最新， 2 最热
  */
 function payOrFree(freeOrPay, newOrHot) {
+
     $.ajax({
 //            url: 'http://192.168.0.114:8180/wycms/selling/products/payOrFree',
         url: hostUrl+'selling/products/payOrFree',
@@ -472,7 +473,7 @@ function getData() {
 /**
  * 获取专题列表小图标
  */
-function getTopic(type) {
+function getTopic(that,type) {
     $.ajax({
         url: hostUrl + 'topic/topicList',
         type: 'post',

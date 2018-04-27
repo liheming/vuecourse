@@ -1,29 +1,14 @@
 var userid = localStorage.userid;
-//var hostUrl = 'http://192.168.0.114:8180/wycms/';
 var hostUrl = 'http://www.wyuetec.com/wycms/';
 var localUrl = 'http://192.168.0.129:8080/wycms/';
-
-// if (!mui.os.wechat) {
- userid = "o4AOi1JRAUDzU5e9-MC-RuCirdCQ";
-//     mui.openWindow({
-//     	id: "三道云课堂",
-//     	url: "followUs.html",
-//     	extras: {
-//     		name: 'mui' //自定义扩展参数，可以用来处理页面间传值
-//     	},
-//     	show: {
-//     		autoShow: false
-//     	},
-//     	waiting: {
-//     		autoShow: true, //自动显示等待框，默认为true
-//     		title: '正在加载...' //等待对话框上显示的提示内容
-//     	}
-//     });
-// }
-
 var vm;
 var index = 0;
 var type = 0;
+
+const APPKEY = 'sandaoyun';
+const SIGN = '59CCE180FFAC49C8FF97DE2A0A08C119';
+const channelid = '100001';
+
 
 /**
  * index页面onload初始化
@@ -59,8 +44,8 @@ function queryUserInfo() {
             url: hostUrl + 'wechat/wxuser/queryUserInfoByUserId',
             type: 'post',
             data: {
-                'appKey': 'sandaoyun',
-                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'appKey': APPKEY,
+                'sign': SIGN,
                 'userid': userid
             },
             dataType: 'json',
@@ -86,8 +71,8 @@ function queryUserInfo() {
             url: hostUrl + 'wechat/wxuser/queryUserInfoByCode',
             type: 'post',
             data: {
-                'appKey': 'sandaoyun',
-                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'appKey': APPKEY,
+                'sign': SIGN,
                 'code': code
             },
             dataType: 'json',
@@ -122,8 +107,8 @@ function getUserData() {
             url: hostUrl + 'wechat/wxuser/queryUserInfoByUserId',
             type: 'post',
             data: {
-                'appKey': 'sandaoyun',
-                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'appKey': APPKEY,
+                'sign': SIGN,
                 'userid': userid
             },
             dataType: 'json',
@@ -147,8 +132,8 @@ function getUserData() {
             url: hostUrl + 'wechat/wxuser/queryUserInfoByCode',
             type: 'post',
             data: {
-                'appKey': 'sandaoyun',
-                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'appKey': APPKEY,
+                'sign': SIGN,
                 'code': code
             },
             dataType: 'json',
@@ -403,9 +388,9 @@ function getRanking(type) {
         url: hostUrl+'selling/products/rankList',
         type: 'post',
         data: {
-            'appKey': 'sandaoyun',
-            'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
-            'channelCode': '100001',
+            'appKey': APPKEY,
+            'sign': SIGN,
+            'channelCode': channelid,
             'rankType': type
         },
         dataType: 'json',
@@ -436,9 +421,9 @@ function payOrFree(freeOrPay, newOrHot) {
         url: hostUrl+'selling/products/payOrFree',
         type: 'post',
         data: {
-            'appKey': 'sandaoyun',
-            'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
-            'channelCode': '100001',
+            'appKey': APPKEY,
+            'sign': SIGN,
+            'channelCode': channelid,
             'isfree': freeOrPay,
             'newOrHot': newOrHot
         },
@@ -477,9 +462,9 @@ function getTopic(type) {
         url: hostUrl + 'topic/topicList',
         type: 'post',
         data: {
-            'appKey': 'sandaoyun',
-            'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
-            'cpid': '100001',
+            'appKey': APPKEY,
+            'sign': SIGN,
+            'cpid': channelid,
             'type': type
         },
         dataType: 'json',
@@ -510,9 +495,9 @@ function getHotList() {
         url: hostUrl + 'selling/products/home',
         type: 'post',
         data: {
-            'appKey': 'sandaoyun',
-            'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
-            'channelCode': '100001'
+            'appKey': APPKEY,
+            'sign': SIGN,
+            'channelCode': channelid
         },
         dataType: 'json',
         success: function (result) {
@@ -541,9 +526,9 @@ function getOneWeek() {
         url: hostUrl + 'user/center/history/oneWeek',
         type: 'post',
         data: {
-            'appKey': 'sandaoyun',
-            'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
-            'cpid': '100001',
+            'appKey': APPKEY,
+            'sign': SIGN,
+            'cpid': channelid,
             'userid': userid
         },
         dataType: 'json',
@@ -574,9 +559,9 @@ function getEarlier() {
         url: hostUrl + 'user/center/history/earlier',
         type: 'post',
         data: {
-            'appKey': 'sandaoyun',
-            'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
-            'cpid': '100001',
+            'appKey': APPKEY,
+            'sign': SIGN,
+            'cpid': channelid,
             'userid': userid,
             'pageNum': 1
         },
@@ -608,9 +593,9 @@ function getOrdersRecord() {
         url: hostUrl + 'wechat/orders/record',
         type: 'post',
         data: {
-            'appKey': 'sandaoyun',
-            'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
-            'channelid': '100001',
+            'appKey': APPKEY,
+            'sign': SIGN,
+            'channelid': channelid,
             'userid': userid,
             'functionType': 1
         },

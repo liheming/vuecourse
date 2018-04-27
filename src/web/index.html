@@ -211,67 +211,24 @@
 
         <template v-if="isShow">
           <div class="menu">
-            <div>
-
-              <ul class="mui-table-view mui-grid-view mui-grid-9"
+            <div><ul class="mui-table-view mui-grid-view mui-grid-9"
                   style=" padding-top: 5px;   background-color: white">
-
-
                 <li v-for="(item , index)  in  topicData" v-if="index<4"
                     class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3 ">
-
                   <a @click="openTopicPage(item.id,1,item.topPicture,item.topicDesc)"> <span
-                    class="mui-icon ">
-                                        <img class="index-menu-topic-img"
+                    class="mui-icon "><img class="index-menu-topic-img"
                                              v-bind:src="  item.icon ==''  ?   'images/default-preview.jpg' : item.icon "></span>
                     <div class="mui-media-body  " style="font-size: 12px">{{item.name}}</div>
                   </a>
                 </li>
-
-
-                <!--<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3 ">-->
-
-                <!--<a href="content-details.html?id=ff8080816155bd6c016155fb6fdc0031"> <span-->
-                <!--class="mui-icon "><img clamainndex-menu-topic-img"-->
-                <!--src="images/index01.png"></span>-->
-                <!--<div class="mui-media-body  "  style="font-size: 12px">奶爸必看</div>-->
-                <!--</a>-->
-                <!--</li>-->
-                <!--<li class="mui-table-view-cell mui-media mui-col-xs-3  mui-col-sm-3">-->
-                <!--<a @click="openPayOFree(1)"> <span class="mui-icon "><img clamainndex-menu-topic-img"-->
-                <!--src="images/index02.png"></span>-->
-                <!--<div class="mui-media-body "   style="font-size: 12px">虎妈优选</div>-->
-                <!--</a>-->
-                <!--</li>-->
-                <!--<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">-->
-                <!--<a @click="openPayOFree(0)"> <span class="mui-icon "><img clamainndex-menu-topic-img"-->
-                <!--src="images/index03.png"></span>-->
-                <!--<div class="mui-media-body  "   style="font-size: 12px">萌宝养成</div>-->
-                <!--</a>-->
-                <!--</li>-->
-                <!--<li @click="toastMsg()" class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">-->
-                <!--<a href="#"> <span class="mui-icon "><img clamainndex-menu-topic-img"-->
-                <!--src="images/index04.png"></span>-->
-                <!--<div class="mui-media-body "   style="font-size: 12px">亲子同学</div>-->
-                <!--</a>-->
-                <!--</li>-->
-
               </ul>
             </div>
-
             <div>
-
               <img
                 @click="openTopicPage(topicLargeData[0].id , 2 ,topicLargeData[0].topPicture ,topicLargeData[0].topicDesc)"
                 v-bind:src="  topicLargeData[0].specialIcon ==''  ?   'images/default-preview.jpg' : topicLargeData[0].specialIcon "
                 style="width: 100% ; height: auto ;padding: 0 21px  10px  21px">
-
-              <!--<img src="images/2018342082347443.gif"
-                   style="width: 100% ; height: auto ;padding: 0 21px  10px  21px">-->
-              <!--{{topicLargeData[0].topicDesc}}-->
             </div>
-
-
           </div>
 
 
@@ -311,8 +268,6 @@
                 </a>
               </li>
             </ul>
-
-
           </div>
 
           <!--<div style=" background-color: white ; font-size: 8px ; color: #d2d2dd; width: 100% ; text-align: center; padding: 15px">-->
@@ -339,6 +294,7 @@
 
 
       <div id="free" class="mui-control-content ">
+
         <div style="height: 10px ; width: 100% ;background-color: #f9faff"></div>
         <div class="list" style="background-color: white;">
 
