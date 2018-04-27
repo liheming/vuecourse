@@ -1,21 +1,21 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
+  <div>
+    <slide></slide>
+
   </div>
 </template>
 
 <script>
-//  import slide from 'src/components/common/slider.vue'
+  import slide from '../.././common/slider.vue'
 
-export default {
+
+  export default {
+    components: {slide},
   name: 'Hi',
   data () {
     return {
       msg: '很高兴你使用vue 我是排行'
     }
-  },
-  components: {
-//    slide
   }
 }
 </script>
