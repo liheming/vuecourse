@@ -43,6 +43,9 @@
                 <img src="images/person-share.png" class="person-center-item-image"> 分享记录
             </a>
         </li>-->
+
+
+
       </ul>
   </div>
 </template>
