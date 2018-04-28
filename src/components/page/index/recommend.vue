@@ -58,7 +58,7 @@
         </li>
       </ul>
 
-<!--<mainitem data=""></mainitem>-->
+      <!--<mainitem data=""></mainitem>-->
 
     </div>
     <foot></foot>
@@ -70,8 +70,9 @@
   import slide from '../.././common/slider.vue'
   import foot from '../.././common/footer.vue'
   import mainitem from '../.././common/mainitem.vue'
+  import { getHottestData } from '../../../service/getData'
   export default {
-    components: {slide, foot , mainitem},
+    components: {slide, foot, mainitem},
 
     name: 'Hi',
     data () {
@@ -86,38 +87,41 @@
     mounted() {
       this.$nextTick(() => {
         var that = this;
+          getHottestData()
 
-        $.ajax({
-          url: hostUrl + 'selling/products/home',
-          type: 'post',
-          data: {
-            'appKey': APPKEY,
-            'sign': SIGN,
-            'channelCode': channelid
-          },
-          dataType: 'json',
-          success: function (result) {
-            console.log(result);
 
-            if (result.code == 200) {
-              that.hotdata = JSON.parse(result.data);
-              that.msg = '你好'
+//        $.ajax({
+//          url: hostUrl + 'selling/products/home',
+//          type: 'post',
+//          data: {
+//            'appKey': APPKEY,
+//            'sign': SIGN,
+//            'channelCode': channelid
+//          },
+//          dataType: 'json',
+//          success: function (result) {
+//            console.log(result);
+//
+//            if (result.code == 200) {
+//              that.hotdata = JSON.parse(result.data);
+//              that.msg = '你好'
+//
+////          isShow = true;
+//            } else {
+//            }
+//          },
+//          error: function () {
+//          }
+//        });
 
-//          isShow = true;
-            } else {
-            }
-          },
-          error: function () {
-          }
-        });
-
-        this.getTopic(that,1)
-        this.getTopic(that,2)
+          this.getTopic(that, 1)
+        this.getTopic(that, 2)
       })
 
     },
     methods: {
-      getTopic: function (that,type) {
+      async mobileLogin(){},
+      getTopic: function (that, type) {
         $.ajax({
           url: hostUrl + 'topic/topicList',
           type: 'post',

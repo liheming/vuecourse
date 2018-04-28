@@ -7,16 +7,15 @@
  *
  */
 
-let baseUrl = '';
+let baseUrl = 'http://www.wyuetec.com/wycms';
 let routerMode = 'hash';
 let imgBaseUrl;
-
 
 if (process.env.NODE_ENV == 'development') {
   imgBaseUrl = 'http://cangdu.org:8001/img/';
 
 }else if(process.env.NODE_ENV == 'production'){
-	baseUrl = 'http://www.wyuetec.com/wycms/';
+	baseUrl = 'http://www.wyuetec.com/wycms';
   imgBaseUrl = 'http://cangdu.org:8001/img/';
 }
 
