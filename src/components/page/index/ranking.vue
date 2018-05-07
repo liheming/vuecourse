@@ -1,12 +1,11 @@
 <template>
   <div>
     <slide></slide>
-
   </div>
 </template>
 
 <script>
-  import slide from '../.././common/slider.vue'
+  import slide from '../.././common/slidervue.vue'
 
 
   export default {

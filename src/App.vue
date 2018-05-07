@@ -2,8 +2,8 @@
   <div id="app">
     <nav class="mui-bar mui-bar-tab">
 
-      <a  v-for="(item , index) in data" :key="index" class="mui-tab-item"  :id="item.id"   @click="tabClick(item.id)">
-        <router-link :to="item.id">
+      <a  v-for="(item , index) in data" :key="index" class="mui-tab-item"  :id="item.id"   @click="tabClick(item.name)">
+        <router-link  :to="item.id">
           <span class="mui-icon   " style=" margin: 4px 4px 2px 0 "><img
                                                                          :src="item.image"
                                                                         class="item-img"></span>
@@ -11,23 +11,7 @@
         </router-link>
       </a>
 
-      <!--<a id="tabStudy" class="mui-tab-item" >-->
-      <!--<router-link to="/study">-->
-      <!--<span class="mui-icon " style=" margin: 5px 3px 1px 0 "><img mainndex-learn-img"-->
-      <!--src="./imamainndex-book.png"-->
-      <!--style="width: 25px ; height: auto"></span>-->
-      <!--<span class="mui-tab-label">继续学习</span>-->
-      <!--</router-link>-->
-      <!--</a>-->
 
-      <!--<a id="personCenterClick" class="mui-tab-item" >-->
-      <!--<router-link to="/person">-->
-      <!--<span class="mui-icon   " style=" margin: 4px 2px 2px 0 "> <img mainndex-center-img"-->
-      <!--src="./imamainndex-head.png"-->
-      <!--style="width: 25px ; height: auto"></span>-->
-      <!--<span class="mui-tab-label">个人中心</span>-->
-      <!--</router-link>-->
-      <!--</a>-->
     </nav>
 
     <router-view/>
@@ -56,9 +40,9 @@
     data () {
       return {
         data: [
-          {title: '首页', id: '../home/recommend', image: homeOk},
-          {title: '继续学习', id: '../study/orderCourse', image: study },
-          {title: '个人中心', id: '../person', image: person }
+          {title: '首页', id: '../home/recommend', image: homeOk, name:'home'},
+          {title: '继续学习', id: '../study/orderCourse', image: study ,name:'study'},
+          {title: '个人中心', id: '../person', image: person ,name:'person'}
         ],
 //          persons: [{person: '1111'}, {person: '222'}, {person: '333'},]
 
@@ -66,18 +50,18 @@
       }
     },
     methods: {
-      tabClick: function (id) {
-        if (id === "home") {
+      tabClick: function (name) {
+        if (name === "home") {
           this.data[0].image= homeOk
           this.data[1].image= study
           this.data[2].image= person
 
-        } else if (id === "study") {
+        } else if (name === "study") {
           this.data[0].image= home
           this.data[1].image= studyOk
           this.data[2].image= person
         }
-        else if (id === "person") {
+        else if (name === "person") {
           this.data[0].image= home
           this.data[1].image= study
           this.data[2].image= personOk

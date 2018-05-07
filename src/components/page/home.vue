@@ -1,24 +1,59 @@
 <template>
   <div>
     <div class="mui-segmented-control">
-      <router-link v-for="item in data" :class="item.cs" :to="item.id">{{item.title}}<span></span></router-link>
+      <div @click="tabClick(item.id)" v-for="item in data" :key="index" :class="item.cs">
+        <router-link :to="item.id" replace tag="lable">{{item.title}}<span></span>
+        </router-link>
+      </div>
     </div>
-    <transition name="slide-fade">
-      <router-view/>
-    </transition>
+    <div>
+      <transition name="slide-fade">
+        <router-view/>
+      </transition>
+    </div>
   </div>
 </template>
 <script>
+
+  let activeClass = ' mui-control-item mui-active '
+  let normalClass = ' mui-control-item  '
   export default {
     name: 'home',
     data () {
       return {
         data: [
-          {title: '推荐', id: 'recommend', cs: ' mui-control-item mui-active '},
-          {title: '排行', id: 'ranking', cs: ' mui-control-item  '},
-          {title: '免费', id: 'free', cs: ' mui-control-item  '},
-          {title: '付费', id: 'pay', cs: ' mui-control-item '}
+          {title: '推荐', id: 'recommend', cs: activeClass},
+          {title: '排行', id: 'ranking', cs: normalClass},
+          {title: '免费', id: 'free', cs: normalClass},
+          {title: '付费', id: 'pay', cs: normalClass}
         ]
+      }
+    },
+    methods: {
+      tabClick: function (id) {
+        if (id === "recommend") {
+          this.data[0].cs = activeClass
+          this.data[1].cs = normalClass
+          this.data[2].cs = normalClass
+          this.data[3].cs = normalClass
+
+        } else if (id === "ranking") {
+          this.data[0].cs = normalClass
+          this.data[1].cs = activeClass
+          this.data[2].cs = normalClass
+          this.data[3].cs = normalClass
+        }
+        else if (id === "free") {
+          this.data[0].cs = normalClass
+          this.data[1].cs = normalClass
+          this.data[2].cs = activeClass
+          this.data[3].cs = normalClass
+        } else if (id === "pay") {
+          this.data[0].cs = normalClass
+          this.data[1].cs = normalClass
+          this.data[2].cs = normalClass
+          this.data[3].cs = activeClass
+        }
       }
     }
   }
