@@ -1,12 +1,14 @@
 <template>
   <div>
     <div class="mui-segmented-control">
-      <div @click="tabClick(item.id)" v-for="item in data" :key="index" :class="item.cs">
-        <router-link :to="item.id" replace tag="lable">{{item.title}}<span></span>
+      <div @click="tabClick(item.id)" v-for="(item , index) in data" :key="index" :class="item.cs">
+        <router-link    :to="{ path: item.id, query: { page: item.id }}"   replace tag="lable">{{item.title}}<span></span>
         </router-link>
       </div>
     </div>
     <div>
+
+
       <transition name="slide-fade">
         <router-view/>
       </transition>

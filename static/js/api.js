@@ -7,7 +7,7 @@ var type = 0;
 
 const APPKEY = 'sandaoyun';
 const SIGN = '59CCE180FFAC49C8FF97DE2A0A08C119';
-const channelid = '100001';
+const CHANNELID = '100001';
 
 
 /**
@@ -390,7 +390,7 @@ function getRanking(type) {
         data: {
             'appKey': APPKEY,
             'sign': SIGN,
-            'channelCode': channelid,
+            'channelCode': CHANNELID,
             'rankType': type
         },
         dataType: 'json',
@@ -423,7 +423,7 @@ function payOrFree(freeOrPay, newOrHot) {
         data: {
             'appKey': APPKEY,
             'sign': SIGN,
-            'channelCode': channelid,
+            'channelCode': CHANNELID,
             'isfree': freeOrPay,
             'newOrHot': newOrHot
         },
@@ -464,7 +464,7 @@ function getTopic(type) {
         data: {
             'appKey': APPKEY,
             'sign': SIGN,
-            'cpid': channelid,
+            'cpid': CHANNELID,
             'type': type
         },
         dataType: 'json',
@@ -497,7 +497,7 @@ function getHotList() {
         data: {
             'appKey': APPKEY,
             'sign': SIGN,
-            'channelCode': channelid
+            'channelCode': CHANNELID
         },
         dataType: 'json',
         success: function (result) {
@@ -528,7 +528,7 @@ function getOneWeek() {
         data: {
             'appKey': APPKEY,
             'sign': SIGN,
-            'cpid': channelid,
+            'cpid': CHANNELID,
             'userid': userid
         },
         dataType: 'json',
@@ -561,7 +561,7 @@ function getEarlier() {
         data: {
             'appKey': APPKEY,
             'sign': SIGN,
-            'cpid': channelid,
+            'cpid': CHANNELID,
             'userid': userid,
             'pageNum': 1
         },
@@ -595,7 +595,7 @@ function getOrdersRecord() {
         data: {
             'appKey': APPKEY,
             'sign': SIGN,
-            'channelid': channelid,
+            'channelid': CHANNELID,
             'userid': userid,
             'functionType': 1
         },

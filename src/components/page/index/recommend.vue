@@ -58,7 +58,7 @@
         </li>
       </ul>
 
-      <!--<mainitem data=""></mainitem>-->
+      <mainitem res="recommend"></mainitem>
 
     </div>
     <foot></foot>
@@ -87,7 +87,7 @@
     mounted() {
       this.$nextTick(() => {
         var that = this;
-          getHottestData()
+          getHottestData(this)
 
 
 //        $.ajax({
@@ -96,7 +96,7 @@
 //          data: {
 //            'appKey': APPKEY,
 //            'sign': SIGN,
-//            'channelCode': channelid
+//            'channelCode': CHANNELID
 //          },
 //          dataType: 'json',
 //          success: function (result) {
@@ -128,7 +128,7 @@
           data: {
             'appKey': APPKEY,
             'sign': SIGN,
-            'cpid': channelid,
+            'cpid': CHANNELID,
             'type': type
           },
           dataType: 'json',
