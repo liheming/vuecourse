@@ -2,6 +2,8 @@ import {
   baseUrl
 } from './env'
 
+import * as axios from 'axios'
+
 export default async (url = '', data = {}, type = 'GET') => {
   type = type.toUpperCase()
   url = baseUrl + url
@@ -16,7 +18,7 @@ export default async (url = '', data = {}, type = 'GET') => {
       dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'))
       url = url + '?' + dataStr
     }
-    axios.get('/user?ID=12345')
+    axios.get(url)
       .then(function(response){
         console.log(response);
       })
@@ -27,9 +29,9 @@ export default async (url = '', data = {}, type = 'GET') => {
 
 
   } else {
-    axios.post(url, {
+    axios.post(url,
       data
-    })
+    )
       .then(function (res) {
         console.log(res)
       })

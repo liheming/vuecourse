@@ -45,7 +45,7 @@ export default [{
         },
         {
           path: 'pay',
-          component: free
+          component: pay
         }
       ]
 

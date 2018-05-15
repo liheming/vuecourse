@@ -1,39 +1,60 @@
 <template>
   <div class="hello">
-    <div style="height: 8px ; width: 100% ;background-color: #f9faff"></div>
-    <div class="" style=" text-align:  left;  font-size: 14px;   padding: 10px  25px ;">
-      <span id="mostNew" onclick="mostNew()" style="color: #f35b75">最新</span>&nbsp&nbsp<span
-      id="mostHot" onclick="mostHot()"
-      style="color:#d2d2d2;">最热</span>
+    <div style="height: 10px ; width: 100% ;background-color: #f9faff"></div>
+    <div class="list" style="background-color: white;">
+      <div class="" style=" text-align:  left;  font-size: 14px;   padding: 10px  25px ;">
+        <span id="mostNew" @click="newlyClick" style="color: #f35b75">最新</span>&nbsp&nbsp<span
+
+        style="color:#d2d2d2;" @click="hottestClick">最热</span>
+      </div>
+
+      <mainitem res="pay"   :newOrHot="newOrHot" :classId="classId"></mainitem>
     </div>
+    <div style="height: 51px"></div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'Hi',
-  data () {
-    return {
-      msg: '很高兴你使用vue 我是付费'
+  import mainitem  from '../.././common/mainitem.vue'
+
+  export default {
+    name: 'Hi',
+    components: {mainitem},
+    data () {
+      return {
+        data: null,
+        newOrHot: 1,
+        classId: '',
+        isFree:1,
+      }
+    },
+    mounted() {
+      this.$nextTick(() => {
+        var page = this.$route.query.page
+        if(page === 'free'){
+          this.isFree = 1
+        }
+        else if (page === 'pay'){
+          this.isFree = 0
+        }
+
+      })
+    },
+    methods: {
+
+      newlyClick: function () {
+        this.newOrHot = 1
+      },
+      hottestClick: function () {
+        this.newOrHot = 2
+      },
+
     }
   }
-}
+
+
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
 </style>

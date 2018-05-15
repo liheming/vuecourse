@@ -8,7 +8,7 @@
         style="color:#d2d2d2;" @click="hottestClick">最热</span>
       </div>
 
-      <mainitem res="free" :isFree="isFree"  :newOrHot="newOrHot" :classId="classId"></mainitem>
+      <mainitem res="free" :newOrHot="newOrHot" :classId="classId"></mainitem>
     </div>
     <div style="height: 51px"></div>
   </div>
@@ -26,7 +26,6 @@
         newOrHot: 1,
         classId: '',
         isFree:1,
-        page:'free'
       }
     },
     mounted() {

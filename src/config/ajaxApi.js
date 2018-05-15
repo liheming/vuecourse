@@ -5,22 +5,27 @@ import {
 export default async (vueObj = null, url = '', param = {}, type = 'POST') => {
   type = type.toUpperCase()
   url = baseUrl + url
-  $.ajax({
-    url: url,
-    type: type,
-    data: param,
-    dataType: 'json',
-    success: function (result) {
-      console.log(result)
-      if (result.code == 200) {
-        console.log('200')
-        vueObj.data = JSON.parse(result.data)
-      } else {
-        console.log('err')
+  const promise = new Promise(function (resolve, reject) {
+    $.ajax({
+      url: url,
+      type: type,
+      data: param,
+      dataType: 'json',
+      success: function (result) {
+        console.log(result)
+        if (result.code == 200) {
+          resolve(JSON.parse(result.data));
+        } else {
+          reject(new Error(result));
+        }
+      },
+      error: function () {
+        reject(new Error());
       }
-    },
-    error: function () {
-      console.log('err')
-    }
-  })
+    })
+  });
+  return promise;
 }
+
+
+

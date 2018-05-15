@@ -5,7 +5,7 @@ import { getStore } from '../config/mUtils'
  * 获取首页热门推荐数据
  * @param obj vue组件实例对象
  */
-export const getHottestData = (obj) => ajax(obj, '/selling/products/home', {
+export const   getHottestData = () =>  ajax( '/selling/products/home', {
   'appKey': APPKEY,
   'sign': SIGN,
   'channelCode': CHANNELID
