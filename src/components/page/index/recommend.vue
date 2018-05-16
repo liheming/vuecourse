@@ -29,35 +29,6 @@
       <div class="" style="padding: 10px  0  10px  15px ; font-size: 17px ; font-weight: bold">热门推荐
       </div>
 
-      <ul class="mui-table-view">
-        <li v-for=" (item , index) in hotdata" v-if="index<10" class="mui-table-view-cell mui-media"
-            style=" height: 100%">
-          <a class="item-a" @click="openPlayPage(item.id, '')">
-
-            <div class="item-div-img">
-              <img class="item-preview-img"
-                   v-bind:src="  item.preview ==''  ?   'images/default-preview.jpg' : item.preview   ">
-            </div>
-            <div class="item-content-div">
-              <div class="item-content-div-div">
-                <p class=" item-contentName">{{item.contentName}} </p>
-                <p class="item-totalNum-num">共{{item.totalNum}}集 | 已更{{item.hasNum}}集</p>
-                <p class="item-playNum">
-                  {{item.playNum > 9999 ? Math.round(item.playNum / 10000 * 100) / 100 + '万人在学' : item.playNum + '人在学'
-                  }}</p>
-                <div class="item-content-div-div-div">
-                  <p>
-                    <span
-                      class="item-base-price">{{item.isFree ? '' : '原价¥'}} {{item.isFree ? '' : item.price + 30}}</span>
-                    <span class="item-price"> {{item.isFree ? '免费' : '¥' + item.price + '' }}</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </a>
-        </li>
-      </ul>
-
       <mainitem res="recommend"></mainitem>
 
     </div>
@@ -87,32 +58,7 @@
     mounted() {
       this.$nextTick(() => {
         var that = this;
-          getHottestData(this)
 
-
-//        $.ajax({
-//          url: hostUrl + 'selling/products/home',
-//          type: 'post',
-//          data: {
-//            'appKey': APPKEY,
-//            'sign': SIGN,
-//            'channelCode': CHANNELID
-//          },
-//          dataType: 'json',
-//          success: function (result) {
-//            console.log(result);
-//
-//            if (result.code == 200) {
-//              that.hotdata = JSON.parse(result.data);
-//              that.msg = '你好'
-//
-////          isShow = true;
-//            } else {
-//            }
-//          },
-//          error: function () {
-//          }
-//        });
 
           this.getTopic(that, 1)
         this.getTopic(that, 2)

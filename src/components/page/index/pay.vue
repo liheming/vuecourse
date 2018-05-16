@@ -8,7 +8,7 @@
         style="color:#d2d2d2;" @click="hottestClick">最热</span>
       </div>
 
-      <mainitem res="pay"   :newOrHot="newOrHot" :classId="classId"></mainitem>
+      <mainitem res="pay"   :newOrHot="newOrHot" :classId="classId" :isFree="isFree"></mainitem>
     </div>
     <div style="height: 51px"></div>
   </div>

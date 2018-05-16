@@ -34,20 +34,32 @@
 <script>
   import { getFreeOrPayData, getHottestData } from '../../service/getData'
 
+  //  function timeout(ms) {
+  //    return new Promise((resolve) => {
+  //      setTimeout(resolve, ms);
+  //    });
+  //  }
+  //
+  //  async function asyncPrint(value, ms) {
+  //    await timeout(ms);
+  //    console.log(value);
+  //  }
+  //
+  //  asyncPrint('hello world  你好呀 ', 1000);
+
   const getJSON = function (url) {
     const promise = new Promise(function (resolve, reject) {
-
       $.ajax({
         url: url,
         type: 'POST',
-        data:  {
+        data: {
           'appKey': APPKEY,
           'sign': SIGN,
           'channelCode': CHANNELID
         },
         dataType: 'json',
         success: function (result) {
-          console.log(result)
+//          console.log(result)
           if (result.code == 200) {
             console.log('200')
 
@@ -65,15 +77,15 @@
     return promise;
   };
 
-  getJSON("http://www.wyuetec.com/wycms/selling/products/home").then(function (data) {
-    console.log('Contents: ' + json);
-  }, function (error) {
-    console.error('出错了', error);
-  });
+  //  getJSON("http://www.wyuetec.com/wycms/selling/products/home").then(function (data) {
+  //    console.log('Contents: ' + data);
+  //  }, function (error) {
+  //    console.error('出错了', error);
+  //  });
 
   export default {
     name: 'mainitem',
-    props: ['res', 'newOrHot', 'classId'],
+    props: ['res','isFree', 'newOrHot', 'classId'],
     data () {
       return {
         data: null
@@ -83,44 +95,51 @@
     mounted() {
       this.getData(this)
     },
+
     watch: {
+
       // 如果 `newOrHot` 发生改变，这个函数就会运行
       newOrHot: function (newQuestion, oldQuestion) {
-//        getFreeOrPayData(this, this.isFree, this.newOrHot, this.classId)
+        let that = this
+        getFreeOrPayData(this.isFree, newQuestion, this.classId).then(function (resultData) {
+          that.data = resultData
+        })
 
-      },
-      isFree: function (newQuestion, oldQuestion) {
-        console.log("hellloisFree")
-//        getFreeOrPayData(this, this.isFree, this.newOrHot, this.classId)
       }
+
+//      ,
+//      isFree: function (newQuestion, oldQuestion) {
+//        console.log(newQuestion)
+////        getFreeOrPayData(this, this.isFree, this.newOrHot, this.classId)
+//      }
     }
     ,
     methods: {
 
-      getData: function () {
+      getData(that) {
         switch (this.res) {
           case 'recommend':
+            getHottestData().then(function (resultData) {
+              that.data = resultData
+            }).catch(function (err) {
 
+            })
 
-
-
-            console.log('ajax数据是什么呢')
-         getHottestData().then(function (data) {
-           console.log('Contents: ' + data);
-         }, function (error) {
-           console.error('出错了', error);
-         });
             break
 
           case 'free':
 
-//            getFreeOrPayData(this, 1, this.newOrHot, this.classId)
+            getFreeOrPayData(1, this.newOrHot, this.classId).then(function (resultData) {
+              that.data = resultData
+            })
 
             break
 
           case 'pay':
 
-//            getFreeOrPayData(this, 0, this.newOrHot, this.classId)
+            getFreeOrPayData(0, this.newOrHot, this.classId).then(function (resultData) {
+              that.data = resultData
+            })
 
             break
         }

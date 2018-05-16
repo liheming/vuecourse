@@ -8,7 +8,7 @@
         style="color:#d2d2d2;" @click="hottestClick">最热</span>
       </div>
 
-      <mainitem res="free" :newOrHot="newOrHot" :classId="classId"></mainitem>
+      <mainitem res="free" :newOrHot="newOrHot" :classId="classId" :isFree="isFree"></mainitem>
     </div>
     <div style="height: 51px"></div>
   </div>
@@ -25,16 +25,16 @@
         data: null,
         newOrHot: 1,
         classId: '',
-        isFree:1,
+        isFree: 1,
       }
     },
     mounted() {
       this.$nextTick(() => {
-      var page = this.$route.query.page
-        if(page === 'free'){
-        this.isFree = 1
+        var page = this.$route.query.page
+        if (page === 'free') {
+          this.isFree = 1
         }
-        else if (page === 'pay'){
+        else if (page === 'pay') {
           this.isFree = 0
         }
 
@@ -50,6 +50,7 @@
       },
 
     }
+
   }
 
 
