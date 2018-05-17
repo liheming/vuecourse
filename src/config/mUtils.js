@@ -10,6 +10,79 @@ export const setStore = (name, content) => {
 }
 
 /**
+ * 获取链接中的参数值
+ * @param {Object} name 参数名
+ */
+function getQueryString(name) {
+  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+  var r = window.location.search.substr(1).match(reg);
+  if (r != null) return unescape(r[2]);
+
+  return null;
+}
+
+/**
+ * 验证码倒计时
+ * @param obj 当前标签对象
+ */
+function invokeSetTime(obj) {
+  var countdown = 60;
+  settime(obj);
+  function settime(obj) {
+    if (countdown === 0) {
+      $(obj).attr("disabled", false);
+      $(obj).text("获取验证码");
+      countdown = 60;
+      return;
+    } else {
+      $(obj).attr("disabled", true);
+      $(obj).text("(" + countdown + ") s 重发");
+      countdown--;
+    }
+    setTimeout(function () {
+        settime(obj)
+      }
+      , 1000)
+  }
+}
+
+
+
+/**
+ * 评论时间的转换 一天以内精确到小时
+ * @param data 数据 []  (把数据里面的时间格式化)
+ */
+function computerDataTime(data) {
+  for (j = 0; j < data.length; j++) {
+    var item = data[j];
+
+    var commentTime = item.commentTime;
+
+    var date2 = new Date();//结束时间
+    var date3 = date2.getTime() - new Date(commentTime).getTime();//时间差的毫秒数
+    //计算出小时数
+    var leave1 = date3 % (24 * 3600 * 1000);   //计算天数后剩余的毫秒数
+
+    var days = Math.floor(date3 / (24 * 3600 * 1000));
+    var hours = Math.floor(leave1 / (3600 * 1000));
+
+    var leave2 = leave1 % (3600 * 1000);        //计算小时数后剩余的毫秒数
+    var minutes = Math.floor(leave2 / (60 * 1000));
+
+    if (days < 1 && hours <= 24) {
+      if (hours < 1 && minutes < 60) {
+        data[j].commentTime = minutes + '分钟前';
+      } else {
+        data[j].commentTime = hours + '小时前';
+      }
+    } else {
+      data[j].commentTime = item.commentTime.substr(0, 10);
+    }
+  }
+  return data;
+}
+
+/**
  * 获取localStorage
  */
 export const getStore = name => {
@@ -31,16 +104,16 @@ export const removeStore = name => {
 export const getStyle = (element, attr, NumberMode = 'int') => {
     let target;
     // scrollTop 获取方式不同，没有它不属于style，而且只有document.body才能用
-    if (attr === 'scrollTop') { 
+    if (attr === 'scrollTop') {
         target = element.scrollTop;
     }else if(element.currentStyle){
-        target = element.currentStyle[attr]; 
-    }else{ 
-        target = document.defaultView.getComputedStyle(element,null)[attr]; 
+        target = element.currentStyle[attr];
+    }else{
+        target = document.defaultView.getComputedStyle(element,null)[attr];
     }
     //在获取 opactiy 时需要获取小数 parseFloat
     return  NumberMode == 'float'? parseFloat(target) : parseInt(target);
-} 
+}
 
 /**
  * 页面到达底部，加载更多
@@ -75,7 +148,7 @@ export const loadMore = (element, callback) => {
        	oldScrollTop = document.body.scrollTop;
        	moveEnd();
     },{passive: true})
-    
+
     const moveEnd = () => {
         requestFram = requestAnimationFrame(() => {
             if (document.body.scrollTop != oldScrollTop) {
@@ -120,7 +193,7 @@ export const showBack = callback => {
         oldScrollTop = document.body.scrollTop;
         moveEnd();
     },{passive: true})
-    
+
     const moveEnd = () => {
         requestFram = requestAnimationFrame(() => {
             if (document.body.scrollTop != oldScrollTop) {
@@ -172,7 +245,7 @@ export const animate = (element, target, duration = 400, mode = 'ease-out', call
 
     //获取dom样式
     const attrStyle = attr => {
-        if (attr === "opacity") { 
+        if (attr === "opacity") {
             return Math.round(getStyle(element, attr, 'float') * 100);
         } else {
             return getStyle(element, attr);
@@ -214,7 +287,7 @@ export const animate = (element, target, duration = 400, mode = 'ease-out', call
             let speedBase = 0; //目标点需要减去的基础值，三种运动状态的值都不同
             let intervalTime; //将目标值分为多少步执行，数值越大，步长越小，运动时间越长
             switch(mode){
-                case 'ease-out': 
+                case 'ease-out':
                     speedBase = iCurrent;
                     intervalTime = duration*5/400;
                     break;
@@ -229,7 +302,7 @@ export const animate = (element, target, duration = 400, mode = 'ease-out', call
                     break;
                 default:
                     speedBase = iCurrent;
-                    intervalTime = duration*5/400; 
+                    intervalTime = duration*5/400;
             }
             if (mode !== 'ease-in') {
                 iSpeed = (target[attr] - speedBase) / intervalTime;
@@ -237,8 +310,8 @@ export const animate = (element, target, duration = 400, mode = 'ease-out', call
             }
             //判断是否达步长之内的误差距离，如果到达说明到达目标点
             switch(mode){
-                case 'ease-out': 
-                    status = iCurrent != target[attr]; 
+                case 'ease-out':
+                    status = iCurrent != target[attr];
                     break;
                 case 'linear':
                     status = Math.abs(Math.abs(iCurrent) - Math.abs(target[attr])) > Math.abs(iSpeed);
@@ -247,11 +320,11 @@ export const animate = (element, target, duration = 400, mode = 'ease-out', call
                     status = Math.abs(Math.abs(iCurrent) - Math.abs(target[attr])) > Math.abs(iSpeed);
                     break;
                 default:
-                    status = iCurrent != target[attr]; 
+                    status = iCurrent != target[attr];
             }
 
             if (status) {
-                flag = false; 
+                flag = false;
                 //opacity 和 scrollTop 需要特殊处理
                 if (attr === "opacity") {
                     element.style.filter = "alpha(opacity:" + (iCurrent + iSpeed) + ")";

@@ -7,7 +7,7 @@
  *
  */
 
-let baseUrl = 'http://www.wyuetec.com/wycms';
+let baseUrl = 'http://www.wyuetec.com/wycms/';
 let routerMode = 'hash';
 let imgBaseUrl;
 
