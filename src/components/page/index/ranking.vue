@@ -6,8 +6,6 @@
 
 <script>
   import slide from '../.././common/slidervue.vue'
-
-
   export default {
     components: {slide},
   name: 'Hi',

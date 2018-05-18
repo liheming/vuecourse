@@ -3,8 +3,8 @@
     <!--个人中心-->
       <div class="person-center">
         <div class="person-center-div">
-          <img class="person-center-div-img" id="userHead" src="../../images/index_pay.png"/>
-          <P class="person-center-nickName" id="nickName" style="">昵称</P>
+          <img class="person-center-div-img" id="userHead" :src=" headimgurl  ? headimgurl : '../../images/index_pay.png'  "/>
+          <P class="person-center-nickName" id="nickName" v-text=" nickname ? nickname : '昵称' "></P>
         </div>
       </div>
       <ul class="mui-table-view" style="color: #282828">
@@ -51,14 +51,27 @@
 </template>
 
 <script>
+  import { queryUserByUserId } from '../../service/getData'
 export default {
   name: 'Hi',
   data () {
     return {
-      msg: '很高兴你使用vue 我是个人中心'
+      headimgurl: '',
+      nickname: ''
     }
+  },
+  mounted(){
+   let that = this
+    queryUserByUserId().then(function (resultData) {
+      that.headimgurl = resultData.headimgurl;
+      that.nickname = resultData.nickname;
+    }).catch(function (err) {
+
+    })
   }
 }
+
+
 </script>
 <style scoped>
 .mui-navigate-right{

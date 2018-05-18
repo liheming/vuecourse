@@ -29,16 +29,17 @@
       }
     },
     mounted() {
-      this.$nextTick(() => {
-        var page = this.$route.query.page
-        if (page === 'free') {
-          this.isFree = 1
-        }
-        else if (page === 'pay') {
-          this.isFree = 0
-        }
-
-      })
+//      console.log(this.$route.query.page+"param")   //获取链接地址参数
+//      this.$nextTick(() => {
+//        var page = this.$route.param.page
+//        if (page === 'free') {
+//          this.isFree = 1
+//        }
+//        else if (page === 'pay') {
+//          this.isFree = 0
+//        }
+//
+//      })
     },
     methods: {
 

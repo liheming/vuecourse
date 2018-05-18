@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="mui-segmented-control">
-      <div @click="tabClick(item.id)" v-for="(item , index) in data" :key="index" :class="item.cs">
-        <router-link    :to="{ path: item.id, query: { page: item.id }}"   replace tag="lable">{{item.title}}<span></span>
-        </router-link>
+      <div @click="tabClick(item.id)" v-for="(item , index) in data" :key="index" :class="item.cs">{{item.title}}
+       <span>
+        </span>
       </div>
     </div>
     <div>
@@ -16,7 +16,7 @@
   </div>
 </template>
 <script>
-
+  //  import (getQueryString) from 'vue-concise-slider'// 引入slider组件
   let activeClass = ' mui-control-item mui-active '
   let normalClass = ' mui-control-item  '
   export default {
@@ -31,29 +31,39 @@
         ]
       }
     },
+    mounted(){
+      for(let item of  this.data){
+        item.cs = normalClass
+      }
+      if(localStorage.position===undefined){
+        localStorage.position =0
+      }
+      this.data[localStorage.position].cs  = activeClass
+
+    },
     methods: {
       tabClick: function (id) {
+        for(let item of  this.data){
+          item.cs = normalClass
+        }
+          this.$router.replace({ path: id, query: { page: id }})
+
         if (id === "recommend") {
+//        router.put()  ={ path: item.id, query: { page: item.id }}
+          localStorage.position = 0
           this.data[0].cs = activeClass
-          this.data[1].cs = normalClass
-          this.data[2].cs = normalClass
-          this.data[3].cs = normalClass
 
         } else if (id === "ranking") {
-          this.data[0].cs = normalClass
+          localStorage.position = 1
+
+
           this.data[1].cs = activeClass
-          this.data[2].cs = normalClass
-          this.data[3].cs = normalClass
         }
         else if (id === "free") {
-          this.data[0].cs = normalClass
-          this.data[1].cs = normalClass
+          localStorage.position = 2
           this.data[2].cs = activeClass
-          this.data[3].cs = normalClass
         } else if (id === "pay") {
-          this.data[0].cs = normalClass
-          this.data[1].cs = normalClass
-          this.data[2].cs = normalClass
+          localStorage.position = 3
           this.data[3].cs = activeClass
         }
       }

@@ -1,6 +1,6 @@
 import ajax from '../config/ajaxApi'
 import { getStore } from '../config/mUtils'
-
+let userid = "o4AOi1JRAUDzU5e9-MC-RuCirdCQ";
 /**
  *------------------------------------公共通用接口-------------------------------------
  */
@@ -9,9 +9,10 @@ import { getStore } from '../config/mUtils'
  * userid 获取用户信息
  * @param userid 微信用户openid
  */
-export const queryUserByUserId = (userid) => ajax('wechat/wxuser/queryUserInfoByUserId', {
+export const queryUserByUserId = () => ajax('wechat/wxuser/queryUserInfoByUserId', {
   'userid': userid
 })
+
 
 /**
  * code获取用户信息

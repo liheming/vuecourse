@@ -13,7 +13,7 @@ export const setStore = (name, content) => {
  * 获取链接中的参数值
  * @param {Object} name 参数名
  */
-function getQueryString(name) {
+export const getQueryString = name => {
   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
   var r = window.location.search.substr(1).match(reg);
   if (r != null) return unescape(r[2]);
@@ -25,7 +25,7 @@ function getQueryString(name) {
  * 验证码倒计时
  * @param obj 当前标签对象
  */
-function invokeSetTime(obj) {
+export const invokeSetTime = obj => {
   var countdown = 60;
   settime(obj);
   function settime(obj) {
@@ -52,7 +52,7 @@ function invokeSetTime(obj) {
  * 评论时间的转换 一天以内精确到小时
  * @param data 数据 []  (把数据里面的时间格式化)
  */
-function computerDataTime(data) {
+export const computerDataTime = data => {
   for (j = 0; j < data.length; j++) {
     var item = data[j];
 

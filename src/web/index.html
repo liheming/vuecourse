@@ -211,13 +211,14 @@
 
         <template v-if="isShow">
           <div class="menu">
-            <div><ul class="mui-table-view mui-grid-view mui-grid-9"
+            <div>
+              <ul class="mui-table-view mui-grid-view mui-grid-9"
                   style=" padding-top: 5px;   background-color: white">
                 <li v-for="(item , index)  in  topicData" v-if="index<4"
                     class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3 ">
                   <a @click="openTopicPage(item.id,1,item.topPicture,item.topicDesc)"> <span
                     class="mui-icon "><img class="index-menu-topic-img"
-                                             v-bind:src="  item.icon ==''  ?   'images/default-preview.jpg' : item.icon "></span>
+                                           v-bind:src="  item.icon ==''  ?   'images/default-preview.jpg' : item.icon "></span>
                     <div class="mui-media-body  " style="font-size: 12px">{{item.name}}</div>
                   </a>
                 </li>
@@ -661,8 +662,6 @@
             <div @click="openIndex()" style="margin-top: 4%;">
               <p class="mui-ellipsis learn-hot-recommend">热门推荐</p>
             </div>
-
-
           </div>
         </template>
       </div>
@@ -670,7 +669,6 @@
 
     <!--个人中心-->
     <div id="tabbar-with-contact" class="mui-control-content">
-
       <div class="person-center">
         <div class="person-center-div">
           <img class="person-center-div-img" id="userHead" src="images/index_pay.png"/>
