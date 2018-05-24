@@ -24,10 +24,11 @@
           </a>
         </li>
         <li @click="toastMsg()" class="mui-table-view-cell">
-          <a class="mui-navigate-right" >
+          <router-link   class="mui-navigate-right"  to="/person/myCollect">
             <img src="../../images/person-message-black.png" class="person-center-item-image"> 我的消息
-          </a>
+          </router-link>
         </li>
+        <router-link to="/person/myCollect" class="description_top">test</router-link>
         <!--<li @click="toastMsg()" class="mui-table-view-cell">
             <a class="mui-navigate-right" style="color: #878787">
                 <img src="images/person-card.png" class="person-center-item-image"> 我的卡券
@@ -47,6 +48,7 @@
 
 
       </ul>
+      <router-view />
   </div>
 </template>
 
@@ -61,6 +63,7 @@ export default {
     }
   },
   mounted(){
+  document.title = '个人中心'
    let that = this
     queryUserByUserId().then(function (resultData) {
       that.headimgurl = resultData.headimgurl;
@@ -68,6 +71,13 @@ export default {
     }).catch(function (err) {
 
     })
+  },
+  methods: {
+    openMyComment(){
+      alert("11")
+//      this.$router.replace({ path: id+'person/myComment', query: { page: id }})
+
+    }
   }
 }
 

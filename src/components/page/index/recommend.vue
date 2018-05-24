@@ -16,10 +16,10 @@
         </ul>
       </div>
       <div>
-        <img  v-for="(item , index)  in  topicLargeData"  :key="index"
-          @click="openTopicPage(item[index].id , 2 ,item.topPicture ,item.topicDesc)"
-          v-bind:src="  item.specialIcon ==''  ?   'images/default-preview.jpg' : item.specialIcon "
-          style="width: 100% ; height: auto ;padding: 0 21px  10px  21px">
+        <img v-for="(item , index)  in  topicLargeData" :key="index"
+             @click="openTopicPage(item[index].id , 2 ,item.topPicture ,item.topicDesc)"
+             v-bind:src="  item.specialIcon ==''  ?   'images/default-preview.jpg' : item.specialIcon "
+             style="width: 100% ; height: auto ;padding: 0 21px  10px  21px">
       </div>
     </div>
 
@@ -40,7 +40,7 @@
   import slide from '../.././common/slider.vue'
   import foot from '../.././common/footer.vue'
   import mainitem from '../.././common/mainitem.vue'
-  import { getHottestData , getTopic } from '../../../service/getData'
+  import { getHottestData, getTopic } from '../../../service/getData'
   export default {
     components: {slide, foot, mainitem},
 
@@ -56,9 +56,8 @@
     ,
     mounted() {
 
+      document.title = '推荐'
       var that = this;
-//          this.getTopic(that, 1)
-//        this.getTopic(that, 2)
 
       getTopic(1).then(function (resultData) {
         that.topicData = resultData
@@ -71,9 +70,7 @@
 
       })
 
-
       this.$nextTick(() => {
-
 
       })
 

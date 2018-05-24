@@ -37,6 +37,7 @@
 
     ,
     mounted(){
+      document.title = '继续学习'
       for (let item of  this.data) {
         item.cs = normalClass
 
@@ -67,8 +68,17 @@
         }
       }
 
-    }
+    },
+    watch: {
+      '$route' (to, from) {
 
+        console.log(from.query.page)
+//        console.log(from)
+//        console.log("to"+to.path)
+//        console.log("from"+from +"-----to"+to)
+        // 对路由变化作出响应...
+      }
+    }
   }
 </script>
 

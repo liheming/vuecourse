@@ -16,7 +16,6 @@
 
 <script>
   import mainitem  from '../.././common/mainitem.vue'
-
   export default {
     name: 'Hi',
     components: {mainitem},
@@ -29,6 +28,7 @@
       }
     },
     mounted() {
+      document.title = '付费'
       this.$nextTick(() => {
         var page = this.$route.query.page
         if(page === 'free'){

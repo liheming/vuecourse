@@ -32,6 +32,8 @@
       }
     },
     mounted(){
+      document.title = '首页'
+
       for(let item of  this.data){
         item.cs = normalClass
       }
@@ -55,8 +57,6 @@
 
         } else if (id === "ranking") {
           localStorage.position = 1
-
-
           this.data[1].cs = activeClass
         }
         else if (id === "free") {
