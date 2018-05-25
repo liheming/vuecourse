@@ -314,7 +314,7 @@ export const doCollect = (productsId) => ajax('wx/remark/addOrUpdate', {
  * 添加留言反馈
  * @param jsonObj    var formData = new FormData(form); （form  表单对象）
  */
-export const addFeedBack = (jsonObj) => ajax('wx/feedback/addBack', '' ,jsonObj)
+export const addFeedBack = (formData) => ajax('wx/feedback/addBack', '' ,formData)
 
 
 

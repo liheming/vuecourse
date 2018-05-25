@@ -211,7 +211,7 @@ function initData() {
             },
             openIndex: function () {
                 //              mui.openWindow({
-                //                  url: 'index.html?index=0'
+                //                  url: 'home.html?home=0'
                 //              });
                 openHomePage();
             },
@@ -311,46 +311,46 @@ function onTabChange(index, type) {
     var personCenterClick = document.getElementById("personCenterClick");
     var tabbarcontact = document.getElementById("tabbar-with-contact");
 
-	var homeimg = document.getElementById('index-home-img');
-	var learnimg = document.getElementById('index-learn-img');
-	var centerimg = document.getElementById('index-center-img')
+	var homeimg = document.getElementById('home-home-img');
+	var learnimg = document.getElementById('home-learn-img');
+	var centerimg = document.getElementById('home-center-img')
 
     //根据index切换tab页的样式
     if (index == 0) {
         if (tabHome && tabbar && homeimg) {
             tabHome.className = 'mui-tab-item mui-active';
             tabbar.className = 'mui-control-content mui-active';
-            homeimg.src = 'images/index-home-ok.png';
+            homeimg.src = 'images/home-home-ok.png';
         }
 
         if (tabStudy && continuestudy && learnimg) {
             tabStudy.className = 'mui-tab-item';
             continuestudy.className = 'mui-control-content';
-            learnimg.src = 'images/index-book.png';
+            learnimg.src = 'images/home-book.png';
         }
 
         if (personCenterClick && tabbarcontact) {
             personCenterClick.className = 'mui-tab-item';
             tabbarcontact.className = 'mui-control-content';
-            centerimg.src = 'images/index-head.png';
+            centerimg.src = 'images/home-head.png';
         }
     } else if (index == 1) {
         if (tabHome && tabbar && homeimg) {
             tabHome.className = 'mui-tab-item';
             tabbar.className = 'mui-control-content';
-            homeimg.src = 'images/index-home.png';
+            homeimg.src = 'images/home-home.png';
         }
 
         if (tabStudy && continuestudy && learnimg) {
             tabStudy.className = 'mui-tab-item mui-active';
             continuestudy.className = 'mui-control-content mui-active';
-            learnimg.src = 'images/index-book-ok.png';
+            learnimg.src = 'images/home-book-ok.png';
         }
 
         if (personCenterClick && tabbarcontact && centerimg) {
             personCenterClick.className = 'mui-tab-item';
             tabbarcontact.className = 'mui-control-content';
-            centerimg.src = 'images/index-head.png';
+            centerimg.src = 'images/home-head.png';
         }
 
         //获取数据
@@ -361,19 +361,19 @@ function onTabChange(index, type) {
         if (tabHome && tabbar && homeimg) {
             tabHome.className = 'mui-tab-item';
             tabbar.className = 'mui-control-content';
-            homeimg.src = 'images/index-home.png';
+            homeimg.src = 'images/home-home.png';
         }
 
         if (tabStudy && continuestudy && learnimg) {
             tabStudy.className = 'mui-tab-item';
             continuestudy.className = 'mui-control-content';
-            learnimg.src = 'images/index-book.png';
+            learnimg.src = 'images/home-book.png';
         }
 
         if (personCenterClick && tabbarcontact && centerimg) {
             personCenterClick.className = 'mui-tab-item mui-active';
             tabbarcontact.className = 'mui-control-content mui-active';
-            centerimg.src = 'images/index-head-ok.png';
+            centerimg.src = 'images/home-head-ok.png';
         }
     }
 }

@@ -51,7 +51,7 @@ export default {
       subdata:null
     }
   },
-  mounted() {
+  created() {
     let that = this;
     getBuyRecord(1).then(function (resultData) {
       that.subdata = resultData

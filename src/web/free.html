@@ -13,6 +13,19 @@
     <link rel="stylesheet" type="text/css" href="css/app.css"/>
     <link rel="stylesheet" type="text/css" href="css/iconfont.css"/><!-- 自定义字体图标 -->
 
+    <style>
+
+        .item-active {
+            line-height: 23px;
+            font-size: 12px;
+            border-radius: 90px;
+            color: #f35b75;
+            padding: 0 15px;
+            margin-right: 15px;
+            margin-top: 8px
+        }
+
+    </style>
 
 </head>
 <body style="background-color: white">
@@ -24,7 +37,7 @@
             <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
 
 
-            <!--第一张 v-for=" (itmainndex) in data" v-mainndex<10"-->
+            <!--第一张 v-for=" (item, index) in data" v-if="index<10"-->
 
 
             <!-- 第三张 -->
@@ -77,47 +90,36 @@
         </div>
     </div>
 
-    <!--<div style="position: relative">-->
+
+    <div style="position: relative">
+        <div id="category-all"
+             style="text-align:  center ; padding-top: 10px; color:#f35b75;  background-color: white ; float: left;font-size: 12px ;width: 20%  ; padding-left: 0;  height: 40px"><span
+                class="mui-control-item "
+                style="border-radius: 90px ;border: solid 1px  ; padding: 3px 15px ; font-size: 12px ;" id="allSpan"
+                @click="allCourse"> 全部</span>
+        </div>
+        <div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control "
+             style=" font-size: 12px ; background-color: white  ; width: 80% ;  height: 40px">
+            <div id="category-item" class="mui-scroll">
+                <a v-for=" (item, index) in classifyData" class="mui-control-item   item-active"
+                   :style="classId == item.classId ? changeStyle  : defaultStyle"
+                   v-text="item.className" @click="getClassifyData(item.classId )"></a>
+                <!--<a class="mui-control-item  item-active" style="line-height: 23px;  font-size: 12px; border-radius: 90px ; color: #f35b75 ;border: solid 1px  #f35b75;padding: 0 15px ;margin-bottom: 5px ;margin-left: 15px">亲子</a>-->
 
 
-    <!--<div id="category-all" onclick="changecolor(true)"-->
-    <!--style="text-align:  center ; padding-top: 19px; color:#67d9fe;  background-color: white ; float: left;font-size: 10px ;width: 15%  ;    height: 60px">-->
-    <!--<span class="mui-control-item "-->
-    <!--style="border-radius: 10px ;border: solid 1px  ; padding: 3px 10px ;"> 全部</span>-->
-    <!--</div>-->
-    <!--<div onclick="changecolor('#ff0000',13)"-->
-    <!--class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted"-->
-    <!--style=" font-size: 10px ; background-color: white  ; width: 85% ; padding: 10px 0 10px 0; height: 60px">-->
-    <!--<div id="category-item" class="mui-scroll">-->
-    <!--&lt;!&ndash;<span class=" " style="border-radius: 10px ; color: #67d9fe ;border: solid 1px  #67d9fe; position: relative ;top: -40% ; padding: 2px 10px ;font-size: 10px ;  margin-left: 15px ;margin-right: 5px"> 全部</span>&ndash;&gt;-->
-    <!--<a class="mui-control-item"><span class="classify-item"-->
-    <!--v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">亲子</span></a>-->
-    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
-    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
-    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
-    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
-    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
-    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
-    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
-    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
-    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
-    <!--<a class="mui-control-item"><span class="classify-item">亲子</span></a>-->
-
-
-    <!--</div>-->
-    <!--</div>-->
-
-
-    <!--</div>-->
+            </div>
+        </div>
+    </div>
 
     <div style="height: 10px ; width: 100% ;background-color: #f9faff"></div>
-    <div class="list" style="background-color: white;">
+    <div class="" style="background-color: white;">
 
-        <template v-if="isShow">
+        <template v-if="freeData">
 
             <div class="" style=" text-align:  left;  font-size: 14px;   padding: 10px  25px ;">
-                    <span id="mostNew" onclick="mostNew()" style="color: #f35b75">最新</span>&nbsp&nbsp<span id="mostHot" onclick="mostHot()"
-                                                                                              style="color:#d2d2d2;">最热</span>
+                <span id="mostNew" onclick="mostNew()" style="color: #f35b75">最新</span>&nbsp&nbsp<span id="mostHot"
+                                                                                                       onclick="mostHot()"
+                                                                                                       style="color:#d2d2d2;">最热</span>
 
             </div>
 
@@ -125,7 +127,7 @@
             <div class="list">
 
                 <ul class="mui-table-view">
-                    <li v-for=" (item, index) in data" v-if="index<10" class="mui-table-view-cell mui-media"
+                    <li v-for=" (item, index) in freeData" v-if="index<10" class="mui-table-view-cell mui-media"
                         style=" height: 100%">
                         <a class="item-a" @click="openDetailsPage(item.id)">
 
@@ -176,100 +178,121 @@
 <script>
 
 
-    var isFree = GetQueryString('freeOrPay');
-    var newest = 1;
-    var hottest = 2;
-    if (isFree == 1)
-        document.title = "免费";
-    else
-        document.title = "付费";
 
-
-    payOrFree(isFree, newest);
     mui.init({
         swipeBack: false  //关闭右滑关闭功能
     });
 
 
     var vuefree = new Vue({
-        el: '#app',
-        data: {
-
-            isShow: false,
-            isNew: true,
-            data: null
-        },
-        methods: {
-            openDetailsPage: function (id) {
-                openContentDetail(id, null);
-
-//                mui.openWindow({
-//                    id: "1321",
-//                    url: "content-details.html?id=" + id,
-//                    extras: {
-//                        name: 'mui' //自定义扩展参数，可以用来处理页面间传值
-//                    },
-//                    show: {
-//                        autoShow: false
-//                    },
-//                    waiting: {
-//                        autoShow: true, //自动显示等待框，默认为true
-//                        title: '正在加载...', //等待对话框上显示的提示内容
-//                        //                            options:{
-//                        //                                width:waiting-dialog-widht,//等待框背景区域宽度，默认根据内容自动计算合适宽度
-//                        //                                height:waiting-dialog-height,//等待框背景区域高度，默认根据内容自动计算合适高度
-//                        //                            }
-//                    }
-//                })
-
-
-            },
-
-
-        }
-
-    });
-
-    function mostNew() {
-        $('#mostNew').css('color', '#f35b75');
-        $('#mostHot').css('color', '#d2d2d2');
-        payOrFree(isFree, newest);
-    }
-
-    function mostHot() {
-        $('#mostNew').css('color', '#d2d2d2');
-        $('#mostHot').css('color', '#f35b75');
-        payOrFree(isFree, hottest);
-    }
-
-
-    function payOrFree(isFree, newOrHot) {
-        $.ajax({
-//            url: 'http://192.168.0.114:8180/wycms/selling/products/payOrFree',
-            url: 'http://www.wyuetec.com/wycms/selling/products/payOrFree',
-            type: 'post',
+            el: '#app',
             data: {
-                'appKey': 'sandaoyun',
-                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
-                'channelCode': '100001',
-                'isfree': isFree,
-                'newOrHot': newOrHot
-            },
-            dataType: 'json',
-            success: function (result) {
-                console.log(result);
 
-                if (result.code == 200) {
-                    console.log("200");
-                    vuefree.data = JSON.parse(result.data);
-                    vuefree.isShow = true;
-                } else {
+                classId: '',
+                classifyData: null,
+                freeData: null,
+                defaultStyle: {
+
+                    lineHeight: '23px',
+                    fontSize: '12px',
+                    color: 'black',
+                    backgroundColor: '#EEEFEA',
+                    border: 'solid 1px #EEEFEA'
+
+                },
+                changeStyle: {
+                    lineHeight: '23px',
+                    fontSize: '12px',
+                    backgroundColor: 'white',
+                    border: 'solid 1px #f35b75'
+
                 }
             },
-            error: function () {
+
+            mounted() {
+                this.getClassifyList();
+            },
+            watch: {
+                lookA: function () {
+
+                }
+            },
+
+            methods: {
+
+                allCourse: function () {
+                    $("#allSpan").css('background-color', 'white');
+                    $("#allSpan").css('color', '#f35b75');
+                    $("#allSpan").css('border', 'solid 1px #f35b75');
+                    this.classId = '';
+
+                },
+
+                getClassifyData: function (classId) {
+                    this.classId = classId;
+
+                    $("#allSpan").css('background-color', '#EEEFEA');
+                    $("#allSpan").css('color', 'black');
+                    $("#allSpan").css('border', 'solid 1px #EEEFEA');
+
+                    $.ajax({
+                        url: hostUrl + 'wx/search/detail',
+                        type: 'post',
+                        data: {
+                            'appKey': APPKEY,
+                            'sign': SIGN,
+                            'cpid': CHANNELID,
+//                            'classId': classId,
+                            'isFree': 0
+
+                        },
+                        dataType: 'json',
+                        success: function (result) {
+                            console.log(result);
+
+                            if (result.code === 200) {
+                                console.log("200");
+                                vuefree.freeData = JSON.parse(result.data);
+                            } else {
+                            }
+                        },
+                        error: function () {
+                        }
+                    });
+                },
+                getClassifyList: function () {
+                    $.ajax({
+                        url: hostUrl + 'wx/search/classify',
+                        type: 'post',
+                        data: {
+                            'appKey': APPKEY,
+                            'sign': SIGN
+
+                        },
+                        dataType: 'json',
+                        success: function (result) {
+                            console.log(result);
+
+                            if (result.code == 200) {
+                                console.log("200");
+                                vuefree.classifyData = JSON.parse(result.data);
+                            } else {
+                            }
+                        },
+                        error: function () {
+                        }
+                    });
+                }
             }
-        });
-    }
+
+
+        })
+    ;
+
+
+    /**
+     *
+     */
 
 
 </script>

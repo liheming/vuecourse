@@ -174,6 +174,16 @@
 
 body{background: white}
 
+.hot_recommend {
+  width: 50%;
+  font-size: 16px ;
+  color: white;
+  background:#f35b75;
+  display: inline-block;
+  border-radius: 20px;
+  padding: 6px 8px;
+}
+
 /*-----内容列表item公共样式----*/
 
 .item-a {
@@ -258,7 +268,7 @@ body{background: white}
 
 }
 
-/*-----------index 首页---------*/
+/*-----------home 首页---------*/
 .index-menu-topic-img{
   width: 30px ; height: 30px
 }

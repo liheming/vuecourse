@@ -304,7 +304,7 @@ function openTopicPage(topicid,topicType,topPicture,topicDesc) {
 
 function openHomePage(type) {
     mui.openWindow({
-        url: "index.html?index=0&ver=" + vercode+"&type="+type,
+        url: "index.html?home=0&ver=" + vercode+"&type="+type,
         waiting: {
             autoShow: true, //自动显示等待框，默认为true
             title: '正在加载...' //等待对话框上显示的提示内容
@@ -317,7 +317,7 @@ function openHomePage(type) {
  */
 function openIndex() {
     mui.openWindow({
-        url: "index.html?index=0&ver=" + vercode
+        url: "index.html?home=0&ver=" + vercode
     });
 }
 

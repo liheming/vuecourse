@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1,maximum-scale=1, minimum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="css/app.css"/>
+    <style>
+
+    </style>
+
+</head>
+
+<body>
+
+<div id="app" style="background-color: white" class="mui-content"
+>
+    <template v-if="isShow">
+
+        <nav class="mui-bar mui-bar-tab">
+
+            <div @click="subCourse" style="width: 100%; height: 50px; display: table;">
+                <input type="button" value="立即体验"
+                       style="width: 100%; height: 100%; display: table-cell; text-align: center; vertical-align: middle ; font-family: fantasy; font-size: 25px ; border: 0; color: white; background:#67d9fe;"/>
+
+            </div>
+        </nav>
+
+
+        <!--<template v-if="seen">-->
+
+        <div style="width: 100% ; height: 100%">
+            <div style=";position: relative ; height: 100%; width: 100%;   ">
+                <img v-bind:src="content.topPicture" style="width: 100%;  height: auto ; ">
+
+                <div style="width: 100% ; height: inherit ; position: absolute; top:-5.5px ; background:rgba(0,0,0,0.4);  ">
+                        <span class="mui-icon iconfont icon-play" @click="openPlayPage(content.id,'',content.type)"
+
+                              style="position: absolute;top: 50%;  left:44% ;transform: translateY(-50%); color: white ;  font-size: 50px"></span>
+                </div>
+
+            </div>
+
+            <div @click="sendFriend"
+                 style="  z-index: 10; color: white ; position:fixed; top:30px; right:1px; background:rgba(0,0,0,0.4); border-bottom-left-radius:50px;border-top-left-radius:50px;  padding: 5px 10px; ">
+                <span class="mui-icon iconfont icon-gift" style="font-size: 18px  ; "></span>
+                <span style=" font-size: 14px">赠送好友</span>
+            </div>
+
+            <div style=" position:fixed; top:75px; right:1px;visibility: hidden ; background:rgba(0,0,0,0.4); border-bottom-left-radius:50px;border-top-left-radius:50px;  padding: 5px 10px; ">
+                <span class="mui-icon iconfont icon-collect" style="font-size: 18px  ;color: red "></span>
+                <span style="color: white ; font-size: 14px">收藏课程</span>
+            </div>
+
+
+        </div>
+
+
+        <div style="  padding: 20px 20px ;line-height: 1px ;position: relative;">
+
+
+            <div style=" width: 100%  ; font-size: 15px;  line-height: 16px;">
+                <p id="contentName"
+                   style="color: #282828; font-weight: bold ;  overflow: hidden; font-size: 15px;  line-height: 20px ; ">
+                    {{content.contentName}}
+                </p>
+                <p class='mui-ellipsis' style="font-size: 11px;"> {{content.director}}</p>
+
+                <p class='mui-ellipsis' style="font-size: 11px;">
+                    已有{{content.playNum}}人播放
+                </p>
+
+            </div>
+
+            <div class="mui-media-body"
+                 style=" display: inline;  ; font-size: 13px;  line-height: 16px; position: absolute ; top: 90px ;right: 20px">
+
+                <!--<div style="text-align: center">-->
+                <!--<a @click="openPlayPage(content.id,content.type)">-->
+                <!--<p class='mui-ellipsis'-->
+                <!--style="font-size: 10px ; color: white;  background:#67d9fe;  display: inline-block; border-radius: 10px;  padding: 5px 15px; ">-->
+                <!--{{ content.isTry ? '试看' : '立即播放' }}</p>-->
+                <!--</a>-->
+
+                <!--<p class='mui-ellipsis'-->
+                <!--style="font-size: 10px ; color: white;  background:grey;  display: inline-block; border-radius: 10px;  padding: 5px 10px; ">-->
+                <!--+ 赠送好友</p>-->
+
+                <!--</div>-->
+
+                <span style="font-size: 11px ; color: #8f8f94;  text-decoration:line-through">{{content.isFree ?  '' : '原价¥'}} {{content.isFree ?  '' : content.price+30}}</span>
+                <span style="font-size: 15px ; color:  red "> {{content.isFree ? '免费' : '¥'+content.price+'' }}</span>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="detail">
+            <div v-for="image in content.contentPicture">
+                <img v-bind:src="image" style="width: 100%;   ">
+
+            </div>
+
+
+            <div>
+                <img src="images/use-guide.jpg" style="width: 100% ;">
+
+            </div>
+
+        </div>
+
+        <div style="height: 5px ; width: 100% ;background-color: #f9faff"></div>
+
+        <div class="mostNewRecommend">
+            <div style="padding: 20px  0  20px  15px ;font-size: 17px ; color: #282828 ;font-weight: bold ">
+                最新推荐
+            </div>
+            <div class="list">
+
+                <ul class="mui-table-view">
+                    <li v-for=" (item, index) in data" v-if="index<3" class="mui-table-view-cell mui-media"
+                        style=" height: 100%">
+                        <a  class="item-a" @click="getContent(item.id)">
+
+                            <div class="item-div-img">
+                                <img class="item-preview-img"
+                                     v-bind:src="  item.preview ==''  ?   'images/default-preview.jpg' : item.preview   ">
+                            </div>
+                            <div class="item-content-div">
+                                <div class="item-content-div-div">
+                                    <p class=" item-contentName">{{item.contentName}} </p>
+                                    <p class="item-totalNum-num">共{{item.totalNum}}集 | 已更{{item.hasNum}}集</p>
+                                    <p class="item-playNum"> {{item.playNum > 9999 ?
+                                        Math.round(item.playNum/10000*100)/100 +'万人在学' :item.playNum+'人在学'
+                                        }}</p>
+                                    <div class="item-content-div-div-div">
+                                        <p>
+                                            <span class="item-base-price">{{item.isFree ?  '' : '原价¥'}} {{item.isFree ?  '' : item.price+30}}</span>
+                                            <span class="item-price"> {{item.isFree ? '免费' : '¥'+item.price+'' }}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+
+        <template v-if="sub">
+            <div id="subdialog" class="mui-popup mui-popup-in"
+                 style="display: block; line-height: 35px; width: 330px">
+                <div class="mui-popup-inner">
+                    <div class="mui-popup-title" style="margin-top: 5px">《{{content.title}}》课程</div>
+                    <div class="mui-popup-text">
+                        <span style="font-size: 11px ; color: #8f8f94;  text-decoration:line-through">{{content.isFree ?  '' : '原价¥'}} {{content.isFree ?  '' : content.price+30}}</span>
+                        <span style="font-size: 15px ; color:  red "> {{content.isFree ? '免费' : '¥'+content.price+'' }}</span>
+
+                    </div>
+                    <input @click="wxPayConfig(content.productsCode)" class="mui-ellipsis"
+                           value="立即订阅" type="button"
+                           style="font-size: 20px ; border: 0; color: white; background:#67d9fe; display: inline-block; border-radius: 50px; padding: 10px 70px; "/>
+                    <!--<div class="mui-popup-text"><span class="mui-icon "> </span>话费支付<input disabled type="radio"></div>-->
+                    <div class="mui-popup-out"><span class="mui-icon iconfont icon-close"
+                                                     style="position: absolute; right: 6px ; top: 6px; font-size: 20px"
+                                                     @click="subguanbi"></span></div>
+                </div>
+            </div>
+            <div class="mui-popup-backdrop mui-active" style="display: block;"></div>
+        </template>
+
+        <template v-if="subsuccess">
+            <div id="successdialog" class="mui-popup mui-popup-in"
+                 style="display: block; font-size: 16px; line-height: 40px; width: 320px; ">
+                <div class="mui-popup-inner" style="padding: 40px">
+                    <div class="mui-popup-title">恭喜你已经成功订阅</div>
+                    <div class="mui-popup-text">《{{content.contentName}}》课程</div>
+                    <input @click="successguanbi" class="mui-ellipsis" value="我知道了" type="button"
+                           style="font-size: 20px ; border: 0; margin-top: 15px; color: white; background:#67d9fe; display: inline-block; border-radius: 50px; padding: 10px 70px; "/>
+                    <div class="mui-popup-out"><span class="mui-icon mui-icon-close"
+                                                     style="position: absolute; right: 2px ; top: 2px;"
+                                                     @click="successguanbi"></span></div>
+                </div>
+            </div>
+            <div class="mui-popup-backdrop mui-active" style=""></div>
+        </template>
+
+
+        <template v-if="subfail">
+            <div id="faildialog" class="mui-popup mui-popup-in"
+                 style="display: block; font-size: 16px; line-height: 40px; width: 320px; ">
+                <div class="mui-popup-inner" style="padding: 30px">
+                    <div class="mui-popup-title">订阅未成功</div>
+                    <input @click="wxPayConfig(content.productsCode)" class="mui-ellipsis" value="再试一次呗"
+                           type="button"
+                           style="font-size: 20px ; border: 0; margin-top: 15px; color: white; background:#67d9fe; display: inline-block; border-radius: 50px; padding: 10px 70px; "/>
+                    <div class="mui-popup-out"><span class="mui-icon mui-icon-close"
+                                                     style="position: absolute; right: 2px ; top: 2px;"
+                                                     @click="failguanbi"></span></div>
+                </div>
+            </div>
+            <div class="mui-popup-backdrop mui-active" style="display: block;"></div>
+        </template>
+
+    </template>
+
+
+</div>
+</body>
+</div>
+
+<!--先引入库文件 再使用库文件  顺序不能乱-->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<!--<script src="https://cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js"></script>-->
+<script src="js/mui.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/api.js?ver=2018021215"></script>
+<script src="js/base.js?ver=2018021215"></script>
+<!--微信支付js-sdk-->
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+    var vmcontent;
+    //4. 创建实例
+
+    vmcontent = new Vue({
+        el: '#app',
+
+        data: {
+            isShow: false,
+            sub: false,
+            subfail: false,
+            subsuccess: false,
+            seen: true,
+            title: '三到云课堂',
+            data: null,
+            content: null
+
+        },
+
+        components: {},
+        methods: {
+
+            sendFriend: function () {
+                alert("正在升级，敬请期待");
+            },
+
+            subCourse: function () {
+
+                if (this.content.isFree || this.content.hasBuy) {
+//                    alert();
+
+                    openPlayPage(this.content.id, '', this.content.type);
+//                    mui.openWindow({
+//                        url: "content-play.html?id=" + this.content.id + "&type=" + this.content.type
+//                    });
+
+
+                } else {
+                    this.sub = true;
+                    this.subsuccess = false;
+                    this.subfail = false;
+                }
+
+            },
+            subguanbi: function () {
+                this.sub = false;
+                this.subsuccess = false;
+                this.subfail = false;
+
+            },
+            successguanbi: function () {
+                this.sub = false;
+                this.subsuccess = false;
+                this.subfail = false;
+
+            },
+            failguanbi: function () {
+                this.sub = false;
+                this.subsuccess = false;
+                this.subfail = false;
+
+            },
+
+//            openPlayPage: function (id, type) {
+//
+//                addCollection(this.content.contentId, type);
+//                mui.openWindow({
+//                    url: "content-play.html?id=" + id + "&type=" + type,
+//                    extras: {
+//                        name: 'mui'  //自定义扩展参数，可以用来处理页面间传值
+//                    },
+//                    show: {
+//                        autoShow: false
+//                    },
+//                    waiting: {
+//
+//                        autoShow: true,//自动显示等待框，默认为true
+//                        title: '正在加载...',//等待对话框上显示的提示内容
+////                            options:{
+////                                width:waiting-dialog-widht,//等待框背景区域宽度，默认根据内容自动计算合适宽度
+////                                height:waiting-dialog-height,//等待框背景区域高度，默认根据内容自动计算合适高度
+////                            }
+//                    }
+//                })
+//            }
+
+        },
+
+        computed: {
+            // 计算属性的 getter
+            reversedMessage: function () {
+                // `this` 指向 vm 实例
+                return this.message.split('').reverse().join('')
+            }
+        }
+    });
+
+
+
+    //视频集/音频集增加播放量接口 type 内容类型1视频集 , 3音频集
+    function addCollection(contentId, type) {
+        $.ajax({
+            url: 'http://www.wyuetec.com/wycms/user/center/history/addCollection',
+            type: 'post',
+            data: {
+                'appKey': 'sandaoyun',
+                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'contentid': contentId,
+                'type': type
+            },
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+
+                if (result.code == 200) {
+                    console.log("200");
+                } else {
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+
+
+    getList();
+    getContent(GetQueryString("id"));
+
+
+
+    function initView() {
+        document.title = vmcontent.content.contentName;
+    }
+
+    function getList() {
+        $.ajax({
+            url: 'http://www.wyuetec.com/wycms/selling/products/home',
+            type: 'post',
+            data: {'appKey': 'sandaoyun', 'sign': '59CCE180FFAC49C8FF97DE2A0A08C119', 'channelCode': '100001'},
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+
+                if (result.code == 200) {
+                    console.log("200");
+                    vmcontent.data = JSON.parse(result.data);
+                    vmcontent.isShow = true;
+                } else {
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+
+
+
+
+    function getContent(id) {
+
+        $('html, body').animate({scrollTop: 0}, 'fast');//带动画回到頂部
+        //    获取列表
+        $.ajax({
+//            url: 'http://192.168.0.114:8180/wycms/selling/products/content',
+            url: 'http://www.wyuetec.com/wycms/selling/products/content',
+            type: 'post',
+            data: {
+                'appKey': 'sandaoyun',
+                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'productsId': id,
+                'userid': userid,
+                'cpid': '100001'
+            },
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+
+                if (result.code == 200) {
+                    console.log("200");
+                    vmcontent.content = JSON.parse(result.data);
+
+                    initView();
+
+                } else {
+                    console.log("err");
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+
+
+    // 微信支付
+    function wxPayConfig(productsId) {
+
+        console.log("立即微信支付" + productsId);
+        $.ajax({
+            url: 'http://www.wyuetec.com/wycms/wx/wxConfig',
+            type: 'post',
+            data: {
+                'appKey': 'sandaoyun',
+                'sign': '59CCE180FFAC49C8FF97DE2A0A08C119',
+                'url': encodeURIComponent(location.href.split('#')[0])
+            },
+            dataType: 'json',
+            success: function (result) {
+                if (result.code == 200) {
+                    var data = JSON.parse(result.data);
+
+                    wx.config({
+                        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                        appId: data.appId, // 必填，公众号的唯一标识
+                        timestamp: data.timestamp, // 必填，生成签名的时间戳
+                        nonceStr: data.nonceStr, // 必填，生成签名的随机串
+                        signature: data.signature, // 必填，签名
+                        jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表
+                    });
+
+
+                    chooseWXPay(
+                        'sandaoyun',
+                        '59CCE180FFAC49C8FF97DE2A0A08C119',
+                        '100001',
+                        productsId
+                    );
+                }
+            },
+            error: function () {
+                alert("发起支付异常，请重试！");
+
+            }
+        });
+    }
+
+    function chooseWXPay(appKey, sign, cpid, productsId) {
+
+        $.ajax({
+            url: 'http://www.wyuetec.com/wycms/wx/pay',
+            type: 'post',
+            data: {
+                'appKey': appKey,
+                'sign': sign,
+                'userid': userid,
+                'cpid': cpid,
+                'productsId': productsId
+            },
+            dataType: 'json',
+            success: function (result) {
+                if (result.code == 200) {
+                    var data = JSON.parse(result.data);
+
+                    wx.chooseWXPay({
+                        timestamp: data.timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                        nonceStr: data.nonceStr, // 支付签名随机串，不长于 32 位
+                        package: data.packageValue, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+                        signType: data.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                        paySign: data.paySign, // 支付签名
+                        success: function (res) {
+                            if (res.errMsg == "chooseWXPay:ok") {
+                                vmcontent.content.hasBuy = true;
+                                vmcontent.subsuccess = true;
+                                vmcontent.sub = false;
+                                vmcontent.subfail = false;
+//                                alert("支付成功");
+                            } else {
+                                vmcontent.subsuccess = false;
+                                vmcontent.sub = false;
+                                vmcontent.subfail = true;
+                            }
+                        },
+                        cancel: function (res) {
+
+                        },
+                        fail: function (res) {
+                            vmcontent.subsuccess = false;
+                            vmcontent.sub = false;
+                            vmcontent.subfail = true;
+                        },
+                        complete: function (res) {
+
+                        }
+                    });
+                }
+            },
+        });
+    }
+
+    //mui初始化
+    mui.init({
+        swipeBack: false //启用右滑关闭功能
+    });
+
+    //
+    //    function successguanbi() {
+    //        var ad = document.getElementById("successdialog"); // 隐藏元素 不可用
+    //        ad.removeChild(ad.childNodes[0]);
+    //
+    //    }
+    //
+    //    function guanbi() {
+    //        var ad = document.getElementById("dialog"); // 隐藏元素 不可用
+    //        ad.removeChild(ad.childNodes[0]);
+    //
+    //    }
+    //
+    //    function failguanbi() {
+    //        var ad = document.getElementById("faildialog"); // 隐藏元素 不可用
+    //        ad.removeChild(ad.childNodes[0]);
+    //
+    //    }
+
+
+    //
+    //
+    //    const SubDdialog = {
+    //        template: '<div id="dialog" class="mui-popup mui-popup-in" style="display: block; line-height: 35px; width: 320px"> <div class="mui-popup-inner"> <div class="mui-popup-title">《{{contentName}}》课程</div> <div class="mui-popup-text">￥{{price}}</div> <input onclick="wxPayConfig()" class="mui-ellipsis" value="立即订阅" type="button" style="font-size: 10px ; color: white; background:#67d9fe; display: inline-block; border-radius: 50px; padding: 10px 70px; "/> <div class="mui-popup-text"><span class="mui-icon "> </span>话费支付<input disabled type="radio"></div> <div class="mui-popup-out"><span class="mui-icon mui-icon-close" style="position: absolute; right: 2px ; top: 2px;" onclick="guanbi()"></span> </div> </div> </div>'
+    //        , props: {
+    //            price: {
+    //                type: Number,
+    //                default: price
+    //            },
+    //            contentName: {
+    //                type: String,
+    //                default: contentName
+    //            },
+    //
+    //        }
+    //
+    //        ,
+    //    };
+    //
+    //    const SubSuccessDdialog = {
+    //        template: '<div id="dialog" class="mui-popup mui-popup-in" style="display: block; font-size: 16px; line-height: 40px; width: 320px; "> <div class="mui-popup-inner" style="padding: 40px"> <div class="mui-popup-title">恭喜你已经成功订阅</div> <div class="mui-popup-text">《》课程</div> <input onclick="guanbi()" id="alertBtn" class="mui-ellipsis" value="我知道了" type="button" style="font-size: 20px ; margin-top: 15px; color: white; background:#67d9fe; display: inline-block; border-radius: 50px; padding: 10px 70px; "/> <div class="mui-popup-out"><span class="mui-icon mui-icon-close" style="position: absolute; right: 2px ; top: 2px;" onclick="guanbi()"></span> </div> </div> </div>'
+    //
+    //    };
+    //
+    //    const SubFailDdialog = {
+    //        template: '<div id="dialog" class="mui-popup mui-popup-in" style="display: block; font-size: 16px; line-height: 40px; width: 320px; "> <div class="mui-popup-inner" style="padding: 30px"> <div class="mui-popup-title">订阅未成功</div> <input onclick="guanbi()" id="alertBtn" class="mui-ellipsis" value="换一种支付方式" type="button" style="font-size: 20px ; margin-top: 15px; color: #282828; background:#eee; display: inline-block; border-radius: 50px; padding: 5px 20px; "/> <div class="mui-popup-out"><span class="mui-icon mui-icon-close" style="position: absolute; right: 2px ; top: 2px;" onclick="guanbi()"></span> </div> </div> </div>'
+    //
+    //    };
+
+
+    //
+    //    // 2. 定义路由
+    //    // 每个路由应该映射一个组件。 其中"component" 可以是
+    //    // 通过 Vue.extend() 创建的组件构造器，
+    //    // 或者，只是一个组件配置对象。
+    //    // 我们晚点再讨论嵌套路由。
+    //    const routes = [
+    //        {path: '/subDdialog', component: SubDdialog, props: true},
+    //        {path: '/subfail', component: SubFailDdialog},
+    //        {path: '/subsuccess', component: SubSuccessDdialog},
+    //    ];
+    //
+    //    // 3. 创建 router 实例，然后传 `routes` 配置
+    //    // 你还可以传别的配置参数, 不过先这么简单着吧。
+    //    const router = new VueRouter({
+    //        routes // （缩写）相当于 routes: routes
+    //    });
+
+
+    vmcontent.seen = true;
+
+
+</script>
+
+</body>
+
+</html>

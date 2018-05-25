@@ -80,7 +80,7 @@
   //  getJSON("http://www.wyuetec.com/wycms/selling/products/home").then(function (data) {
   //    console.log('Contents: ' + data);
   //  }, function (error) {
-  //    console.error('出错了', error);
+  //    console.error('出错了', error);//
   //  });
 
   export default {
@@ -92,7 +92,7 @@
 
       }
     },
-    mounted() {
+    created() {
       this.getData(this)
     },
 
@@ -101,7 +101,7 @@
       // 如果 `newOrHot` 发生改变，这个函数就会运行
       newOrHot: function (newQuestion, oldQuestion) {
         let that = this
-        getFreeOrPayData(this.isFree, newQuestion, this.classId).then(function (resultData) {
+        getFreeOrPayData(this.isFree, newQuestion, this.classId ).then(function (resultData) {
           that.data = resultData
         })
 
