@@ -20,7 +20,13 @@ const personMessage = r => require.ensure([], () => r(require('../components/pag
 const personBuyRecord = r => require.ensure([], () => r(require('../components/page/person/buyRecord.vue')), 'buyRecord')
 
 
-const help = r => require.ensure([], () => r(require('../components/page/help/help.vue')), 'help')
+const help = r => require.ensure([], () => r(require('../components/page/help/help.vue')), 'help');
+const feedBack = r => require.ensure([], () => r(require('../components/page/help/feedBack.vue')), 'feedBack');
+
+const play = r => require.ensure([], () => r(require('../components/page/play/play.vue')), 'play');
+
+
+const topic = r => require.ensure([], () => r(require('../components/page/topic/topic.vue')), 'topic');
 
 
 export default [{
@@ -30,7 +36,7 @@ export default [{
     // 地址为空时跳转home页面
     {
       path: '',
-      redirect: '/index'
+      redirect: '/home/recommend'
     },
     {
       path: '/index',
@@ -97,8 +103,18 @@ export default [{
       component: personBuyRecord
     }
     ,{
-      path: 'help',
+      path: '/help',
       component: help
+    },{
+      path: '/feedBack',
+      component: feedBack
+    }
+    ,{
+      path: '/play',
+      component: play
+    } ,{
+      path: '/topic',
+      component: topic
     }
 
   ]

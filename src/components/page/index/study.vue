@@ -57,7 +57,7 @@
       }
     },
     watch: {
-      '$route' (to, from) {
+      '$route' (to, from) {//监控路由
         console.log(from.query.page)
 //        console.log(from)
 //        console.log("to"+to.path)

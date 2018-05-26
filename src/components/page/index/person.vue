@@ -28,7 +28,7 @@
           <img src="../../../images/person-message-black.png" class="person-center-item-image"> 我的消息
         </router-link>
       </li>
-      <router-link to="/person/myCollect" class="description_top">test</router-link>
+      <a @click="openMyComment">User</a>
       <!--<li @click="toastMsg()" class="mui-table-view-cell">
           <a class="mui-navigate-right" style="color: #878787">
               <img src="images/person-card.png" class="person-center-item-image"> 我的卡券
@@ -73,8 +73,8 @@
     },
     methods: {
       openMyComment(){
-        alert("11")
-//      this.$router.replace({ path: id+'person/myComment', query: { page: id }})
+        alert("11");
+        this.$router.push({path: '/help', query: {page: '123'}})
       }
     }
   }

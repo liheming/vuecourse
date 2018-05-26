@@ -1,5 +1,5 @@
 import {
-  baseUrl
+  baseUrl,APPKEY,SIGN
 } from './env'
 
 export default async (url = '', param = {}, formData = null, type = 'POST') => {

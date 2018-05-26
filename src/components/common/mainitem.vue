@@ -3,7 +3,7 @@
     <ul class="mui-table-view">
       <li v-for=" (item , index) in data" class="mui-table-view-cell mui-media"
           style=" height: 100%">
-        <a class="item-a" @click="openPlayPage(item.id, '')">
+        <router-link class="item-a" @click="openPlayPage(item.id, '')" to="/play">
 
           <div class="item-div-img">
             <img class="item-preview-img"
@@ -25,7 +25,7 @@
               </div>
             </div>
           </div>
-        </a>
+        </router-link>
       </li>
     </ul>
   </div>

@@ -1,5 +1,7 @@
 import ajax from '../config/ajaxApi'
 import { getStore } from '../config/mUtils'
+import {CHANNELID
+} from '../config/env'
 let userid = "o4AOi1JRAUDzU5e9-MC-RuCirdCQ";
 /**
  *------------------------------------公共通用接口-------------------------------------
@@ -312,16 +314,16 @@ export const doCollect = (productsId) => ajax('wx/remark/addOrUpdate', {
 
 /**
  * 添加留言反馈
- * @param jsonObj    var formData = new FormData(form); （form  表单对象）
+ * @param formData var formData = new FormData(form); （form  表单对象）
  */
-export const addFeedBack = (formData) => ajax('wx/feedback/addBack', '' ,formData)
+export const addFeedBack = (formData) => ajax('wx/feedback/addBack', '', formData);
 
 
 
 /**
  * 获取用户的历史留言
  */
-export const getHistoryFeedback = () => ajax('wx/feedback/addBack', {
+export const getHistoryFeedback = () => ajax('wx/feedback/queryUserBack', {
   'cpid': CHANNELID,
   'userid': userid
 })

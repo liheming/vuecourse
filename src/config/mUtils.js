@@ -2,31 +2,35 @@
  * 存储localStorage
  */
 export const setStore = (name, content) => {
-	if (!name) return;
-	if (typeof content !== 'string') {
-		content = JSON.stringify(content);
-	}
-	window.localStorage.setItem(name, content);
-}
+  if (!name) return;
+  if (typeof content !== 'string') {
+    content = JSON.stringify(content);
+  }
+  window.localStorage.setItem(name, content);
+};
 
 /**
  * 获取链接中的参数值
  * @param {Object} name 参数名
  */
 export const getQueryString = name => {
-  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-  var r = window.location.search.substr(1).match(reg);
+  let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+  let r = window.location.search.substr(1).match(reg);
   if (r != null) return unescape(r[2]);
 
   return null;
-}
+};
+
+export const getParam = name => {
+  this.$route.query.name
+};
 
 /**
  * 验证码倒计时
  * @param obj 当前标签对象
  */
 export const invokeSetTime = obj => {
-  var countdown = 60;
+  let countdown = 60;
   settime(obj);
   function settime(obj) {
     if (countdown === 0) {
@@ -53,21 +57,21 @@ export const invokeSetTime = obj => {
  * @param data 数据 []  (把数据里面的时间格式化)
  */
 export const computerDataTime = data => {
-  for (j = 0; j < data.length; j++) {
-    var item = data[j];
+  for (let j = 0; j < data.length; j++) {
+    let item = data[j];
 
-    var commentTime = item.commentTime;
+    let commentTime = item.commentTime;
 
-    var date2 = new Date();//结束时间
-    var date3 = date2.getTime() - new Date(commentTime).getTime();//时间差的毫秒数
+    let date2 = new Date();//结束时间
+    let date3 = date2.getTime() - new Date(commentTime).getTime();//时间差的毫秒数
     //计算出小时数
-    var leave1 = date3 % (24 * 3600 * 1000);   //计算天数后剩余的毫秒数
+    let leave1 = date3 % (24 * 3600 * 1000);   //计算天数后剩余的毫秒数
 
-    var days = Math.floor(date3 / (24 * 3600 * 1000));
-    var hours = Math.floor(leave1 / (3600 * 1000));
+    let days = Math.floor(date3 / (24 * 3600 * 1000));
+    let hours = Math.floor(leave1 / (3600 * 1000));
 
-    var leave2 = leave1 % (3600 * 1000);        //计算小时数后剩余的毫秒数
-    var minutes = Math.floor(leave2 / (60 * 1000));
+    let leave2 = leave1 % (3600 * 1000);        //计算小时数后剩余的毫秒数
+    let minutes = Math.floor(leave2 / (60 * 1000));
 
     if (days < 1 && hours <= 24) {
       if (hours < 1 && minutes < 60) {

@@ -10,6 +10,9 @@
 let baseUrl = 'http://www.wyuetec.com/wycms/';
 let routerMode = 'hash';
 let imgBaseUrl;
+const APPKEY = 'sandaoyun';
+const SIGN = '59CCE180FFAC49C8FF97DE2A0A08C119';
+const CHANNELID = '100001';
 
 if (process.env.NODE_ENV == 'development') {
   imgBaseUrl = 'http://cangdu.org:8001/img/';
@@ -23,4 +26,7 @@ export {
 	baseUrl,
 	routerMode,
 	imgBaseUrl,
+  APPKEY,
+  SIGN,
+  CHANNELID
 }

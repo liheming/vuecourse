@@ -20,8 +20,7 @@
 
 <script>
   //  import muijs from './js/mui.min'
-  import'../.././style/mui.min.css'
-  import'../.././style/app.css'
+
 
   import homeOk from '../.././images/index-home-ok.png'
   import studyOk from '../.././images/index-book-ok.png'
