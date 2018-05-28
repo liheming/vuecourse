@@ -44,7 +44,7 @@
 
             <div class="upload_warp_img" v-show="imgList.length!=0">
 
-              <div class="upload_warp_img_div" v-for="(item, index) in imgList"
+              <div class="upload_warp_img_div" v-for="(item , index) in imgList"
                    style="width: 55px ; height: 50px ;float: left ; position: relative ; margin-right: 8px">
                 <div class="upload_warp_img_div_top" style="position: absolute ;right: 1px ;top: 1px">
                   <img src="../../../images/faq-close.png" class="upload_warp_img_div_del"
@@ -88,6 +88,7 @@
 <script>
 
   import {addFeedBack, getHistoryFeedback} from '../../../service/getData'
+  import { APPKEY, CHANNELID, SIGN } from '../../../config/env'
 
   export default {
     name: 'App',
@@ -113,8 +114,7 @@
       addBack() {
         let that = this
         let fContent = $("#feedback-content").val();
-        let form = document.getElementById("imgform");
-        let formData = new FormData(form);
+        let formData = new FormData();
 
         if (!fContent) {
           alert("请先输入留言内容！");
@@ -130,7 +130,7 @@
         for (let i = 0; i < files.length; i++) {
           formData.append("pictures", files[i].file);
         }
-
+        let userid = "o4AOi1JRAUDzU5e9-MC-RuCirdCQ";
         formData.append("appKey", APPKEY);
         formData.append("sign", SIGN);
         formData.append("cpid", CHANNELID);
@@ -140,9 +140,13 @@
         formData.append("type", 1);
 
         addFeedBack(formData).then(function (resultData) {
-          that.data = resultData
+          $("#feedback-content").val('');
+          that.imgList = [];
+          alert("您已留言成功，我们将会尽快回复您！");
+          console.log("200");
         }).catch(function (err) {
-          console.log(err)
+          alert("留言失败，请重新提交");
+          console.log("err 留言失败喔");
         })
 
       }
@@ -153,7 +157,7 @@
           return;
         }
 
-        var file = document.getElementById('upload_file');
+        let file = document.getElementById('upload_file');
         file.click();
 
       },
@@ -252,9 +256,7 @@
   }
 </script>
 <style>
-  .faq{
-    padding: 15px;
-  }
+
   .router-link-active {
     color: #f35b75;
 
@@ -264,4 +266,59 @@
     width: 25px;
     height: auto;
   }
+
+  .faq {
+    width: 100%;
+    height: auto;
+    background-color: white;
+
+  }
+
+  .faq-content {
+    padding: 0 15px;
+    margin-top: 25px;
+  }
+
+  .faq-title {
+    margin-bottom: 20px;
+  }
+
+  .mui-table-view {
+
+    font-size: 14px
+  }
+
+  .faq-icon {
+    width: 20px;
+  }
+
+  .upload_warp_img {
+    float: left;
+  }
+
+  .upload_warp_img_div {
+    width: 55px;
+    height: 50px;
+    float: left;
+    position: relative;
+    margin-right: 8px
+  }
+
+  .upload_warp_img_div_top {
+    position: absolute;
+    right: 1px;
+    top: 1px
+  }
+
+  .upload_warp_img_div_del {
+    width: 15px;
+    height: 15px
+  }
+
+  .upload_image_preview {
+    width: 55px;
+    height: 50px
+  }
+
+
 </style>

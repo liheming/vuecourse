@@ -8,58 +8,78 @@
     </div>
     <div>
 
-
-      <transition name="slide-fade">
-        <router-view />
-      </transition>
+          <recommend v-show="page == 'recommend'"></recommend>
+          <ranking v-show="page == 'ranking'"></ranking>
+          <free v-show="page === 'free'"></free>
+          <pay v-show="page === 'pay'"></pay>
     </div>
   </div>
 </template>
 <script>
+  import recommend from '../home/recommend.vue'
+  import ranking from '../home/ranking.vue'
+  import free from '../home/free.vue'
+  import pay from '../home/pay.vue'
   //  import (getQueryString) from 'vue-concise-slider'// 引入slider组件
-  let activeClass = ' mui-control-item mui-active '
-  let normalClass = ' mui-control-item  '
+  let activeClass = ' mui-control-item mui-active '  //
+  let normalClass = ' mui-control-item  '     //
+
+  const pageRcommend ='recommend'
+  const pageRanking ='ranking'
+  const pageFree ='free'
+  const pagePay ='pay'
   export default {
     name: 'home',
+    components: {recommend, ranking, free, pay},
     data () {
       return {
+        page: pageRcommend,  //切换 tab page
         data: [
-          {title: '推荐', id: 'recommend', cs: activeClass},
-          {title: '排行', id: 'ranking', cs: normalClass},
-          {title: '免费', id: 'free', cs: normalClass},
-          {title: '付费', id: 'pay', cs: normalClass}
+          {title: '推荐', id: pageRcommend, cs: activeClass},
+          {title: '排行', id: pageRanking, cs: normalClass},
+          {title: '免费', id: pageFree, cs: normalClass},
+          {title: '付费', id: pagePay, cs: normalClass}
         ]
       }
     },
-    mounted(){
+    created(){
       document.title = '首页'
-      for(let item of  this.data){
+      for (let item of  this.data) {
         item.cs = normalClass
       }
-      if(localStorage.position===undefined){
-        localStorage.position =0
+      let page = this.$route.query.page
+      if (page === pageRcommend  || !page) {
+        this.page = pageRcommend
+        this.data[0].cs = activeClass
+      } else if (page === pageRanking) {
+        this.page = pageRanking
+        this.data[1].cs = activeClass
+      } else if (page === pageFree) {
+        this.page = pageFree
+        this.data[2].cs = activeClass
+      } else if (page === pagePay) {
+        this.page = pagePay
+        this.data[3].cs = activeClass
       }
-      this.data[localStorage.position].cs  = activeClass
     },
     methods: {
       tabClick: function (id) {
-        for(let item of  this.data){
+        for (let item of  this.data) {
           item.cs = normalClass
         }
-        this.$router.replace({ path: id, query: { page: id }})
-        if (id === "recommend") {
-//        router.put()  ={ path: item.id, query: { page: item.id }}
-          localStorage.position = 0
+        this.$router.replace({path: 'home', query: {page: id}})
+        if (id === pageRcommend) {
+          this.page = pageRcommend
           this.data[0].cs = activeClass
-        } else if (id === "ranking") {
-          localStorage.position = 1
+        } else if (id === pageRanking) {
+          this.page = pageRanking
           this.data[1].cs = activeClass
         }
-        else if (id === "free") {
-          localStorage.position = 2
+        else if (id === pageFree) {
+          this.page = pageFree
           this.data[2].cs = activeClass
-        } else if (id === "pay") {
-          localStorage.position = 3
+        } else if (id === pagePay) {
+          this.page = pagePay
           this.data[3].cs = activeClass
         }
       }
@@ -73,9 +93,11 @@
   .slide-fade-enter-active {
     transition: all 0.3s ease;
   }
+
   .slide-fade-leave-active {
     transition: all 0.1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
   }
+
   .slide-fade-enter, .slide-fade-leave-to
     /* .slide-fade-leave-active for below version 2.1.8 */
   {

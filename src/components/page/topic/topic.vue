@@ -75,7 +75,7 @@
 
 <script>
   import {getTopicList} from "../../../service/getData";
-  import footer from '../.././common/footer.vue'
+  import footer from '../../common/pagefooter.vue'
 
   // var vueTopic;
   // var topPicture = GetQueryString('topPicture');

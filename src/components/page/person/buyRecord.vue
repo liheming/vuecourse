@@ -22,7 +22,6 @@
     components: {buyitem},
     data () {
       return {
-        msg: '我是购买记录',
         res: 'buyFail',
         data: [
           {title: '未成功', id: 'buyFail', cs: activeClass},
@@ -33,14 +32,11 @@
 
     ,
     mounted(){
-      for (let item of  this.data) {
-        item.cs = normalClass
-
+      if (this.res === "buyFail") {
+        this.data[0].cs = activeClass
+      }else {
+        this.data[1].cs = activeClass
       }
-      if (localStorage.buyposition === undefined) {
-        localStorage.buyposition = 0
-      }
-      this.data[localStorage.buyposition].cs = activeClass
 
     },
     methods: {
@@ -50,12 +46,10 @@
 
         }
         if (id === "buyFail") {
-          localStorage.buyposition = 0
           this.data[0].cs = activeClass
           this.res = 'buyFail'
 
         } else if (id === "buySuccess") {
-          localStorage.buyposition = 1
           this.data[1].cs = activeClass
           this.res = 'buySuccess'
         }

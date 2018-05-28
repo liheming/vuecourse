@@ -1,63 +1,42 @@
 <template>
-  <div >
+  <div>
     <!--个人中心-->
     <div class="person-center">
       <div class="person-center-div">
-        <img class="person-center-div-img" id="userHead" :src=" headimgurl  ? headimgurl : '../../images/index_pay.png'  "/>
+        <img class="person-center-div-img" id="userHead"
+             :src=" headimgurl  ? headimgurl : '../../images/index_pay.png'  "/>
         <P class="person-center-nickName" id="nickName" v-text=" nickname ? nickname : '昵称' "></P>
       </div>
     </div>
+
     <ul class="mui-table-view" style="color: #282828">
-      <li @click="openMyCollent()" class="mui-table-view-cell">
-        <a class="mui-navigate-right">
-          <img class="person-center-item-image" src="../../../images/person-collect-black.png"> 我的收藏
-        </a>
-      </li>
-      <li @click="openMyComment()" class="mui-table-view-cell">
-        <a class="mui-navigate-right">
-          <img src="../../../images/person-comment-black.png" class="person-center-item-image"> 我的评论
-        </a>
-      </li>
-      <li @click="openBuyRecord()" class="mui-table-view-cell">
-        <a class="mui-navigate-right">
-          <img src="../../../images/person-buyrecord-black.png" class="person-center-item-image"> 购买记录
-        </a>
-      </li>
-      <li @click="toastMsg()" class="mui-table-view-cell">
-        <router-link   class="mui-navigate-right"  to="/person/myCollect">
-          <img src="../../../images/person-message-black.png" class="person-center-item-image"> 我的消息
+      <li class="mui-table-view-cell" v-for="(item , index) in data " :key="index">
+        <router-link class="mui-navigate-right" :to="item.id" >
+          <img :src="item.image" class="person-center-item-image">{{item.title}}
         </router-link>
       </li>
-      <a @click="openMyComment">User</a>
-      <!--<li @click="toastMsg()" class="mui-table-view-cell">
-          <a class="mui-navigate-right" style="color: #878787">
-              <img src="images/person-card.png" class="person-center-item-image"> 我的卡券
-          </a>
-      </li>
-      <li @click="toastMsg()" class="mui-table-view-cell">
-          <a class="mui-navigate-right" style="color: #878787 ">
-              <img src="images/person-gift.png" class="person-center-item-image"> 赠送记录
-          </a>
-      </li>
-      <li @click="toastMsg()" class="mui-table-view-cell">
-          <a class="mui-navigate-right" style="color: #878787 ">
-              <img src="images/person-share.png" class="person-center-item-image"> 分享记录
-          </a>
-      </li>-->
-
-
-
     </ul>
-    <router-view />
+    <router-link to="/help">help</router-link>
   </div>
 </template>
 
 <script>
+  import collect from '../../../images/person-collect-black.png'
+  import comment from '../../../images/person-comment-black.png'
+  import buyRecord from '../../../images/person-buyrecord-black.png'
+  import message from '../../../images/person-message-black.png'
+
   import { queryUserByUserId } from '../../../service/getData'
   export default {
     name: 'Hi',
     data () {
       return {
+        data: [
+          {title: '我的收藏', id: 'personCollect', image: collect},
+          {title: '我的评论', id: 'personComment', image: comment},
+          {title: '购买记录', id: 'personBuyRecord', image: buyRecord},
+          {title: '我的消息', id: 'personMessage', image: message}
+        ],
         headimgurl: '',
         nickname: ''
       }
@@ -66,24 +45,34 @@
       document.title = '个人中心'
       let that = this
       queryUserByUserId().then(function (resultData) {
+        localStorage.userid = resultData.openid;
         that.headimgurl = resultData.headimgurl;
         that.nickname = resultData.nickname;
       }).catch(function (err) {
+
       })
     },
     methods: {
       openMyComment(){
-        alert("11");
-        this.$router.push({path: '/help', query: {page: '123'}})
+        alert("11")
+//      this.$router.replace({ path: id+'person/myComment', query: { page: id }})
+
       }
     }
   }
+
+
 </script>
 <style scoped>
-  .mui-navigate-right{
+  .person-center-item-image{
+    margin-right: 10px;
+  }
+  .mui-navigate-right {
     font-size: 14px;
   }
-  .mui-table-view-cell{
+
+  .mui-table-view-cell {
     padding: 12px 15px;
+
   }
 </style>

@@ -198,7 +198,7 @@ export const getMyMessage = () => ajax('wx/message/myMessage', {
  * 获取课程的内容信息
  * @param productsid   销售品id
  */
-export const getContent = (productsid) => ajax('wx/comments/addComments', {
+export const getContent = (productsid) => ajax('wx/products/content', {
   'cpid': CHANNELID,
   'userid': userid,
   'productsId': productsid

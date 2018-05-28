@@ -42,9 +42,9 @@
         <div style="margin-top: 4%;">
           <p style="font-size: 11px;">暂无消息喔~</p>
         </div>
-        <div @click="openHomePage" style="margin-top: 4%;">
+        <router-link  to="/home/recommend?page=home" style="margin-top: 4%;">
           <p class="mui-ellipsis hot_recommend">热门推荐</p>
-        </div>
+        </router-link>
       </div>
     </div>
   </div>

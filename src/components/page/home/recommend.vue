@@ -38,7 +38,7 @@
 
 <script>
   import slide from '../.././common/slider.vue'
-  import foot from '../.././common/footer.vue'
+  import foot from '../../common/pagefooter.vue'
   import mainitem from '../.././common/mainitem.vue'
   import { getTopic } from '../../../service/getData'
   export default {
@@ -63,7 +63,6 @@
       getTopic(1).then(function (resultData) {
         that.topicData = resultData
       }).catch(function (err) {
-
       })
       getTopic(2).then(function (resultData) {
         that.topicLargeData = resultData

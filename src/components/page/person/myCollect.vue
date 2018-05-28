@@ -40,9 +40,9 @@
           <div style="margin-top: 4%;">
             <p style="font-size: 11px;">空空如也喔~</p>
           </div>
-          <div @click="toHome()" style="margin-top: 4%;">
+          <router-link to="/home/recommend?page=home" style="margin-top: 4%;">
             <p class="mui-ellipsis hot_recommend">热门推荐</p>
-          </div>
+          </router-link>
         </div>
       </template>
     </div>

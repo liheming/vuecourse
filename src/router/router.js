@@ -36,7 +36,7 @@ export default [{
     // 地址为空时跳转home页面
     {
       path: '',
-      redirect: '/home/recommend'
+      redirect: '/home'
     },
     {
       path: '/index',
@@ -89,17 +89,17 @@ export default [{
     ,
 
     {
-      path: 'personCollect',
+      path: '/personCollect',
       component: personCollect
     }, {
-      path: 'personComment',
+      path: '/personComment',
       component: personComment
     }, {
-      path: 'personMessage',
+      path: '/personMessage',
       component: personMessage
     },
     {
-      path: 'personBuyRecord',
+      path: '/personBuyRecord',
       component: personBuyRecord
     }
     ,{

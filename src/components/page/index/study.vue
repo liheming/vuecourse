@@ -9,55 +9,72 @@
     </div>
     <div style="height: 5px ; width: 100% ;background-color: #f9faff"></div>
     <!--<component :is="currentView"></component>-->
-    <router-view/>
-
+    <!--<router-view/>-->
+    <order v-show="order"></order>
+    <play v-show="!order"></play>
   </div>
 </template>
 
 <script>
-  //  import play from './study/playRecord.vue'
+  import play from '../study/playRecord'
+  import Order from '../study/orderCourse'
   let activeClass = ' mui-control-item mui-active '
   let normalClass = ' mui-control-item  '
+
+  const orderCourse = 'orderCourse'
+  const playRecord = 'playRecord'
+
   export default {
+    components: {Order, play},
     name: '',
     data () {
       return {
+        order: true, // 默认显示订阅记录
         msg: '很高兴你使用vue 我是继续学习',
         data: [
-          {title: '我的订阅', id: 'orderCourse', cs: activeClass},
-          {title: '播放记录', id: 'playRecord', cs: normalClass},
+          {title: '我的订阅', id: orderCourse, cs: activeClass},
+          {title: '播放记录', id: playRecord, cs: normalClass},
         ]
       }
     }
+
     ,
-    mounted(){
+    created(){
       document.title = '继续学习'
       for (let item of  this.data) {
         item.cs = normalClass
       }
-      if (localStorage.studyposition === undefined) {
-        localStorage.studyposition = 0
+      let page = this.$route.query.page
+      if (page === orderCourse || !page) {
+        this.order = true
+        this.data[0].cs = activeClass
+      }else {
+        this.order = false
+        this.data[1].cs = activeClass
       }
-      this.data[localStorage.studyposition].cs = activeClass
+
     },
     methods: {
       tabClick: function (id) {
         for (let item of  this.data) {
           item.cs = normalClass
         }
-        this.$router.replace({path: id, query: {page: id}})
-        if (id === "orderCourse") {
-//        router.put()  ={ path: item.id, query: { page: item.id }}
-          localStorage.studyposition = 0
+        this.$router.replace({path: 'study', query: {page: id}})
+
+        if (id === orderCourse) {
+          this.order = true
           this.data[0].cs = activeClass
-        } else if (id === "playRecord") {
-          localStorage.studyposition = 1
+
+        } else if (id === playRecord) {
+          this.order = false
           this.data[1].cs = activeClass
         }
       }
+
     },
     watch: {
-      '$route' (to, from) {//监控路由
+      '$route' (to, from) {
+
         console.log(from.query.page)
 //        console.log(from)
 //        console.log("to"+to.path)

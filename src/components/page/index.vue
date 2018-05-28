@@ -1,8 +1,9 @@
 <template>
-  <div >
+  <div>
+    <indexad></indexad>
     <nav class="mui-bar mui-bar-tab">
-      <a v-for="(item , index) in data" :key="index" class="mui-tab-item" :id="item.id"
-         @click="tabClick(item.name ,item.id)">
+      <a v-for="(item , index) in data" :key="index" class="mui-tab-item" :id="item.id" :class="item.cs"
+         @click="tabClick(item.id)">
         <label>
           <span class="mui-icon   " style=" margin: 4px 4px 2px 0 "><img
             :src="item.image"
@@ -21,7 +22,6 @@
 <script>
   //  import muijs from './js/mui.min'
 
-
   import homeOk from '../.././images/index-home-ok.png'
   import studyOk from '../.././images/index-book-ok.png'
   import personOk from '../.././images/index-head-ok.png'
@@ -30,53 +30,61 @@
   import study from '../.././images/index-book.png'
   import person from '../.././images/index-head.png'
 
+  import indexad from '../common/indexAd.vue'
+
+  let activeClass = ' mui-tab-item mui-active'
+  let normalClass = ' mui-tab-item '
+
+  const pageHome = '/home'
+  const pageStudy = '/study'
+  const pageperson = '/person'
+
   export default
   {
     name: 'App',
-
+    components: {indexad},
     data () {
       return {
         data: [
-          {title: '首页', id: '../home/recommend', image: home, name: 'home'},
-          {title: '继续学习', id: '../study/orderCourse', image: study, name: 'study'},
-          {title: '个人中心', id: '../person', image: person, name: 'person'}
+          {title: '首页', id: pageHome, image: home, name: 'home', cs: normalClass},
+          {title: '继续学习', id: pageStudy, image: study, name: 'study', cs: normalClass},
+          {title: '个人中心', id: pageperson, image: person, name: 'person', cs: normalClass}
         ],
 //          persons: [{person: '1111'}, {person: '222'}, {person: '333'},]
       }
     }
     ,
     created(){
-      if (localStorage.appPosition === undefined) {
-        localStorage.appPosition = 0
-      }
-      if (localStorage.appPosition == 0) {
-        this.data[localStorage.appPosition].image = homeOk
-      } else if (localStorage.appPosition == 1) {
-        this.data[localStorage.appPosition].image = studyOk
-      } else if (localStorage.appPosition == 2) {
-        this.data[localStorage.appPosition].image = personOk
+//      let page =this.$route.query.page
+      let page = this.$route.path
+//      console.log(this.$route)
+//      console.log(this.$route.path)
+//      console.log(this.$route.fullPath)
+      if (page === pageHome) {
+        this.data[0].image = homeOk
+        this.data[0].cs = activeClass
+      } else if (page === pageStudy) {
+        this.data[1].image = studyOk
+        this.data[1].cs = activeClass
+      } else if (page === pageperson) {
+        this.data[2].image = personOk
+        this.data[2].cs = activeClass
       }
     },
 
     methods: {
-      tabClick: function (name, id) {
-        this.$router.replace({path: id, query: {page: name}})
-        if (name === "home") {
-          localStorage.appPosition = 0
+      tabClick: function (id) {
+        this.$router.replace({path: id})
+        this.data[0].image = home
+        this.data[1].image = study
+        this.data[2].image = person
+        if (id === pageHome) {
           this.data[0].image = homeOk
-          this.data[1].image = study
-          this.data[2].image = person
 
-        } else if (name === "study") {
-          localStorage.appPosition = 1
-          this.data[0].image = home
+        } else if (id === pageStudy) {
           this.data[1].image = studyOk
-          this.data[2].image = person
         }
-        else if (name === "person") {
-          localStorage.appPosition = 2
-          this.data[0].image = home
-          this.data[1].image = study
+        else if (id === pageperson) {
           this.data[2].image = personOk
         }
       }

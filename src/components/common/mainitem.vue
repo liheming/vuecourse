@@ -3,7 +3,7 @@
     <ul class="mui-table-view">
       <li v-for=" (item , index) in data" class="mui-table-view-cell mui-media"
           style=" height: 100%">
-        <router-link class="item-a" @click="openPlayPage(item.id, '')" to="/play">
+        <router-link class="item-a"   :to="'play'+'?pid='+item.id ">
 
           <div class="item-div-img">
             <img class="item-preview-img"
