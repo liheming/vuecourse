@@ -7,11 +7,14 @@
       </div>
     </div>
     <div>
+      <keep-alive>
 
-          <recommend v-show="page == 'recommend'"></recommend>
-          <ranking v-show="page == 'ranking'"></ranking>
-          <free v-show="page === 'free'"></free>
-          <pay v-show="page === 'pay'"></pay>
+          <recommend v-if="page == 'recommend'"></recommend>
+          <ranking v-if="page == 'ranking'"></ranking>
+          <free v-if="page === 'free'"></free>
+          <pay v-if="page === 'pay'"></pay>
+
+      </keep-alive>
     </div>
   </div>
 </template>

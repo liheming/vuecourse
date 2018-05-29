@@ -10,8 +10,11 @@
     <div style="height: 5px ; width: 100% ;background-color: #f9faff"></div>
     <!--<component :is="currentView"></component>-->
     <!--<router-view/>-->
+    <keep-alive>
+
     <order v-show="order"></order>
     <play v-show="!order"></play>
+    </keep-alive>
   </div>
 </template>
 

@@ -2,7 +2,8 @@ import ajax from '../config/ajaxApi'
 import { getStore } from '../config/mUtils'
 import {CHANNELID
 } from '../config/env'
-let userid = "o4AOi1JRAUDzU5e9-MC-RuCirdCQ";
+// let userid = "o4AOi1JRAUDzU5e9-MC-RuCirdCQ"; //何圣胜
+// let userid = "o4AOi1BknLkhiJmawNJ5xh0F82nM";  //小明
 /**
  *------------------------------------公共通用接口-------------------------------------
  */

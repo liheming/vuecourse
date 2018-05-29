@@ -1,12 +1,12 @@
 <template>
   <div>
     <!--播放内容部分-->
-    <div  style="background-color: white ;">
+    <div style="background-color: white ;">
       <div style="position: relative ; background-color: white; height: 100%; width: 100%;">
 
         <video id="myVideo" v-bind:src="fileUrl"
-               onplay="videoPlay()"  playsinline=""  webkit-playsinline=""
-               preload="auto" style="width: 100%  ;height: auto"  :poster=" content.topPicture "
+               onplay="videoPlay()" playsinline="" webkit-playsinline=""
+               preload="auto" style="width: 100%  ;height: auto" :poster=" content.topPicture "
                v-bind:title="subsetName">
         </video>
         <!--<div  v-bind:style="{ background-image: url(content.topPicture) ,position: absolute , top: -5px}"></div>-->
@@ -35,8 +35,9 @@
           </p>
 
           <div style="display: inline; float: right;">
-            <span style="font-size: 11px ; color: #a89e9d;  text-decoration:line-through">{{content.isFree ?  '' : '原价¥'}} {{content.isFree ?  '' : content.price+30}}</span>
-            <span style="font-size: 15px ; color:  #f35b75 "> {{content.isFree ? '免费' : '¥'+content.price+'' }}</span>
+            <span style="font-size: 11px ; color: #a89e9d;  text-decoration:line-through">{{content.isFree ? '' : '原价¥'}} {{content.isFree ? '' : content.price + 30}}</span>
+            <span style="font-size: 15px ; color:  #f35b75 "> {{content.isFree ? '免费' : '¥' + content.price + ''
+              }}</span>
           </div>
         </div>
       </div>
@@ -54,15 +55,30 @@
     </div>
 
     <div style="height: 2px ; width: 100% ;background-color: #f9faff"></div>
+    <wx-sub :content="content"></wx-sub>
+    <sms-sub :content="content"></sms-sub>
+    <sub-success :content="content"></sub-success>
+    <sub-fail :content="content"></sub-fail>
+    <sm-rule :content="content"></sm-rule>
 
+    <sub-success :content="content"></sub-success>
+    <!--<subdialog :content="content"></subdialog>-->
   </div>
 
 </template>
 
 <script>
+  import wxSub from '../../common/dialog/wxSub.vue'
+  import smsSub from '../../common/dialog/smsSub.vue'
+  import subSuccess from '../../common/dialog/subSuccess.vue'
+  import subFail from '../../common/dialog/subFail.vue'
+  import smRule from '../../common/dialog/smRule.vue'
   import { getContent } from '../../../service/getData'
+
+
   export default {
     name: "play",
+    components: {wxSub,smsSub,subSuccess,subFail,smRule},
     data() {
       return {
         msg: '我是播放页',
@@ -94,7 +110,7 @@
     },
     created(){
       let that = this
-     let pid = that.$route.query.pid
+      let pid = that.$route.query.pid
       getContent(pid).then(function (resultData) {
         console.log(resultData.id)
         console.log(resultData)
@@ -172,22 +188,22 @@
     height: 50px;
   }
 
-  /* 可以设置不同的进入和离开动画 */
-  /* 设置持续时间和动画函数 */
-  .slide-fade-enter-active {
-    transition: all 1s ease;
-  }
+  /*!* 可以设置不同的进入和离开动画 *!*/
+  /*!* 设置持续时间和动画函数 *!*/
+  /*.slide-fade-enter-active {*/
+    /*transition: all 1s ease;*/
+  /*}*/
 
-  .slide-fade-leave-active {
-    transition: all 1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-  }
+  /*.slide-fade-leave-active {*/
+    /*transition: all 1s cubic-bezier(1.0, 0.5, 0.8, 1.0);*/
+  /*}*/
 
-  .slide-fade-enter, .slide-fade-leave-to
-    /* .slide-fade-leave-active for below version 2.1.8 */
-  {
-    transform: translateX(30px);
-    opacity: 0.8;
-  }
+  /*.slide-fade-enter, .slide-fade-leave-to*/
+    /*!* .slide-fade-leave-active for below version 2.1.8 *!*/
+  /*{*/
+    /*transform: translateX(30px);*/
+    /*opacity: 0.8;*/
+  /*}*/
 
   .item-li {
 

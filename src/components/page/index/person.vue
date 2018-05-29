@@ -27,6 +27,7 @@
   import message from '../../../images/person-message-black.png'
 
   import { queryUserByUserId } from '../../../service/getData'
+  import { setStore } from '../../../config/mUtils'
   export default {
     name: 'Hi',
     data () {
@@ -45,7 +46,7 @@
       document.title = '个人中心'
       let that = this
       queryUserByUserId().then(function (resultData) {
-        localStorage.userid = resultData.openid;
+        setStore('userid',resultData.openid)
         that.headimgurl = resultData.headimgurl;
         that.nickname = resultData.nickname;
       }).catch(function (err) {

@@ -37,7 +37,7 @@
             {{item.productDesc}}
           </div>
 
-          <a class="item-a" @click="openPlayPage(item.productId, '')"
+          <router-link   :to="'play'+'?pid='+item.productId "  class="item-a" @click="openPlayPage(item.productId, '')"
              style=" margin: 16px 16px ; background-color: #fafafa">
             <div class="item-div-img">
               <img class="item-preview-img"
@@ -59,7 +59,7 @@
                 </div>
               </div>
             </div>
-          </a>
+          </router-link>
         </li>
       </ul>
 

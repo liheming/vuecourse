@@ -165,6 +165,12 @@
   width: 30px;
 }
 
+
+.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before {
+  color: #f35b75;
+}
+
+
 /*---------------------------------------------page自定义样式-------------------------------------------*/
 
 

@@ -21,8 +21,8 @@ export const getQueryString = name => {
   return null;
 };
 
-export const getParam = name => {
-  this.$route.query.name
+export const getParam = (that,name) => {
+  that.$route.query+'.'+name
 };
 
 /**
