@@ -17,8 +17,6 @@
             <img src="../../../images/icon-play.png" style="height: 43px ; width: auto">
           </div>
         </div>
-
-
       </div>
 
       <div style="padding: 20px ;position: relative ; ">
@@ -43,45 +41,61 @@
       </div>
     </div>
 
-    <!--菜单目录-->
-    <div class="mui-segmented-control" style="padding: 3px 0 ;      z-index: 5; font-size: 15px">
-      <a id="detail" class="mui-control-item mui-active" href="#item-detail"
-         style=" font-size: 15px  ">简介<span></span></a>
-      <a id="category" class="mui-control-item " href="#item-category"
-         style=" font-size: 15px ">目录<span></span></a>
-      <a id="comment" class="mui-control-item" href="#item-comment"
-         style=" font-size: 15px ;">评论<span></span></a>
-
+    <div class="mui-segmented-control">
+      <div @click="tabClick(item.id)" v-for="(item , index) in data" :key="index" :class="item.cs">{{item.title}}
+        <span>
+        </span>
+      </div>
     </div>
 
-    <div style="height: 2px ; width: 100% ;background-color: #f9faff"></div>
-    <wx-sub :content="content"></wx-sub>
-    <sms-sub :content="content"></sms-sub>
-    <sub-success :content="content"></sub-success>
-    <sub-fail :content="content"></sub-fail>
-    <sm-rule :content="content"></sm-rule>
+    <detail v-show="tabType=== 'detail'"  :content="content"></detail>
+    <category v-show="tabType=== 'category'" :content="content"></category>
+    <comment v-show="tabType=== 'comment'" :content="content"></comment>
 
-    <sub-success :content="content"></sub-success>
+    <!--<div style="height: 2px ; width: 100% ;background-color: #f9faff"></div>-->
+    <div v-show="dialogShow">
+      <wx-sub :content="content"></wx-sub>
+      <sms-sub :content="content"></sms-sub>
+      <sub-success :content="content"></sub-success>
+      <sub-fail :content="content"></sub-fail>
+      <sm-rule :content="content"></sm-rule>
+      <sub-success :content="content"></sub-success>
+    </div>
     <!--<subdialog :content="content"></subdialog>-->
   </div>
 
 </template>
 
 <script>
+  //弹窗组件
   import wxSub from '../../common/dialog/wxSub.vue'
   import smsSub from '../../common/dialog/smsSub.vue'
   import subSuccess from '../../common/dialog/subSuccess.vue'
   import subFail from '../../common/dialog/subFail.vue'
   import smRule from '../../common/dialog/smRule.vue'
+
+  //菜单目录组件
+  import detail from './child/detail.vue'
+  import category from './child/category.vue'
+  import comment from './child/comment.vue'
+
+  //接口
   import { getContent } from '../../../service/getData'
 
+  //  常量
+  const activeClass = ' mui-control-item mui-active '
+  const normalClass = ' mui-control-item  '
+  const tabDetail = 'detail'
+  const tabCategory = 'category'
+  const tabComment = 'comment'
 
   export default {
     name: "play",
-    components: {wxSub,smsSub,subSuccess,subFail,smRule},
+    components: {wxSub, smsSub, subSuccess, subFail, smRule, detail, category, comment},
     data() {
       return {
         msg: '我是播放页',
+        tabType: tabDetail,
         dialogShow: false,
         dialogType: '',
         backTopIsShow: false,
@@ -91,8 +105,6 @@
         agreeProtocol: 0,
         myindex: 0,
         message: '',
-        commentIsShow: false,
-        goodComment: false,  //精彩评论
         newRecisShow: false,
         isSeen: false,
         isComment: false,
@@ -100,23 +112,44 @@
         fileUrl: null,
         subsetName: null,
         content: null,
-        commentData: null,
-        topcommentData: null,
-        recommendcommentData: null,
-        categoryData: null,
-        recentUpdate: null,
-        newRecommendData: null
+        data: [
+          {title: '简介', id: tabDetail, cs: activeClass},
+          {title: '目录', id: tabCategory, cs: normalClass},
+          {title: '评论', id: tabComment, cs: normalClass}
+        ],
+
       }
     },
     created(){
       let that = this
       let pid = that.$route.query.pid
       getContent(pid).then(function (resultData) {
-        console.log(resultData.id)
-        console.log(resultData)
+//        console.log(resultData.id)
+//        console.log(resultData)
         that.content = resultData
       }).catch(function (err) {
       })
+    },
+    methods: {
+      tabClick: function (id) {
+        for (let item of  this.data) {
+          item.cs = normalClass
+        }
+
+        if (id === tabDetail) {
+          this.tabType = tabDetail
+          this.data[0].cs = activeClass
+
+        }
+        else if (id === tabCategory) {
+          this.tabType = tabCategory
+          this.data[1].cs = activeClass
+        }
+        else if (id === tabComment) {
+          this.tabType = tabComment
+          this.data[2].cs = activeClass
+        }
+      }
     }
 
   }
@@ -191,18 +224,18 @@
   /*!* 可以设置不同的进入和离开动画 *!*/
   /*!* 设置持续时间和动画函数 *!*/
   /*.slide-fade-enter-active {*/
-    /*transition: all 1s ease;*/
+  /*transition: all 1s ease;*/
   /*}*/
 
   /*.slide-fade-leave-active {*/
-    /*transition: all 1s cubic-bezier(1.0, 0.5, 0.8, 1.0);*/
+  /*transition: all 1s cubic-bezier(1.0, 0.5, 0.8, 1.0);*/
   /*}*/
 
   /*.slide-fade-enter, .slide-fade-leave-to*/
-    /*!* .slide-fade-leave-active for below version 2.1.8 *!*/
+  /*!* .slide-fade-leave-active for below version 2.1.8 *!*/
   /*{*/
-    /*transform: translateX(30px);*/
-    /*opacity: 0.8;*/
+  /*transform: translateX(30px);*/
+  /*opacity: 0.8;*/
   /*}*/
 
   .item-li {

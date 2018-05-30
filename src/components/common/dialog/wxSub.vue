@@ -2,7 +2,7 @@
   <div>
     <div v-show="show" id="sub" class="mui-popup mui-popup-in"
          style="display: block; line-height: 35px; width: 350px">
-      <div class="mui-popup-inner">
+      <div class="mui-popup-inner" style="padding: 40px">
         <div class="mui-popup-title" style="margin-top: 5px">《{{content.title}}》课程</div>
 
         <!--<div>-->

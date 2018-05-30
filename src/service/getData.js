@@ -2,7 +2,7 @@ import ajax from '../config/ajaxApi'
 import { getStore } from '../config/mUtils'
 import {CHANNELID
 } from '../config/env'
-// let userid = "o4AOi1JRAUDzU5e9-MC-RuCirdCQ"; //何圣胜
+let userid = "o4AOi1JRAUDzU5e9-MC-RuCirdCQ"; //何圣胜
 // let userid = "o4AOi1BknLkhiJmawNJ5xh0F82nM";  //小明
 /**
  *------------------------------------公共通用接口-------------------------------------
@@ -287,7 +287,7 @@ export const addSinglePlayRecord = (productsid, contentId, type) => ajax('wx/his
  * @param productsId 销售品id
  * @param maxCount 推荐的数目，默认为3
  */
-export const getRecommendList = (productsId, maxCount = 3) => ajax('wx/comments/addComments', {
+export const getRecommendList = (productsId, maxCount = 3) => ajax('wx/recommend/products', {
   'channelCode': CHANNELID,
   'id': productsId,
   'maxCount': maxCount

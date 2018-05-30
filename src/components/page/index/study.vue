@@ -10,26 +10,23 @@
     <div style="height: 5px ; width: 100% ;background-color: #f9faff"></div>
     <!--<component :is="currentView"></component>-->
     <!--<router-view/>-->
-    <keep-alive>
-
     <order v-show="order"></order>
     <play v-show="!order"></play>
-    </keep-alive>
   </div>
 </template>
 
 <script>
   import play from '../study/playRecord'
   import Order from '../study/orderCourse'
-  let activeClass = ' mui-control-item mui-active '
-  let normalClass = ' mui-control-item  '
 
+  const activeClass = ' mui-control-item mui-active '
+  const normalClass = ' mui-control-item  '
   const orderCourse = 'orderCourse'
   const playRecord = 'playRecord'
 
   export default {
     components: {Order, play},
-    name: '',
+    name: 'study',
     data () {
       return {
         order: true, // 默认显示订阅记录
@@ -62,7 +59,7 @@
         for (let item of  this.data) {
           item.cs = normalClass
         }
-        this.$router.replace({path: 'study', query: {page: id}})
+//        this.$router.replace({path: 'study', query: {page: id}}) // 切换参数  保留！
 
         if (id === orderCourse) {
           this.order = true
